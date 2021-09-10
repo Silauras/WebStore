@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>c1d749bf-4abc-4a79-91d6-430c50781ff5.SCHEMA:webstore</OriginalElement>
+  <nodes>
+    <node x="1611.1318695727355" y="922.305891840662">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.message</node>
+    <node x="1508.8903016923991" y="-192.85261875761262">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.order</node>
+    <node x="2230.278785657915" y="57.50164114489547">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.seller_shop</node>
+    <node x="2039.442664335941" y="-4.768574908647963">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.shop</node>
+    <node x="2351.20092267076" y="-213.7174177831912">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.warehouse</node>
+    <node x="870.4798082161292" y="140.2192637051231">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.communication</node>
+    <node x="1085.196069881585" y="154.27979661114682">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.subscription_subscribers</node>
+    <node x="2969.262227201161" y="349.91455222893944">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product_media</node>
+    <node x="2103.9602352808574" y="-337.856660228182">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.promotion</node>
+    <node x="1749.6400284822857" y="-168.7174177831912">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.order_product</node>
+    <node x="2623.812823925919" y="446.9996711327648">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product</node>
+    <node x="2422.7012605150107" y="28.529232643118178">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.warehouse_product</node>
+    <node x="1396.973335318529" y="1165.0917159763317">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.claim</node>
+    <node x="2996.476555957745" y="515.262567503957">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product_template_characteristic_template</node>
+    <node x="1859.258663922277" y="922.305891840662">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.commentary</node>
+    <node x="2109.516070281962" y="1209.0917159763317">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.review_photo</node>
+    <node x="1238.7563446640145" y="289.2886723507918">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.user_account</node>
+    <node x="3166.792678055922" y="335.49359424005297">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.characteristic_template</node>
+    <node x="3081.476555957745" y="773.0315407678611">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.category</node>
+    <node x="2675.1237353721067" y="-123.0416030025441">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.price</node>
+    <node x="1749.6400284822857" y="769.7844092570039">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.message_photo</node>
+    <node x="1396.973335318529" y="899.1869671132766">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.dialog</node>
+    <node x="968.3379390488572" y="-16.30651280630582">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.subscription</node>
+    <node x="2815.53752556354" y="518.623629719854">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.characteristic</node>
+    <node x="1661.235118707537" y="1187.0917159763317">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.reaction</node>
+    <node x="3242.4061438971175" y="694.0315407678611">c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product_template</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.characteristic" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product" relationship="REFERENCES">
+      <point x="-64.5" y="-60.62395858708919" />
+      <point x="83.5" y="0.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product_template" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.category" relationship="REFERENCES">
+      <point x="0.0" y="39.5" />
+      <point x="3333.4061438971175" y="838.5315407678611" />
+      <point x="79.0" y="15.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product_template_characteristic_template" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.characteristic_template" relationship="REFERENCES">
+      <point x="156.5" y="-39.0" />
+      <point x="3316.976555957745" y="452.9966326864089" />
+      <point x="3271.3699786130433" y="452.9966326864089" />
+      <point x="-1.9226994428786384" y="39.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.order_product" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.order" relationship="REFERENCES">
+      <point x="-67.5" y="-16.635582216808814" />
+      <point x="94.0" y="-15.000381242387391" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.commentary" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.user_account" relationship="REFERENCES">
+      <point x="-96.0" y="68.0" />
+      <point x="1334.2563446640145" y="1106.8058918406618" />
+      <point x="0.0" y="127.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.commentary" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.commentary" relationship="REFERENCES">
+      <point x="0.0" y="116.5" />
+      <point x="1955.258663922277" y="1371.5917159763317" />
+      <point x="2430.2012605150107" y="1371.5917159763317" />
+      <point x="2430.2012605150107" y="1038.8058918406618" />
+      <point x="96.00000000000023" y="0.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.promotion" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.shop" relationship="REFERENCES">
+      <point x="-84.5" y="94.5" />
+      <point x="0.017570944916315057" y="-61.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.claim" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.user_account" relationship="REFERENCES">
+      <point x="-85.0" y="0.0" />
+      <point x="1319.2563446640145" y="1259.5917159763317" />
+      <point x="-15.0" y="127.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.commentary" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product" relationship="REFERENCES">
+      <point x="0.0" y="-116.49999999999989" />
+      <point x="1955.258663922277" y="530.4996711327648" />
+      <point x="-83.5" y="0.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.price" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.promotion" relationship="REFERENCES">
+      <point x="0.0" y="-105.5" />
+      <point x="2752.6237353721067" y="-243.35666022818202" />
+      <point x="92.0" y="0.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.price" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product" relationship="REFERENCES">
+      <point x="0.0" y="105.5" />
+      <point x="45.310911446187674" y="-83.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.message" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.user_account" relationship="REFERENCES">
+      <point x="-74.5" y="11.88107527261468" />
+      <point x="1349.2563446640145" y="1017.6869671132766" />
+      <point x="15.0" y="127.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.reaction" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.commentary" relationship="REFERENCES">
+      <point x="85.0" y="0.0" />
+      <point x="1940.258663922277" y="1259.5917159763317" />
+      <point x="-15.0" y="116.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product_template_characteristic_template" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product_template" relationship="REFERENCES">
+      <point x="156.5" y="39.0" />
+      <point x="3316.976555957745" y="631.7656059503129" />
+      <point x="3271.3699786130433" y="631.7656059503129" />
+      <point x="-62.036165284074286" y="-39.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.subscription_subscribers" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.subscription" relationship="REFERENCES">
+      <point x="-96.0" y="-39.0" />
+      <point x="25.35813083272774" y="61.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.category" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.category" relationship="REFERENCES">
+      <point x="0.0" y="50.5" />
+      <point x="3160.476555957745" y="929.805891840662" />
+      <point x="3348.4061438971175" y="929.805891840662" />
+      <point x="3348.4061438971175" y="853.5315407678611" />
+      <point x="79.0" y="30.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.subscription_subscribers" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.user_account" relationship="REFERENCES">
+      <point x="96.0" y="39.0" />
+      <point x="-49.56027478242959" y="-127.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.seller_shop" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.shop" relationship="REFERENCES">
+      <point x="-56.5" y="0.0" />
+      <point x="72.0" y="39.770216053543436" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product_template" relationship="REFERENCES">
+      <point x="-14.999823925918918" y="83.5" />
+      <point x="2692.313" y="748.5315407678611" />
+      <point x="-91.0" y="15.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.dialog" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.order" relationship="REFERENCES">
+      <point x="-3.3531852909618465E-4" y="-50.499967113276625" />
+      <point x="1459.973" y="561.789" />
+      <point x="1724.0" y="561.789" />
+      <point x="1724.0" y="-120.353" />
+      <point x="93.99969830760097" y="-3.8124238737680116E-4" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.review_photo" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.commentary" relationship="REFERENCES">
+      <point x="-79.5" y="0.0" />
+      <point x="1970.258663922277" y="1259.5917159763317" />
+      <point x="15.0" y="116.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.message_photo" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.message" relationship="REFERENCES">
+      <point x="-76.5" y="50.5" />
+      <point x="71.50815890955027" y="-83.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.shop" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.user_account" relationship="REFERENCES">
+      <point x="-24.982429055083685" y="-61.5" />
+      <point x="2086.4602352808574" y="-210.35261875761262" />
+      <point x="1334.2563446640145" y="-210.35261875761262" />
+      <point x="0.0" y="-127.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.message" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.dialog" relationship="REFERENCES">
+      <point x="-74.5" y="-56.11892472738532" />
+      <point x="63.0" y="0.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.order" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.user_account" relationship="REFERENCES">
+      <point x="-94.0" y="15.0" />
+      <point x="1364.2563446640145" y="-105.35261875761262" />
+      <point x="30.0" y="-127.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.warehouse_product" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.warehouse" relationship="REFERENCES">
+      <point x="-79.0" y="-39.0" />
+      <point x="7.50033784425068" y="72.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.reaction" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.user_account" relationship="REFERENCES">
+      <point x="0.0" y="72.5" />
+      <point x="1746.235118707537" y="1386.5917159763317" />
+      <point x="1304.2563446640145" y="1386.5917159763317" />
+      <point x="-30.0" y="127.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.communication" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.user_account" relationship="REFERENCES">
+      <point x="0.0" y="61.50000000000003" />
+      <point x="959.9798082161292" y="416.7886723507918" />
+      <point x="-95.5" y="0.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.seller_shop" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.user_account" relationship="REFERENCES">
+      <point x="0.0" y="39.0" />
+      <point x="2286.778785657915" y="416.7886723507918" />
+      <point x="95.5" y="0.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.warehouse" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.shop" relationship="REFERENCES">
+      <point x="-71.5" y="0.0" />
+      <point x="2141.4602352808574" y="-141.2174177831912" />
+      <point x="30.017570944916315" y="-61.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product_media" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product" relationship="REFERENCES">
+      <point x="-82.0" y="43.08511890382533" />
+      <point x="83.5" y="-76.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.order_product" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product" relationship="REFERENCES">
+      <point x="0.0" y="50.0" />
+      <point x="1817.1400284822857" y="515.4996711327648" />
+      <point x="-83.5" y="-15.0" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.warehouse_product" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product" relationship="REFERENCES">
+      <point x="86.5" y="37.92916435433773" />
+      <point x="2722.313" y="105.4583969974559" />
+      <point x="15.000176074081082" y="-83.5" />
+    </edge>
+    <edge source="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.characteristic" target="c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.product_template" relationship="REFERENCES">
+      <point x="0.0" y="72.5" />
+      <point x="2880.03752556354" y="733.5315407678611" />
+      <point x="-91.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.47048710601719196" showDependencies="false" x="2195.0" y="525.0" />
+  <SelectedNodes>
+    <node>c1d749bf-4abc-4a79-91d6-430c50781ff5.TABLE:webstore.order_product</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
