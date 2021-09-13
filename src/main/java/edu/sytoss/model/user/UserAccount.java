@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -56,8 +57,16 @@ public class UserAccount {
 
     @Override
     public String toString() {
-        return name + " " + surname + " " + role;
+        return "UserAccount{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", registrationDate=" + registrationDate +
+                ", lastActivityDate=" + lastActivityDate +
+                ", role='" + role + '\'' +
+                '}';
     }
-
-
 }

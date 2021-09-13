@@ -5,6 +5,7 @@ import edu.sytoss.repository.UserAccountDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.PersistenceUnit;
 import java.util.List;
 
 @Repository
@@ -21,8 +22,6 @@ public class UserAccountDaoImpl extends AbstractDao<Long, UserAccount> implement
 
     @Override
     public List<UserAccount> findAllUserAccounts() {
-        return (List<UserAccount>) getEntityManager()
-                .createQuery("from UserAccount")
-                .getResultList();
+        return getAll(UserAccount.class);
     }
 }
