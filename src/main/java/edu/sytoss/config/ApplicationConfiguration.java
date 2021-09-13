@@ -1,47 +1,32 @@
 package edu.sytoss.config;
 
-import edu.sytoss.repositoryImpl.UserAccountDaoImpl;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({"edu.sytoss"})
 @PropertySource(value = {"classpath:application.properties"})
-public class HibernateConfiguration {
+@EnableJpaRepositories(basePackages = "edu.sytoss.repository")
+public class ApplicationConfiguration {
 
     @Autowired
     private Environment environment;
-
-//    @Bean
-//    public LocalSessionFactoryBean sessionFactory() {
-//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-//        sessionFactory.setDataSource(dataSource());
-//        sessionFactory.setPackagesToScan("edu.sytoss.model");
-//        sessionFactory.setHibernateProperties(hibernateProperties());
-//        return sessionFactory;
-//    }
 
     @Bean
     public DataSource dataSource() {
@@ -62,35 +47,30 @@ public class HibernateConfiguration {
         return properties;
     }
 
-//    @Bean
-//    @Autowired
-//    public HibernateTransactionManager transactionManager(SessionFactory s) {
-//        HibernateTransactionManager txManager = new HibernateTransactionManager();
-//        txManager.setSessionFactory(s);
-//        return txManager;
-//    }
-
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
         entityManager.setDataSource(dataSource());
-        entityManager.setPackagesToScan("edu.sytoss.model", "edu.sytoss.repositoryImpl", "edu.sytoss.repository");
+        entityManager.setPackagesToScan(PACKAGES_TO_SCAN);
         entityManager.setJpaProperties(hibernateProperties());
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         entityManager.setJpaVendorAdapter(vendorAdapter);
         return entityManager;
     }
 
+    private static final String[] PACKAGES_TO_SCAN = {
+            "edu.sytoss.model",
+            "edu.sytoss.repositoryImpl",
+            "edu.sytoss.repository",
+            "edu.sytoss.service"
+    };
 
-//
-//
-//    @Bean
-//    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-//        JpaTransactionManager transactionManager = new JpaTransactionManager();
-//        transactionManager.setEntityManagerFactory(entityManagerFactory);
-//
-//        return transactionManager;
-//    }
+    @Bean
+    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory);
+        return transactionManager;
+    }
 
 
 }
