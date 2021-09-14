@@ -1,4 +1,4 @@
-package edu.sytoss.service;
+package edu.sytoss.service.impl;
 
 import edu.sytoss.model.product.Product;
 import edu.sytoss.repository.ProductRepository;

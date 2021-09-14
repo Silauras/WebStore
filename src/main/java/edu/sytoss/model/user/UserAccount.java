@@ -1,6 +1,7 @@
 package edu.sytoss.model.user;
 
 import edu.sytoss.model.communication.Claim;
+import edu.sytoss.model.communication.Message;
 import edu.sytoss.model.communication.Reaction;
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.shop.Shop;
@@ -60,17 +61,37 @@ public class UserAccount {
 
     @Column(name = "`role`", nullable = false, length = 50)
     private String role;
-    @ManyToOne
-    @JoinColumn(name = "communication_communication_id")
-    private Communication communication;
-    @ManyToOne
-    @JoinColumn(name = "shop_shop_id")
+
+    @OneToMany
+    @JoinColumn(name = "user_account")
+    private Set<Communication> communication;
+
+   /* @ManyToOne
+    @JoinTable(name = "seller_shop")*/
+    @Transient
     private Shop shop;
-    private Set<Messages> messages;
+
+    @OneToMany
+    @JoinColumn(name = "author")
+    private Set<Message> messages;
+
+    @OneToMany
+    @JoinColumn(name = "customer")
     private Set<Order> orders;
+
+    @OneToMany
+    @JoinColumn(name = "author")
     private Set<Reaction> reactions;
+
+    @ManyToMany
+    @JoinTable(name = "subscription_subscribers",
+            joinColumns =
+            @JoinColumn(name = "subscriber_id", referencedColumnName = "user_account_id"),
+            inverseJoinColumns =
+            @JoinColumn(name = "subscription_id", referencedColumnName = "subscription_id")
+    )
     private Set<Subscription> subscriptions;
-    private Set<Claim> complaintsSent;
+    //private Set<Claim> complaintsSent;
     //private Set<UserAccountClaim> complaints;
 
     @Override

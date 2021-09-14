@@ -14,14 +14,12 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "commentary")
 @Entity
+@DiscriminatorColumn(name = "commentary_type")
 public class Commentary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commentary_id", nullable = false)
     private Long id;
-
-    @Column(name = "commentary_type", nullable = false, length = 50)
-    private String commentaryType;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "author", nullable = false)

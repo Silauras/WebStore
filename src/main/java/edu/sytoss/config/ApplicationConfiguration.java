@@ -62,7 +62,8 @@ public class ApplicationConfiguration {
             "edu.sytoss.model",
             "edu.sytoss.repositoryImpl",
             "edu.sytoss.repository",
-            "edu.sytoss.service"
+            "edu.sytoss.service",
+            "edu.sytoss.service.impl"
     };
 
     @Bean

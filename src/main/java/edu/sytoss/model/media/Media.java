@@ -1,4 +1,4 @@
-package edu.sytoss.model;
+package edu.sytoss.model.media;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
