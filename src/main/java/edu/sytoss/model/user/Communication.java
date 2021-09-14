@@ -28,5 +28,13 @@ public class Communication {
     @JoinColumn(name = "user_account", nullable = false)
     private UserAccount userAccount;
 
-   
+    @Override
+    public String toString() {
+        return "Communication{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", userAccount=" + userAccount +
+                '}';
+    }
 }
