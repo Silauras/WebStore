@@ -1,12 +1,18 @@
 package edu.sytoss.model.user;
 
+import edu.sytoss.model.communication.Claim;
+import edu.sytoss.model.communication.Reaction;
+import edu.sytoss.model.order.Order;
+import edu.sytoss.model.shop.Shop;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import sun.misc.resources.Messages;
 
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,15 +21,15 @@ import java.util.Date;
 @Entity
 @Table(name = "user_account")
 public class UserAccount {
-    public UserAccount(String name, String surname, String patronymic, String login, String password, Date registrationDate,Date lastActivityDate, String role) {
+    public UserAccount(String name, String surname, String patronymic, String login, String password, Date registrationDate, Date lastActivityDate, String role) {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
         this.login = login;
         this.password = password;
-        this.registrationDate  = registrationDate;
-        this.lastActivityDate  = lastActivityDate;
-        this.role  = role;
+        this.registrationDate = registrationDate;
+        this.lastActivityDate = lastActivityDate;
+        this.role = role;
     }
 
     @Id
@@ -54,6 +60,18 @@ public class UserAccount {
 
     @Column(name = "`role`", nullable = false, length = 50)
     private String role;
+    @ManyToOne
+    @JoinColumn(name = "communication_communication_id")
+    private Communication communication;
+    @ManyToOne
+    @JoinColumn(name = "shop_shop_id")
+    private Shop shop;
+    private Set<Messages> messages;
+    private Set<Order> orders;
+    private Set<Reaction> reactions;
+    private Set<Subscription> subscriptions;
+    private Set<Claim> complaintsSent;
+    //private Set<UserAccountClaim> complaints;
 
     @Override
     public String toString() {
