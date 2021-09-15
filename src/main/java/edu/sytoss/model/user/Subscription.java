@@ -1,9 +1,19 @@
 package edu.sytoss.model.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import edu.sytoss.model.product.Product;
+import edu.sytoss.model.shop.Shop;
+import lombok.*;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+
+import javax.persistence.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+@AllArgsConstructor
 
 @Entity
 @Table(name = "subscription")
@@ -12,11 +22,24 @@ public class Subscription {
     @Column(name = "subscription_id", nullable = false)
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "name_subscription")
+    private String name_subscription;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name = "subscription_type")
+    private String subscription_type;
+
+    @Column(name = "subscription_object")
+    private String subscription_object;
+
+    @Column(name = "information")
+    private String information;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "shop_id", nullable = false)
+    private Shop shop;
+
 }

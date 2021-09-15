@@ -1,5 +1,6 @@
 package edu.sytoss.model.user;
 
+import edu.sytoss.model.communication.Claim;
 import edu.sytoss.model.communication.Message;
 import edu.sytoss.model.communication.Reaction;
 import edu.sytoss.model.order.Order;
@@ -7,6 +8,7 @@ import edu.sytoss.model.shop.Shop;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 
 import javax.persistence.*;
@@ -20,16 +22,7 @@ import java.util.Set;
 @Entity
 @Table(name = "user_account")
 public class UserAccount {
-    public UserAccount(String name, String surname, String patronymic, String login, String password, Date registrationDate, Date lastActivityDate, String role) {
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-        this.login = login;
-        this.password = password;
-        this.registrationDate = registrationDate;
-        this.lastActivityDate = lastActivityDate;
-        this.role = role;
-    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

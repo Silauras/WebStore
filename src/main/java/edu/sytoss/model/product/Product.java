@@ -1,6 +1,7 @@
 package edu.sytoss.model.product;
 
 import edu.sytoss.model.shop.Warehouse;
+import edu.sytoss.model.user.Subsciptable;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,7 +14,8 @@ import java.util.Set;
 
 @Table(name = "product")
 @Entity
-public class Product {
+@Embeddable// Определяет класс, экземпляры которого хранятся как неотъемлемая часть исходного объекта
+public class Product implements Subsciptable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id", nullable = false)

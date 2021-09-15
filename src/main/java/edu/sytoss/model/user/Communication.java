@@ -24,9 +24,17 @@ public class Communication {
     @Column(name = "phone_number", length = 50)
     private String phoneNumber;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_account", nullable = false)
     private UserAccount userAccount;
 
-   
+    @Override
+    public String toString() {
+        return "\n"+   "userAccount=" + userAccount +
+                ", Communication{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }
