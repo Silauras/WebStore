@@ -27,16 +27,21 @@
     <loaded-nodes>
       <connection connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126">
         <schema name="webstore" object-types="table, view, procedure, function, constraint, index, column, dataset trigger" />
+        <schema name="world" object-types="table, view, procedure, function" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="3b5c8bd2-8161-400a-9a94-05e97924e126">
-      <console name="WebStore" type="STANDARD" schema="webstore" session="Main"><![CDATA[select * from communication]]></console>
+      <console name="WebStore" type="STANDARD" schema="webstore" session="Main"><![CDATA[select * from subscription]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/user_account" />
+      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/communication" />
+      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/subscription" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="3b5c8bd2-8161-400a-9a94-05e97924e126" />
@@ -44,6 +49,9 @@
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.communication" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.subscription" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.user_account" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.shop" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.commentary" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />

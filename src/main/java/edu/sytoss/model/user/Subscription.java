@@ -1,6 +1,11 @@
 package edu.sytoss.model.user;
 
+import edu.sytoss.model.product.Product;
+import edu.sytoss.model.shop.Shop;
 import lombok.*;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 
 import javax.persistence.*;
 
@@ -28,5 +33,13 @@ public class Subscription {
 
     @Column(name = "information")
     private String information;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "shop_id", nullable = false)
+    private Shop shop;
 
 }
