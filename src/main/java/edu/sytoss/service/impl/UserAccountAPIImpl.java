@@ -48,10 +48,6 @@ public class UserAccountAPIImpl implements UserAccountAPI {
         if(userAccountDTO.getId() != null){
             userAccounts.add(userAccountRepository.findById(userAccountDTO.getId()));
         }
-        if (userAccountDTO.getFullName()!=null)
-        {
-
-        }
         return  userAccounts;
     }
 

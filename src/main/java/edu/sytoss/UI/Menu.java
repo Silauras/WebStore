@@ -1,10 +1,13 @@
 package edu.sytoss.UI;
 
+import edu.sytoss.dto.UserAccountDTO;
 import edu.sytoss.model.communication.Answer;
 import edu.sytoss.model.communication.Commentary;
 import edu.sytoss.model.product.Product;
+import edu.sytoss.service.UserAccountAPI;
 import edu.sytoss.service.impl.CommentaryApiImpl;
 import edu.sytoss.service.impl.ProductService;
+import edu.sytoss.service.impl.UserAccountAPIImpl;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +29,8 @@ public class Menu {
     ProductService productService;
     @Autowired
     CommentaryApiImpl commentaryApi;
+    @Autowired
+    UserAccountAPI userAccountAPI;
 
 
     Scanner scanner = new Scanner(System.in);
@@ -44,6 +49,10 @@ public class Menu {
             switch (scanner.nextInt()) {
                 case -1:
                     return;
+                case 1:
+                    System.out.println(userAccountAPI.findUserAccount(new UserAccountDTO(1L)));
+                    System.out.println(userAccountAPI.findUserAccount(new UserAccountDTO("Alma")));
+                    break;
                 case 4:
                     printCommentaries();
                     break;
