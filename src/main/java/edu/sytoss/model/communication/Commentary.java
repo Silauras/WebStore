@@ -8,12 +8,16 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "commentary")
+
 @Entity
+@Inheritance
+@Table(name = "commentary")
 @DiscriminatorColumn(name = "commentary_type")
 public class Commentary {
     @Id
@@ -39,12 +43,7 @@ public class Commentary {
     @JoinColumn(name = "product", nullable = false)
     private Product product;
 
-    @ManyToOne
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "root_commentary")
-    private Commentary rootCommentary;
-
-    @Column(name = "rating")
-    private Integer rating;
-
-
+    List<Answer> answers;
 }

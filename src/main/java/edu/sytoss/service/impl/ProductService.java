@@ -14,7 +14,11 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public Product findById(Long id){
+    public Product findById(Long id) {
         return productRepository.findById(id);
+    }
+
+    public List<Product> findAll() {
+        return productRepository.findAll();
     }
 }

@@ -1,6 +1,5 @@
 package edu.sytoss.model.user;
 
-import edu.sytoss.model.communication.Claim;
 import edu.sytoss.model.communication.Message;
 import edu.sytoss.model.communication.Reaction;
 import edu.sytoss.model.order.Order;
@@ -8,7 +7,6 @@ import edu.sytoss.model.shop.Shop;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sun.misc.resources.Messages;
 
 
 import javax.persistence.*;
