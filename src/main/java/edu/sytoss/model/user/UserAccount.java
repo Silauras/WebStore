@@ -22,16 +22,7 @@ import java.util.Set;
 @Entity
 @Table(name = "user_account")
 public class UserAccount {
-    public UserAccount(String name, String surname, String patronymic, String login, String password, Date registrationDate, Date lastActivityDate, String role) {
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-        this.login = login;
-        this.password = password;
-        this.registrationDate = registrationDate;
-        this.lastActivityDate = lastActivityDate;
-        this.role = role;
-    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
