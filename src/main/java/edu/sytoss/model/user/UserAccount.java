@@ -1,6 +1,5 @@
 package edu.sytoss.model.user;
 
-import edu.sytoss.model.communication.Claim;
 import edu.sytoss.model.communication.Message;
 import edu.sytoss.model.communication.Reaction;
 import edu.sytoss.model.order.Order;
@@ -8,7 +7,6 @@ import edu.sytoss.model.shop.Shop;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 
 
 import javax.persistence.*;
@@ -53,12 +51,13 @@ public class UserAccount {
     @Column(name = "`role`", nullable = false, length = 50)
     private String role;
 
+
     @OneToMany
     @JoinColumn(name = "user_account")
     private Set<Communication> communication;
 
-   /* @ManyToOne
-    @JoinTable(name = "seller_shop")*/
+    /* @ManyToOne
+     @JoinTable(name = "seller_shop")*/
     @Transient
     private Shop shop;
 
@@ -82,8 +81,26 @@ public class UserAccount {
             @JoinColumn(name = "subscription_id", referencedColumnName = "subscription_id")
     )
     private Set<Subscription> subscriptions;
-    //private Set<Claim> complaintsSent;
-    //private Set<UserAccountClaim> complaints;
+
+    public UserAccount(Long userAccountId) {
+        this.id = userAccountId;
+    }
+
+    public UserAccount(String surnameNameLogin) {
+        String[] surnameName = surnameNameLogin.split(" ");
+        int countWolds = surnameName.length;
+        if (countWolds == 2) {
+            this.surname = surnameName[0];
+            this.name = surnameName[1];
+        } else if (surnameNameLogin.startsWith("$")) {
+            this.role=surnameNameLogin.substring(1);
+        } else if (surnameNameLogin.startsWith("@")) {
+            this.login = surnameNameLogin.substring(1);
+        } else {
+            this.surname = surnameNameLogin;
+            this.name = surnameNameLogin;
+        }
+    }
 
     @Override
     public String toString() {
