@@ -10,7 +10,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.io.IOException;
 
 public class Application {
-    static ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
+    static ApplicationContext applicationContext =new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
 
     public static void main(String[] args) throws IOException, InterruptedException {
         System.out.print("\033[H\033[2J");
