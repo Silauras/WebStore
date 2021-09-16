@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface UserAccountAPI {
     /*------------------------Subscription-----------------------------*/
-    Subscription findSubscriptionById(UserAccount userAccount);
-    List<Subscription> findAllSubscription();
+    Subscription findSubscriptionById(Long id);
 
     /*------------------------Communication----------------------------*/
-    Communication findCommunicationById(UserAccount userAccount);
-    List<Communication> findAllCommunication();
+    Communication findCommunicationById(Long id);
 
-    /*-------------------------UserAccount----------------------------*/
+    List<Communication> showAllCommunication();
+
+    /*--------------------------UserAccount---------------------------*/
     List<UserAccount> findUserAccount(UserAccount userAccount);
     List<UserAccount> findAllUserAccount();
 
-
+    
 }
