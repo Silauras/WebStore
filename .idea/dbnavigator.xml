@@ -27,20 +27,19 @@
     <loaded-nodes>
       <connection connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126">
         <schema name="webstore" object-types="table, view, procedure, function, constraint, index, column, dataset trigger" />
-        <schema name="world" object-types="table, view, procedure, function" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="3b5c8bd2-8161-400a-9a94-05e97924e126">
-      <console name="WebStore" type="STANDARD" schema="webstore" session="Main"><![CDATA[select * from subscription]]></console>
+      <console name="WebStore" type="STANDARD" schema="webstore" session="Main"><![CDATA[select * from user_account  where role = 'ADMIN']]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/user_account" />
-      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/communication" />
       <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/subscription" />
+      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/communication" />
+      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/user_account" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
