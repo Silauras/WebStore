@@ -28,7 +28,7 @@ public class Characteristic {
     @JoinColumn(name = "product", nullable = false)
     private Product product;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "template", nullable = false)
     private CharacteristicTemplate template;
 
@@ -71,4 +71,6 @@ public class Characteristic {
     public void setId(Long id) {
         this.id = id;
     }
+
+
 }

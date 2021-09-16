@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,11 +21,19 @@ public class CharacteristicTemplate {
     @Column(name = "characteristic_template_id", nullable = false)
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "`name`")
+    private String name;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @ManyToMany
+    @JoinTable(name = "product_template_characteristic_template",
+            joinColumns =
+            @JoinColumn(name = "characteristic_template", referencedColumnName = "characteristic_template_id"),
+            inverseJoinColumns =
+            @JoinColumn(name = "product_template", referencedColumnName = "product_template_id")
+    )
+    private Set<ProductTemplate> productTemplates;
+
+    @OneToMany
+    @JoinColumn(name = "template")
+    List<Characteristic> characteristics;
 }
