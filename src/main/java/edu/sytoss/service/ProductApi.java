@@ -7,9 +7,9 @@ import java.util.List;
 public interface ProductApi {
 
     /* --------- PRODUCTS --------- */
-    ProductCard findProductById(Long id);
+    Product findProductById(Long id);
 
-    List<ProductCard> findAllProducts();
+    List<Product> findAllProducts();
 
     /* --------- CATEGORY --------- */
     Category findCategoryById(Long id);
@@ -29,5 +29,5 @@ public interface ProductApi {
     /* --------- CHARACTERISTIC --------- */
     List<Characteristic> findCharacteristicByTemplate(Long characteristicTemplateId);
 
-    List<Characteristic> findCharacteristicsPerCategory(Long categoryId);
+    List<Characteristic> loadCategoryWithAllCharacteristics(Long categoryId);
 }
