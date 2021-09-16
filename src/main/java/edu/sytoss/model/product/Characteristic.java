@@ -28,8 +28,49 @@ public class Characteristic {
     @JoinColumn(name = "product", nullable = false)
     private Product product;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "template", nullable = false)
     private CharacteristicTemplate template;
+
+    public CharacteristicTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(CharacteristicTemplate template) {
+        this.template = template;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 
 }
