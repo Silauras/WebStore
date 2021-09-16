@@ -6,8 +6,6 @@ import edu.sytoss.config.ApplicationConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.util.logging.Level;
-
 public class Application {
     static ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
     public static void main(String[] args) {
