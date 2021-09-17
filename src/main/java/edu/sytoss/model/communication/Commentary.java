@@ -1,6 +1,6 @@
 package edu.sytoss.model.communication;
 
-import edu.sytoss.model.product.Product;
+import edu.sytoss.model.product.ProductCard;
 import edu.sytoss.model.user.UserAccount;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,12 +8,15 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "commentary")
+
 @Entity
+@Inheritance
+@Table(name = "commentary")
 @DiscriminatorColumn(name = "commentary_type")
 public class Commentary {
     @Id
@@ -37,14 +40,9 @@ public class Commentary {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "product", nullable = false)
-    private Product product;
+    private ProductCard productCard;
 
-    @ManyToOne
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "root_commentary")
-    private Commentary rootCommentary;
-
-    @Column(name = "rating")
-    private Integer rating;
-
-
+    List<Answer> answers;
 }

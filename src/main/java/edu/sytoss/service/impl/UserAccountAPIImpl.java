@@ -1,6 +1,5 @@
 package edu.sytoss.service.impl;
 
-import edu.sytoss.dto.UserAccountDTO;
 import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.Subscription;
 import edu.sytoss.model.user.UserAccount;
@@ -28,31 +27,57 @@ public class UserAccountAPIImpl implements UserAccountAPI {
 
 
     @Override
-    public Subscription findSubscriptionById(Long id) {
-        return subscriptionRepository.findById(id);
-    }
-    /*-------------------------------------------------------------------*/
-    @Override
-    public Communication findCommunicationById(Long id) {
-        return communicationRepository.findById(id);
+    public Subscription findSubscriptionById(UserAccount userAccount) {
+        return null;
     }
 
     @Override
-    public List<Communication> showAllCommunication() {
+    public List<Subscription> findAllSubscription() {
+        return null;
+    }
+
+    /*-------------------------------------------------------------------*/
+    @Override
+    public Communication findCommunicationById(UserAccount userAccount) {
+        return communicationRepository.findById(userAccount.getId());
+    }
+
+    @Override
+    public List<Communication> findAllCommunication() {
         return communicationRepository.findAll();
     }
+
     /*-------------------------------------------------------------------*/
     @Override
-    public List<UserAccount> findUserAccount(UserAccountDTO userAccountDTO) {
+    public List<UserAccount> findUserAccount(UserAccount userAccount) {
         List<UserAccount> userAccounts = new ArrayList<>();
-        if(userAccountDTO.getId() != null){
-            userAccounts.add(userAccountRepository.findById(userAccountDTO.getId()));
+        if (userAccount.getId() != null) {
+            userAccounts.add(userAccountRepository.findById(userAccount.getId()));
         }
-        if (userAccountDTO.getFullName()!=null)
-        {
-
+        if (userAccount.getLogin() != null) {
+            userAccounts.addAll(userAccountRepository.findUserByLoginStartingWithIgnoreCase(userAccount.getLogin()));
         }
-        return  userAccounts;
+        if (userAccount.getName() != null && userAccount.getSurname() != null
+                && userAccount.getSurname().equals(userAccount.getName())) {
+            userAccounts.addAll(userAccountRepository.findUserByNameStartingWithOrSurnameStartingWithIgnoreCase(userAccount.getName()));
+        }
+        if (userAccount.getName() != null && userAccount.getSurname() != null
+                && !userAccount.getSurname().equals(userAccount.getName())) {
+            userAccounts.addAll(userAccountRepository
+                    .findUserByNameStartingWithAndSurnameStartingWithIgnoreCase(userAccount.getSurname(), userAccount.getName()));
+            userAccounts.addAll(userAccountRepository
+                    .findUserBySurnameStartingWithAndNameStartingWithIgnoreCase(userAccount.getSurname(), userAccount.getName()));
+        }
+        if (userAccount.getRole() != null) {
+            userAccounts.addAll(userAccountRepository.findByRoleStartingWithIgnoreCase(userAccount.getRole()));
+        }
+        return userAccounts;
     }
+
+    @Override
+    public List<UserAccount> findAllUserAccount() {
+        return userAccountRepository.findAll();
+    }
+
 
 }

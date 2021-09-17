@@ -2,7 +2,7 @@ package edu.sytoss.model.shop;
 
 import javax.persistence.*;
 
-import edu.sytoss.model.product.Product;
+import edu.sytoss.model.product.ProductCard;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,5 +41,5 @@ public class Warehouse {
             inverseJoinColumns =
             @JoinColumn(name = "product_id", referencedColumnName = "product_id")
     )
-    Set<Product> products;
+    Set<ProductCard> productCards;
 }

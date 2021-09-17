@@ -35,7 +35,7 @@ public class AlterPrice {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "product", nullable = false)
-    private Product product;
+    private ProductCard productCard;
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "promotion")

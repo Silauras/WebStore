@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,5 +24,18 @@ public class ProductTemplate {
     @ManyToOne(optional = false)
     @JoinColumn(name = "category", nullable = false)
     private Category category;
+
+    @ManyToMany
+    @JoinTable(name = "product_template_characteristic_template",
+            inverseJoinColumns =
+            @JoinColumn(name = "characteristic_template", referencedColumnName = "characteristic_template_id"),
+            joinColumns =
+            @JoinColumn(name = "product_template", referencedColumnName = "product_template_id")
+    )
+    private List<CharacteristicTemplate> characteristicTemplates;
+
+    @OneToMany
+    @JoinColumn(name = "product_template")
+    List<ProductCard> productCards;
 
 }
