@@ -27,6 +27,6 @@ public class Category {
     private Category parentCategory;
 
     @OneToMany
-    @JoinColumn(name = "product_template_id")
+    @JoinColumn(name = "category")
     List<ProductTemplate> productTemplates;
 }
