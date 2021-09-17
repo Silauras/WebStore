@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -73,14 +74,14 @@ public class UserAccount {
     @JoinColumn(name = "author")
     private Set<Reaction> reactions;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "subscription_subscribers",
             joinColumns =
             @JoinColumn(name = "subscriber_id", referencedColumnName = "user_account_id"),
             inverseJoinColumns =
             @JoinColumn(name = "subscription_id", referencedColumnName = "subscription_id")
     )
-    private Set<Subscription> subscriptions;
+    private List<Subscription> subscriptions;
 
     public UserAccount(Long userAccountId) {
         this.id = userAccountId;

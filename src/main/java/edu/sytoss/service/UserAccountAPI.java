@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserAccountAPI {
     /*------------------------Subscription-----------------------------*/
-    Subscription findSubscriptionById(UserAccount userAccount);
+    List<Subscription> findAllSubscriptionOnUserAccountById(UserAccount userAccount);
     List<Subscription> findAllSubscription();
 
     /*------------------------Communication----------------------------*/

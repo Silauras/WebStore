@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -26,9 +27,12 @@ public class UserAccountAPIImpl implements UserAccountAPI {
     SubscriptionRepository subscriptionRepository;
 
 
+    @Transactional
     @Override
-    public Subscription findSubscriptionById(UserAccount userAccount) {
-        return null;
+    public List<Subscription> findAllSubscriptionOnUserAccountById(UserAccount userAccount) {
+        List<Subscription> subscriptions = userAccountRepository.findById(userAccount.getId()).getSubscriptions();
+        subscriptions.toString();
+        return subscriptions;
     }
 
     @Override

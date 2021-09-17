@@ -3,6 +3,7 @@ package edu.sytoss.UI;
 import edu.sytoss.model.communication.Answer;
 import edu.sytoss.model.communication.Commentary;
 import edu.sytoss.model.user.Communication;
+import edu.sytoss.model.user.Subscription;
 import edu.sytoss.model.user.UserAccount;
 import edu.sytoss.model.product.*;
 import edu.sytoss.service.ProductApi;
@@ -68,6 +69,7 @@ public class Menu {
                 System.out.println("What you want to see?");
                 System.out.println("1. Show UserAccount with main info");
                 System.out.println("2. Show UserAccount with Communication");
+                System.out.println("3. Show UserAccount with Subscription");
                 long userAccountId;
                 switch (scanner.nextInt()) {
                     case 1:
@@ -84,7 +86,7 @@ public class Menu {
                         System.out.println("Write UserAccount id(0 for all)");
                         userAccountId = scanner.nextInt();
                         if (userAccountId == 0) {
-                            for (long id = 1; id<= countUser; id++) {
+                            for (long id = 1; id <= countUser; id++) {
                                 new UserAccountPrinter(id);
                                 new CommunicationPrinter(id);
                             }
@@ -94,7 +96,18 @@ public class Menu {
                             break;
                         }
                     case 3:
-
+                        System.out.println("Write UserAccount id(0 for all)1111");
+                        userAccountId = scanner.nextInt();
+                        if (userAccountId == 0) {
+                           /* for (long id = 1; id <= countUser; id++) {
+                                new UserAccountPrinter(id);
+                                new SubscriptionPrinter(id);
+                            }*/
+                        } else {
+                            new UserAccountPrinter(userAccountId);
+                            new SubscriptionPrinter(userAccountId);
+                            break;
+                        }
                 }
                 break;
             case 2:
@@ -286,24 +299,28 @@ public class Menu {
 
     }
 
-  /*  private class SubscriptionPrinter {
+    private class SubscriptionPrinter {
 
         private SubscriptionPrinter(long userAccountId) {
-            printOrderById(userAccountId);
+            printSubscriptionsById(userAccountId);
         }
 
-        private void printAllOrders() {
-            List<Subscription> Subscription = userAccountAPI.findAllSubscription();
-            for (Communication communication : communications) {
-                System.out.println(communication.toString());
+        private void printAllSubscriptions() {
+            List<Subscription> subscriptions = userAccountAPI.findAllSubscription();
+            for (Subscription subscription : subscriptions) {
+                System.out.println(subscription.toString());
             }
         }
 
-        private void printOrderById(Long userAccountId) {
-            Communication communications = userAccountAPI.findCommunicationById(new UserAccount(userAccountId));
-            System.out.println(communications.toString());
+        private void printSubscriptionsById(Long userAccountId) {
+            List<Subscription> subscriptions = userAccountAPI.findAllSubscriptionOnUserAccountById(new UserAccount(userAccountId));
+            for (Subscription subscription : subscriptions) {
+                System.out.println(subscription.toString());
+
+            }
+            //System.out.println(subscription.toString());
         }
 
-    }*/
+    }
 
 }
