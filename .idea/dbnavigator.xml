@@ -37,8 +37,8 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/subscription" />
       <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/communication" />
+      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/subscription" />
       <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/user_account" />
     </open-files>
   </component>
