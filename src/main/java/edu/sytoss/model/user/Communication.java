@@ -30,8 +30,7 @@ public class Communication {
 
     @Override
     public String toString() {
-        return "\n"+   "userAccount=" + userAccount +
-                ", Communication{" +
+        return "Communication{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
