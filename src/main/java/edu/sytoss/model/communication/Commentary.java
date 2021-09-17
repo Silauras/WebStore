@@ -1,6 +1,6 @@
 package edu.sytoss.model.communication;
 
-import edu.sytoss.model.product.Product;
+import edu.sytoss.model.product.ProductCard;
 import edu.sytoss.model.user.UserAccount;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -41,7 +40,7 @@ public class Commentary {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "product", nullable = false)
-    private Product product;
+    private ProductCard productCard;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "root_commentary")
