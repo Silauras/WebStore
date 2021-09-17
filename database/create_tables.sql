@@ -37,7 +37,7 @@ create table product_template
         foreign key (category) references category (category_id)
 );
 
-create table product
+create table productCard
 (
     product_id       bigint auto_increment
         primary key,
@@ -56,22 +56,22 @@ create table characteristic
         primary key,
     name              varchar(50) not null,
     value             varchar(50) not null,
-    product           bigint      not null,
+    productCard           bigint      not null,
     template          bigint      not null,
     constraint characteristic_ibfk_1
-        foreign key (product) references product (product_id),
+        foreign key (productCard) references productCard (product_id),
     constraint characteristic_ibfk_2
         foreign key (template) references characteristic_template (characteristic_template_id)
 );
 
-create index product
-    on characteristic (product);
+create index productCard
+    on characteristic (productCard);
 
 create index template
     on characteristic (template);
 
 create index product_template
-    on product (product_template);
+    on productCard (product_template);
 
 create index category
     on product_template (category);
@@ -143,7 +143,7 @@ create table commentary
     content         text                                 not null,
     delete_state    tinyint(1) default 0                 null,
     creation_date   datetime   default CURRENT_TIMESTAMP not null,
-    product         bigint                               not null,
+    productCard         bigint                               not null,
     root_commentary bigint                               null,
     rating          int                                  null,
     constraint commentary_ibfk_1
@@ -151,14 +151,14 @@ create table commentary
     constraint commentary_ibfk_2
         foreign key (root_commentary) references commentary (commentary_id),
     constraint commentary_ibfk_3
-        foreign key (product) references product (product_id)
+        foreign key (productCard) references productCard (product_id)
 );
 
 create index author
     on commentary (author);
 
-create index product
-    on commentary (product);
+create index productCard
+    on commentary (productCard);
 
 create index root_commentary
     on commentary (root_commentary);
@@ -272,7 +272,7 @@ create table order_product
     constraint order_product_ibfk_1
         foreign key (order_id) references `order` (order_id),
     constraint order_product_ibfk_2
-        foreign key (product_id) references product (product_id)
+        foreign key (product_id) references productCard (product_id)
 );
 
 create index order_id
@@ -305,16 +305,16 @@ create table price
     value      decimal                            not null,
     start_date datetime default CURRENT_TIMESTAMP not null,
     end_date   datetime                           null,
-    product    bigint                             not null,
+    productCard    bigint                             not null,
     promotion  bigint                             null,
     constraint price_ibfk_1
-        foreign key (product) references product (product_id),
+        foreign key (productCard) references productCard (product_id),
     constraint price_ibfk_2
         foreign key (promotion) references promotion (promotion_id)
 );
 
-create index product
-    on price (product);
+create index productCard
+    on price (productCard);
 
 create index promotion
     on price (promotion);
@@ -379,7 +379,7 @@ create table warehouse_product
     constraint warehouse_product_ibfk_1
         foreign key (warehouse_id) references warehouse (warehouse_id),
     constraint warehouse_product_ibfk_2
-        foreign key (product_id) references product (product_id)
+        foreign key (product_id) references productCard (product_id)
 );
 
 create index product_id

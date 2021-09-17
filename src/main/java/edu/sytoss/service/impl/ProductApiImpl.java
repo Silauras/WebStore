@@ -34,12 +34,12 @@ public class ProductApiImpl implements ProductApi {
     /* --------- IMPLEMENTED METHODS --------- */
 
     @Override
-    public Product findProductById(Long id) {
+    public ProductCard findProductById(Long id) {
         return productRepository.findById(id);
     }
 
     @Override
-    public List<Product> findAllProducts() {
+    public List<ProductCard> findAllProducts() {
         return productRepository.findAll();
     }
 
@@ -87,12 +87,12 @@ public class ProductApiImpl implements ProductApi {
 
     @Transactional
     @Override
-    public List<Characteristic> loadCategoryWithAllCharacteristics(Long categoryId) {
+    public List<Characteristic> findCharacteristicsPerCategory(Long categoryId) {
         List<Characteristic> characteristics = new ArrayList<>();
         Category category = categoryRepository.findById(categoryId);
         for (ProductTemplate productTemplate : category.getProductTemplates()) {
-            for (CharacteristicTemplate characteristicTemplate : productTemplate.getCharacteristicTemplates()) {
-                characteristics.addAll(characteristicTemplate.getCharacteristics());
+            for (ProductCard productCard: productTemplate.getProductCards()){
+                characteristics.addAll(productCard.getCharacteristics());
             }
         }
         return characteristics;
