@@ -2,10 +2,7 @@ package edu.sytoss.UI;
 
 import edu.sytoss.model.communication.Answer;
 import edu.sytoss.model.communication.Commentary;
-import edu.sytoss.model.order.Order;
-import edu.sytoss.model.product.Product;
 import edu.sytoss.model.user.Communication;
-import edu.sytoss.model.user.Subscription;
 import edu.sytoss.model.user.UserAccount;
 import edu.sytoss.model.product.*;
 import edu.sytoss.service.ProductApi;
@@ -37,12 +34,8 @@ public class Menu {
             System.out.println("What you want to see?");
             System.out.println("-1. Quit");
             System.out.println("1. Show UserAccount");
-            System.out.println("2. User with all orders and full price");
-            System.out.println("3. Shop with all products and warehouses");
-            System.out.println("4. Product with all commentaries");
-            System.out.println("5. User with claims on him");
-            System.out.println("6. Catalog with all possible characteristics");
-            System.out.println("7. Show UserAccount and ");
+            System.out.println("2. Product with all commentaries");
+            System.out.println("3. Catalog with all possible characteristics");
 
             switch (scanner.nextInt()) {
                 case -1:
@@ -50,10 +43,10 @@ public class Menu {
                 case 1:
                     findUserAccount();
                     break;
-                case 4:
+                case 2:
                     printCommentaries();
                     break;
-                case 6:
+                case 3:
                     printAllPossibleCharacteristics();
                     break;
 
@@ -106,13 +99,13 @@ public class Menu {
                 break;
             case 2:
                 System.out.println("Write Name and/or Surname or Login(if Login start with'@')");
+                scanner.nextLine();
                 String surnameNameLogin = scanner.nextLine();
-                String surnameNameLogin1 = scanner.nextLine();
-                new UserAccountPrinter(surnameNameLogin1);
+                new UserAccountPrinter(surnameNameLogin);
                 break;
             case 3:
                 System.out.println("Write Role start with '$'");
-                String r = scanner.nextLine();
+                scanner.nextLine();
                 String role = scanner.nextLine();
                 new UserAccountPrinter(role);
                 break;
