@@ -4,7 +4,7 @@ import edu.sytoss.model.communication.Answer;
 import edu.sytoss.model.communication.Commentary;
 import edu.sytoss.model.communication.Question;
 import edu.sytoss.model.communication.Review;
-import edu.sytoss.model.product.Product;
+import edu.sytoss.model.product.ProductCard;
 import edu.sytoss.repository.AnswerRepository;
 import edu.sytoss.repository.CommentaryRepository;
 import edu.sytoss.repository.QuestionRepository;
@@ -27,31 +27,31 @@ public class CommentaryApiImpl {
     @Autowired
     CommentaryRepository<Commentary> commentaryRepository;
 
-    public List<Answer> findAnswersForProduct(Product product) {
-        return answerRepository.findAllByProduct(product);
+    public List<Answer> findAnswersForProductCard(ProductCard productCard) {
+        return answerRepository.findAllByProductCard(productCard);
     }
 
-    public List<Review> findReviewsForProduct(Product product){
-        return reviewRepository.findAllByProduct(product);
+    public List<Review> findReviewsForProductCard(ProductCard productCard){
+        return reviewRepository.findAllByProductCard(productCard);
     }
 
-    public List<Question> findQuestionsForProduct(Product product){
-        return questionRepository.findAllByProduct(product);
-    }
-
-
-    public long countCommentariesForProduct(Product product){
-        return commentaryRepository.countAllByProduct(product);
+    public List<Question> findQuestionsForProductCard(ProductCard productCard){
+        return questionRepository.findAllByProductCard(productCard);
     }
 
 
-    public long countReviewsForProduct(Product product){
-        return reviewRepository.countAllByProduct(product);
+    public long countCommentariesForProductCard(ProductCard productCard){
+        return commentaryRepository.countAllByProductCard(productCard);
     }
 
 
-    public long countQuestionsForProduct(Product product){
-        return questionRepository.countAllByProduct(product);
+    public long countReviewsForProductCard(ProductCard productCard){
+        return reviewRepository.countAllByProductCard(productCard);
+    }
+
+
+    public long countQuestionsForProductCard(ProductCard productCard){
+        return questionRepository.countAllByProductCard(productCard);
     }
 
     public List<Answer> findAnswersByRootCommentary(Long commentaryId){
