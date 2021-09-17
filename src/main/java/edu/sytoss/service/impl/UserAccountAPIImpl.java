@@ -27,18 +27,23 @@ public class UserAccountAPIImpl implements UserAccountAPI {
 
 
     @Override
-    public Subscription findSubscriptionById(Long id) {
-        return subscriptionRepository.findById(id);
+    public Subscription findSubscriptionById(UserAccount userAccount) {
+        return null;
+    }
+
+    @Override
+    public List<Subscription> findAllSubscription() {
+        return null;
     }
 
     /*-------------------------------------------------------------------*/
     @Override
-    public Communication findCommunicationById(Long id) {
-        return communicationRepository.findById(id);
+    public Communication findCommunicationById(UserAccount userAccount) {
+        return communicationRepository.findById(userAccount.getId());
     }
 
     @Override
-    public List<Communication> showAllCommunication() {
+    public List<Communication> findAllCommunication() {
         return communicationRepository.findAll();
     }
 

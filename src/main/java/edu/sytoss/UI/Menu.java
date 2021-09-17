@@ -2,6 +2,11 @@ package edu.sytoss.UI;
 
 import edu.sytoss.model.communication.Answer;
 import edu.sytoss.model.communication.Commentary;
+import edu.sytoss.model.order.Order;
+import edu.sytoss.model.product.Product;
+import edu.sytoss.model.user.Communication;
+import edu.sytoss.model.user.Subscription;
+import edu.sytoss.model.user.UserAccount;
 import edu.sytoss.model.product.*;
 import edu.sytoss.service.ProductApi;
 import edu.sytoss.service.UserAccountAPI;
@@ -10,7 +15,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -63,21 +67,43 @@ public class Menu {
         System.out.println("2. Find User by Name and/or Surname or Login" + "\n" +
                 "   (You can use path of Name/Surname/Login)");
         System.out.println("3. Find User by Role");
+        long countUser = userAccountAPI.findAllUserAccount().size();
         switch (scanner.nextInt()) {
             case -1:
                 return;
             case 1:
-                System.out.println("Write UserAccount id(0 for all)");
-                long userAccountId = scanner.nextInt();
-                if (userAccountId == 0) {
-                    List<UserAccount> userAccounts = userAccountAPI.findAllUserAccount();
-                    for (UserAccount userAccount : userAccounts) {
-                        System.out.println(userAccount.toString());
-                    }
-                } else {
-                    new UserAccountPrinter(userAccountId);
-                    break;
+                System.out.println("What you want to see?");
+                System.out.println("1. Show UserAccount with main info");
+                System.out.println("2. Show UserAccount with Communication");
+                long userAccountId;
+                switch (scanner.nextInt()) {
+                    case 1:
+                        System.out.println("Write UserAccount id(0 for all)");
+                        userAccountId = scanner.nextInt();
+                        if (userAccountId == 0) {
+                            new UserAccountPrinter();
+                        } else {
+                            new UserAccountPrinter(userAccountId);
+                            break;
+                        }
+                        break;
+                    case 2:
+                        System.out.println("Write UserAccount id(0 for all)");
+                        userAccountId = scanner.nextInt();
+                        if (userAccountId == 0) {
+                            for (long id = 1; id<= countUser; id++) {
+                                new UserAccountPrinter(id);
+                                new CommunicationPrinter(id);
+                            }
+                        } else {
+                            new UserAccountPrinter(userAccountId);
+                            new CommunicationPrinter(userAccountId);
+                            break;
+                        }
+                    case 3:
+
                 }
+                break;
             case 2:
                 System.out.println("Write Name and/or Surname or Login(if Login start with'@')");
                 String surnameNameLogin = scanner.nextLine();
@@ -215,6 +241,10 @@ public class Menu {
     }
 
     private class UserAccountPrinter {
+        private UserAccountPrinter() {
+            printAllUserAccount();
+        }
+
         private UserAccountPrinter(long userAccountId) {
             printUserAccountById(userAccountId);
         }
@@ -223,6 +253,12 @@ public class Menu {
             printUserAccountBySurnameNameLogin(surnameNameLogin);
         }
 
+        private void printAllUserAccount() {
+            List<UserAccount> userAccounts = userAccountAPI.findAllUserAccount();
+            for (UserAccount userAccount : userAccounts) {
+                System.out.println(userAccount.toString());
+            }
+        }
 
         private void printUserAccountById(Long userAccountId) {
             List<UserAccount> userAccounts = userAccountAPI.findUserAccount(new UserAccount(userAccountId));
@@ -236,4 +272,45 @@ public class Menu {
             }
         }
     }
+
+    private class CommunicationPrinter {
+
+        private CommunicationPrinter(long userAccountId) {
+            printCommunicationById(userAccountId);
+        }
+
+        private void printAllCommunication() {
+            List<Communication> communications = userAccountAPI.findAllCommunication();
+            for (Communication communication : communications) {
+                System.out.println(communication.toString());
+            }
+        }
+
+        private void printCommunicationById(Long userAccountId) {
+            Communication communications = userAccountAPI.findCommunicationById(new UserAccount(userAccountId));
+            System.out.println(communications.toString());
+        }
+
+    }
+
+  /*  private class SubscriptionPrinter {
+
+        private SubscriptionPrinter(long userAccountId) {
+            printOrderById(userAccountId);
+        }
+
+        private void printAllOrders() {
+            List<Subscription> Subscription = userAccountAPI.findAllSubscription();
+            for (Communication communication : communications) {
+                System.out.println(communication.toString());
+            }
+        }
+
+        private void printOrderById(Long userAccountId) {
+            Communication communications = userAccountAPI.findCommunicationById(new UserAccount(userAccountId));
+            System.out.println(communications.toString());
+        }
+
+    }*/
+
 }
