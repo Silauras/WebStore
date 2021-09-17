@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -34,5 +33,9 @@ public class ProductTemplate {
             @JoinColumn(name = "product_template", referencedColumnName = "product_template_id")
     )
     private List<CharacteristicTemplate> characteristicTemplates;
+
+    @OneToMany
+    @JoinColumn(name = "product_template")
+    List<ProductCard> productCards;
 
 }

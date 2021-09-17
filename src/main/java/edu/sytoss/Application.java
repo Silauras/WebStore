@@ -9,11 +9,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.util.logging.Level;
 
 public class Application {
-
-
+    static ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
     public static void main(String[] args) {
-        java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
         System.out.println("Application started!");
         Menu menu = applicationContext.getBean(Menu.class);
         menu.start();
