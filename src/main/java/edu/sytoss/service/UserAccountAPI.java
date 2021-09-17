@@ -1,6 +1,5 @@
 package edu.sytoss.service;
 
-import edu.sytoss.dto.UserAccountDTO;
 import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.Subscription;
 import edu.sytoss.model.user.UserAccount;
@@ -8,14 +7,17 @@ import edu.sytoss.model.user.UserAccount;
 import java.util.List;
 
 public interface UserAccountAPI {
+    /*------------------------Subscription-----------------------------*/
+    Subscription findSubscriptionById(UserAccount userAccount);
+    List<Subscription> findAllSubscription();
 
-    Subscription findSubscriptionById(Long id);
+    /*------------------------Communication----------------------------*/
+    Communication findCommunicationById(UserAccount userAccount);
+    List<Communication> findAllCommunication();
 
-    /*-------------------------------------------------------------------*/
-    Communication findCommunicationById(Long id);
+    /*-------------------------UserAccount----------------------------*/
+    List<UserAccount> findUserAccount(UserAccount userAccount);
+    List<UserAccount> findAllUserAccount();
 
-    List<Communication> showAllCommunication();
 
-    /*-------------------------------------------------------------------*/
-    List<UserAccount> findUserAccount(UserAccountDTO userAccountDTO);
 }
