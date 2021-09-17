@@ -17,7 +17,7 @@ import java.util.Set;
 public class ProductApiImpl implements ProductApi {
     /* --------- REPOSITORIES --------- */
     @Autowired
-    ProductRepository productRepository;
+    ProductCardRepository productCardRepository;
 
     @Autowired
     CategoryRepository categoryRepository;
@@ -35,12 +35,12 @@ public class ProductApiImpl implements ProductApi {
 
     @Override
     public ProductCard findProductById(Long id) {
-        return productRepository.findById(id);
+        return productCardRepository.findById(id);
     }
 
     @Override
-    public List<ProductCard> findAllProducts() {
-        return productRepository.findAll();
+    public List<ProductCard> findAllProductCards() {
+        return productCardRepository.findAll();
     }
 
     @Override

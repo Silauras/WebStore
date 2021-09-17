@@ -84,7 +84,7 @@ public class Menu {
                         System.out.println("Write UserAccount id(0 for all)");
                         userAccountId = scanner.nextInt();
                         if (userAccountId == 0) {
-                            for (long id = 1; id<= countUser; id++) {
+                            for (long id = 1; id <= countUser; id++) {
                                 new UserAccountPrinter(id);
                                 new CommunicationPrinter(id);
                             }
@@ -116,12 +116,12 @@ public class Menu {
         System.out.println("Write product id or 0 to show all products");
         long productId = scanner.nextInt(); // I don't think that in test you will use BIG number;
         if (productId == 0) {
-            List<ProductCard> productCards = productApi.findAllProducts();
+            List<ProductCard> productCards = productApi.findAllProductCards();
             for (ProductCard productCard : productCards) {
                 System.out.println(productCard.getId() + ". " + productCard.getName() + " has " +
                         commentaryApi.countCommentariesForProductCard(productCard) + " commentaries");
+
             }
-        } else {
             System.out.println("Write product id");
             productId = scanner.nextInt();
         }
@@ -157,13 +157,12 @@ public class Menu {
             Map<String, List<String>> characteristics = new HashMap<>();
             List<Characteristic> characteristicsList = productApi.findCharacteristicsPerCategory(categoryId);
             for (Characteristic characteristic : characteristicsList) {
-                if (characteristics.containsKey(characteristic.getName()) &&
-                        !characteristics.get(characteristic.getName()).contains(characteristic.getValue())) {
-                    characteristics.get(characteristic.getName()).add(characteristic.getValue());
-                } else {
+                if (!characteristics.containsKey(characteristic.getName()))
                     characteristics.put(characteristic.getName(), new ArrayList<String>());
+                if (!characteristics.get(characteristic.getName()).contains(characteristic.getValue())) {
                     characteristics.get(characteristic.getName()).add(characteristic.getValue());
                 }
+
             }
             System.out.println(categoryId + ". " + productApi.findCategoryById(categoryId).getName());
             for (String key : characteristics.keySet()) {

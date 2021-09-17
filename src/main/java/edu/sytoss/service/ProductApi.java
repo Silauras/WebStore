@@ -9,7 +9,7 @@ public interface ProductApi {
     /* --------- PRODUCTS --------- */
     ProductCard findProductById(Long id);
 
-    List<ProductCard> findAllProducts();
+    List<ProductCard> findAllProductCards();
 
     /* --------- CATEGORY --------- */
     Category findCategoryById(Long id);

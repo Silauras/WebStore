@@ -7,7 +7,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Application {
-    static ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
+    static ApplicationContext applicationContext =
+            new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
+
     public static void main(String[] args) {
         System.out.println("Application started!");
         Menu menu = applicationContext.getBean(Menu.class);
