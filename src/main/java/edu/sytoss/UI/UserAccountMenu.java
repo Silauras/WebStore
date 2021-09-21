@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Set;
 
 @NoArgsConstructor
 @Service
@@ -92,10 +92,12 @@ public class UserAccountMenu {
             case 2:
                 userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
                 if (userAccountId == 0) {
-                    for (long id = 1; id <= countUser; id++) {
+                    /*for (long id = 1; id <= countUser; id++) {
                         new UserAccountPrinter(id);
                         new CommunicationPrinter(id);
-                    }
+                    }*/
+                    new UserAccountPrinter();
+                    new CommunicationPrinter();
                 } else {
                     new UserAccountPrinter(userAccountId);
                     new CommunicationPrinter(userAccountId);
@@ -191,6 +193,9 @@ public class UserAccountMenu {
         private CommunicationPrinter(long userAccountId) {
             printCommunicationById(userAccountId);
         }
+        private CommunicationPrinter() {
+            printAllCommunication();
+        }
 
         private void printAllCommunication() {
             List<Communication> communications = userAccountAPI.findAllCommunication();
@@ -200,7 +205,7 @@ public class UserAccountMenu {
         }
 
         private void printCommunicationById(Long userAccountId) {
-            Communication communications = userAccountAPI.findCommunicationById(new UserAccount(userAccountId));
+            List<Communication> communications = userAccountAPI.findCommunicationInUserAccountById(new UserAccount(userAccountId));
             System.out.println(communications.toString());
         }
 

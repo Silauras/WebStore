@@ -13,7 +13,7 @@ public interface UserAccountAPI {
     List<Subscription> findAllSubscription();
 
     /*------------------------Communication----------------------------*/
-    Communication findCommunicationById(UserAccount userAccount);
+    List<Communication> findCommunicationInUserAccountById(UserAccount userAccount);
     List<Communication> findAllCommunication();
 
     /*-------------------------UserAccount----------------------------*/
@@ -23,7 +23,7 @@ public interface UserAccountAPI {
     boolean createUserAccount(UserAccount userAccount);
     boolean updateUserAccount(UserAccount userAccount,long id);
 
-    /*------------------------Subscription-----------------------------*/
+    /*---------------------------Order-------------------------------*/
     List<Order> findAllOrderOnUserAccountById(UserAccount userAccount);
     List<Order> findAllOrder();
 

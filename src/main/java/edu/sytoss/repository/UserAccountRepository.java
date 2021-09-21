@@ -1,5 +1,6 @@
 package edu.sytoss.repository;
 
+import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.UserAccount;
 import edu.sytoss.model.user.UserAccountRole;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserAccountRepository extends JpaRepository<UserAccount,Long> {
+public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
 
     @Query("select u from UserAccount u where u.id = ?1")
     UserAccount findById(Long id);
@@ -29,6 +30,13 @@ public interface UserAccountRepository extends JpaRepository<UserAccount,Long> {
     @Query("select u from UserAccount u where upper(u.role) like upper(concat(?1, '%'))")
     List<UserAccount> findByRoleStartingWithIgnoreCase(String role);
 
-    /*@Query("select l from Lesson l left  join  fetch  l.comments where l.id = ?1")
-    Lesson findById(Long id);*/
+    @Query("select u from UserAccount u left  join  fetch  u.communication where u.id = ?1")
+    UserAccount findUserAccountWithCommunicationById(Long id);
+
+   /* @Query("select u\n" +
+            "from UserAccount u\n" +
+            "left join fetch subscription_subscribers ss on u.id = ss.subscriber_id\n" +
+            "left join fetch Subscription s on s.id =ss.subscription_id\n" +
+            "where u.id =?1\n")
+    UserAccount findUserAccountWithSubscriptionById(Long id);*/
 }
