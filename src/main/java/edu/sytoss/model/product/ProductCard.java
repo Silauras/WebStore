@@ -49,6 +49,10 @@ public class ProductCard implements Subsciptable {
     )
     private Set<Warehouse> warehouseSet;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product")
+    private List<Price> prices;
+
     @OneToMany
     @JoinColumn(name = "product")
     List<Characteristic> characteristics;

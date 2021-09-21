@@ -2,6 +2,8 @@ package edu.sytoss.service;
 
 import edu.sytoss.model.product.*;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
 public interface ProductApi {
@@ -11,23 +13,23 @@ public interface ProductApi {
 
     List<ProductCard> findAllProductCards();
 
+    /**
+     * * @param filter
+     * @return
+     */
+    List<ProductCard> findAllProductCardsByFilter(Long CategoryId, HashMap<String, List<String>> filter);
+
+    List<ProductCard> filterProductsByPrice(BigDecimal startPrice, BigDecimal endPrice, List<ProductCard> productCards);
+
     /* --------- CATEGORY --------- */
+
     Category findCategoryById(Long id);
 
     List<Category> findAllCategories();
-
     /* --------- PRODUCT TEMPLATE --------- */
-    ProductTemplate findProductTemplateById(Long id);
-
-    List<ProductTemplate> findProductTemplateByCategoryId(long categoryId);
-
     /* --------- CHARACTERISTIC TEMPLATE --------- */
-    int countUniqueCharacteristicsPerCharacteristicTemplate(Long characteristicTemplateId);
-
-    List<CharacteristicTemplate> findCharacteristicTemplateByProductTemplateId(Long productTemplateId);
-
     /* --------- CHARACTERISTIC --------- */
-    List<Characteristic> findCharacteristicByTemplate(Long characteristicTemplateId);
 
     List<Characteristic> findCharacteristicsPerCategory(Long categoryId);
+
 }

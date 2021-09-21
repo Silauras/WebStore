@@ -285,24 +285,4 @@ public class Menu {
 
     }
 
-  /*  private class SubscriptionPrinter {
-
-        private SubscriptionPrinter(long userAccountId) {
-            printOrderById(userAccountId);
-        }
-
-        private void printAllOrders() {
-            List<Subscription> Subscription = userAccountAPI.findAllSubscription();
-            for (Communication communication : communications) {
-                System.out.println(communication.toString());
-            }
-        }
-
-        private void printOrderById(Long userAccountId) {
-            Communication communications = userAccountAPI.findCommunicationById(new UserAccount(userAccountId));
-            System.out.println(communications.toString());
-        }
-
-    }*/
-
 }

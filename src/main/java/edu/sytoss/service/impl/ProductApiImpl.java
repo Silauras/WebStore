@@ -4,13 +4,12 @@ import edu.sytoss.model.product.*;
 import edu.sytoss.repository.*;
 import edu.sytoss.service.ProductApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 @Transactional
@@ -43,6 +42,17 @@ public class ProductApiImpl implements ProductApi {
         return productCardRepository.findAll();
     }
 
+
+    @Override
+    public List<ProductCard> findAllProductCardsByFilter(Long CategoryId, HashMap<String, List<String>> filter) {
+        return null;
+    }
+
+    @Override
+    public List<ProductCard> filterProductsByPrice(BigDecimal startPrice, BigDecimal endPrice, List<ProductCard> productCards) {
+        return null;
+    }
+
     @Override
     public Category findCategoryById(Long id) {
         Category category = categoryRepository.findById(id);
@@ -55,17 +65,14 @@ public class ProductApiImpl implements ProductApi {
         return categoryRepository.findAll();
     }
 
-    @Override
-    public ProductTemplate findProductTemplateById(Long id) {
+    public ProductTemplate findProductCardTemplateById(Long id) {
         return productTemplateRepository.findById(id);
     }
 
-    @Override
-    public List<ProductTemplate> findProductTemplateByCategoryId(long categoryId) {
+    public List<ProductTemplate> findProductCardTemplateByCategoryId(long categoryId) {
         return productTemplateRepository.findAllByCategory_Id(categoryId);
     }
 
-    @Override
     public int countUniqueCharacteristicsPerCharacteristicTemplate(Long characteristicTemplateId) {
         List<Characteristic> characteristics = characteristicRepository.findAllByTemplate_Id(characteristicTemplateId);
         Set<String> uniqueNames = new HashSet<>();
@@ -75,12 +82,10 @@ public class ProductApiImpl implements ProductApi {
         return uniqueNames.size();
     }
 
-    @Override
     public List<CharacteristicTemplate> findCharacteristicTemplateByProductTemplateId(Long productTemplateId) {
         return characteristicTemplateRepository.findAllByProductTemplateId(productTemplateId);
     }
 
-    @Override
     public List<Characteristic> findCharacteristicByTemplate(Long characteristicTemplateId) {
         return characteristicRepository.findAllByTemplate_Id(characteristicTemplateId);
     }
@@ -91,7 +96,7 @@ public class ProductApiImpl implements ProductApi {
         List<Characteristic> characteristics = new ArrayList<>();
         Category category = categoryRepository.findById(categoryId);
         for (ProductTemplate productTemplate : category.getProductTemplates()) {
-            for (ProductCard productCard: productTemplate.getProductCards()){
+            for (ProductCard productCard : productTemplate.getProductCards()) {
                 characteristics.addAll(productCard.getCharacteristics());
             }
         }
