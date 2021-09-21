@@ -73,7 +73,7 @@ public class Menu {
         String[] surnameAndName = scanner.nextLine().split(" ");
         String surname = surnameAndName[0];
         String name = surnameAndName[1];
-        System.out.println("Write your Login:");
+        System.out.println("Write your Login: ");
         String login = scanner.nextLine();
         System.out.println("Write your Password:");
         String password = scanner.nextLine();
