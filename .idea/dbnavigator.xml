@@ -25,35 +25,34 @@
     <autoscroll-from-editor value="true" />
     <show-object-properties value="false" />
     <loaded-nodes>
-      <connection connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126">
+      <connection connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f">
         <schema name="webstore" object-types="table, view, procedure, function, constraint, index, column, dataset trigger" />
-        <schema name="world" object-types="table, view, procedure, function" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="3b5c8bd2-8161-400a-9a94-05e97924e126">
-      <console name="WebStore" type="STANDARD" schema="webstore" session="Main"><![CDATA[select * from subscription]]></console>
+    <connection id="c24d023d-0301-4cdb-a4d5-9d6ad640641f">
+      <console name="WebStoreConnection" type="STANDARD" schema="webstore" session="Main"><![CDATA[select c from Communication c left  join  fetch  c.user_account where c.id = ?1]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/subscription_subscribers" />
-      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/product_template_characteristic_template" />
-      <object connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" object-ref="schemas/webstore/tables/user_account" />
+      <object connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" object-ref="schemas/webstore/tables/subscription_subscribers" />
+      <object connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" object-ref="schemas/webstore/tables/user_account" />
+      <object connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" object-ref="schemas/webstore/tables/dialog" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="3b5c8bd2-8161-400a-9a94-05e97924e126" />
+    <connection id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.communication" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.subscription" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.user_account" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.shop" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.product_template_characteristic_template" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.subscription_subscribers" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="3b5c8bd2-8161-400a-9a94-05e97924e126" dataset="webstore.commentary" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.claim" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.order" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.user_account" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.product_template" active-filter-id="" />
+    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.product_template_characteristic_template" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.subscription_subscribers" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.dialog" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -81,9 +80,9 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="3b5c8bd2-8161-400a-9a94-05e97924e126" active="true">
+      <connection id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" active="true">
         <database>
-          <name value="WebStore" />
+          <name value="WebStoreConnection" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />

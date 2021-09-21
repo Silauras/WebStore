@@ -1,5 +1,6 @@
 package edu.sytoss.service;
 
+import edu.sytoss.model.order.Order;
 import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.Subscription;
 import edu.sytoss.model.user.UserAccount;
@@ -18,6 +19,12 @@ public interface UserAccountAPI {
     /*-------------------------UserAccount----------------------------*/
     List<UserAccount> findUserAccount(UserAccount userAccount);
     List<UserAccount> findAllUserAccount();
+    long countAllUserAccount();
+    boolean createUserAccount(UserAccount userAccount);
+    boolean updateUserAccount(UserAccount userAccount,long id);
 
+    /*------------------------Subscription-----------------------------*/
+    List<Order> findAllOrderOnUserAccountById(UserAccount userAccount);
+    List<Order> findAllOrder();
 
 }

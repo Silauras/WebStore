@@ -68,7 +68,7 @@ public class UserAccount {
 
     @OneToMany
     @JoinColumn(name = "customer")
-    private Set<Order> orders;
+    private List<Order> orders;
 
     @OneToMany
     @JoinColumn(name = "author")
@@ -102,7 +102,16 @@ public class UserAccount {
             this.name = surnameNameLogin;
         }
     }
-
+    public UserAccount(String surname, String name, String login, String password,
+                       Date registrationDate, Date lastActivityDate, String role) {
+        this.surname = surname;
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.registrationDate = registrationDate;
+        this.lastActivityDate = lastActivityDate;
+        this.role = role;
+    }
     @Override
     public String toString() {
         return "UserAccount{" +
