@@ -5,16 +5,18 @@ import edu.sytoss.model.shop.Shop;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @AllArgsConstructor
 
 @Entity
 @Table(name = "subscription")
-public class Subscription {
+public class
+Subscription {
     @Id
     @Column(name = "subscription_id", nullable = false)
     private Long id;
@@ -39,4 +41,21 @@ public class Subscription {
     @JoinColumn(name = "shop_id", nullable = false)
     private Shop shop;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "subscription_subscribers",
+            inverseJoinColumns =
+            @JoinColumn(name = "subscriber_id", referencedColumnName = "user_account_id"),
+            joinColumns =
+            @JoinColumn(name = "subscription_id", referencedColumnName = "subscription_id")
+    )
+    private Set<UserAccount> userAccount;
+
+    @Override
+    public String toString() {
+        return "Subscription{" +
+                "id=" + id +
+                ", name_subscription='" + name_subscription + '\'' +
+                ", information='" + information + '\'' +
+                '}';
+    }
 }

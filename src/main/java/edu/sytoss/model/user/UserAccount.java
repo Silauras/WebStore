@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -67,20 +68,20 @@ public class UserAccount {
 
     @OneToMany
     @JoinColumn(name = "customer")
-    private Set<Order> orders;
+    private List<Order> orders;
 
     @OneToMany
     @JoinColumn(name = "author")
     private Set<Reaction> reactions;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "subscription_subscribers",
             joinColumns =
             @JoinColumn(name = "subscriber_id", referencedColumnName = "user_account_id"),
             inverseJoinColumns =
             @JoinColumn(name = "subscription_id", referencedColumnName = "subscription_id")
     )
-    private Set<Subscription> subscriptions;
+    private List<Subscription> subscriptions;
 
     public UserAccount(Long userAccountId) {
         this.id = userAccountId;
@@ -101,7 +102,16 @@ public class UserAccount {
             this.name = surnameNameLogin;
         }
     }
-
+    public UserAccount(String surname, String name, String login, String password,
+                       Date registrationDate, Date lastActivityDate, String role) {
+        this.surname = surname;
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.registrationDate = registrationDate;
+        this.lastActivityDate = lastActivityDate;
+        this.role = role;
+    }
     @Override
     public String toString() {
         return "UserAccount{" +

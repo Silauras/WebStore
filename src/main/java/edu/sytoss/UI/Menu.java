@@ -1,22 +1,27 @@
 package edu.sytoss.UI;
 
 import edu.sytoss.model.communication.Answer;
+import edu.sytoss.model.communication.Claim;
 import edu.sytoss.model.communication.Commentary;
+import edu.sytoss.model.communication.Dialog;
+import edu.sytoss.model.order.Order;
 import edu.sytoss.model.user.Communication;
+import edu.sytoss.model.user.Subscription;
 import edu.sytoss.model.user.UserAccount;
 import edu.sytoss.model.product.*;
 import edu.sytoss.service.ProductApi;
 import edu.sytoss.service.UserAccountAPI;
 import edu.sytoss.service.impl.CommentaryApiImpl;
+
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.text.MessageFormat;
 import java.util.*;
 
 @NoArgsConstructor
-
 @Service
 public class Menu {
     @Autowired
@@ -25,7 +30,6 @@ public class Menu {
     CommentaryApiImpl commentaryApi;
     @Autowired
     UserAccountAPI userAccountAPI;
-
 
     Scanner scanner = new Scanner(System.in);
 
@@ -36,7 +40,8 @@ public class Menu {
             System.out.println("1. Show UserAccount");
             System.out.println("2. Product with all commentaries");
             System.out.println("3. Catalog with all possible characteristics");
-
+            System.out.println("4. Update User");
+            System.out.println("5. Create User");
             switch (scanner.nextInt()) {
                 case -1:
                     return;
@@ -49,8 +54,43 @@ public class Menu {
                 case 3:
                     printAllPossibleCharacteristics();
                     break;
-
+                case 4:
+                    System.out.println("Write id UserAccount");
+                    scanner.nextLine();
+                    int id = scanner.nextInt();
+                    createUserAccount(id);
+                    break;
+                case 5:
+                    createUserAccount(0);
+                    break;
             }
+        }
+    }
+
+    private void createUserAccount(int id) {
+        System.out.println("Write your Surname and Name:");
+        scanner.nextLine();
+        String[] surnameAndName = scanner.nextLine().split(" ");
+        String surname = surnameAndName[0];
+        String name = surnameAndName[1];
+        System.out.println("Write your Login: ");
+        String login = scanner.nextLine();
+        System.out.println("Write your Password:");
+        String password = scanner.nextLine();
+        Date registrationDate = new Date();
+        System.out.println("Wait 2 second");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Date lastActivityDate = new Date();
+        String newRole = "CUSTOMER";
+        UserAccount newUserAccount = new UserAccount(surname, name, login, password, registrationDate, lastActivityDate, newRole);
+        if (id == 0) {
+            new UserAccountCreator(newUserAccount);
+        } else {
+            new UserAccountCreator(newUserAccount, id);
         }
     }
 
@@ -60,7 +100,7 @@ public class Menu {
         System.out.println("2. Find User by Name and/or Surname or Login" + "\n" +
                 "   (You can use path of Name/Surname/Login)");
         System.out.println("3. Find User by Role");
-        long countUser = userAccountAPI.findAllUserAccount().size();
+        long countUser = userAccountAPI.countAllUserAccount();
         switch (scanner.nextInt()) {
             case -1:
                 return;
@@ -68,6 +108,8 @@ public class Menu {
                 System.out.println("What you want to see?");
                 System.out.println("1. Show UserAccount with main info");
                 System.out.println("2. Show UserAccount with Communication");
+                System.out.println("3. Show UserAccount with Subscription");
+                System.out.println("4. Show UserAccount with Orders");
                 long userAccountId;
                 switch (scanner.nextInt()) {
                     case 1:
@@ -94,8 +136,32 @@ public class Menu {
                             break;
                         }
                     case 3:
-
-                }
+                        System.out.println("Write UserAccount id(0 for all)");
+                        userAccountId = scanner.nextInt();
+                        if (userAccountId == 0) {
+                            for (long id = 1; id <= countUser; id++) {
+                                new UserAccountPrinter(id);
+                                new SubscriptionPrinter(id);
+                            }
+                        } else {
+                            new UserAccountPrinter(userAccountId);
+                            new SubscriptionPrinter(userAccountId);
+                            break;
+                        }
+                    case 4:
+                        System.out.println("Write UserAccount id(0 for all)");
+                        userAccountId = scanner.nextInt();
+                        if (userAccountId == 0) {
+                            for (long id = 1; id <= countUser; id++) {
+                                new UserAccountPrinter(id);
+                                new OrderPrinter(id);
+                            }
+                        } else {
+                            new UserAccountPrinter(userAccountId);
+                            new OrderPrinter(userAccountId);
+                            break;
+                        }
+                    }
                 break;
             case 2:
                 System.out.println("Write Name and/or Surname or Login(if Login start with'@')");
@@ -285,4 +351,69 @@ public class Menu {
 
     }
 
+    private class SubscriptionPrinter {
+
+        private SubscriptionPrinter(long userAccountId) {
+            printSubscriptionsById(userAccountId);
+        }
+
+        private void printAllSubscriptions() {
+            List<Subscription> subscriptions = userAccountAPI.findAllSubscription();
+            for (Subscription subscription : subscriptions) {
+                System.out.println(subscription.toString());
+            }
+        }
+
+        private void printSubscriptionsById(Long userAccountId) {
+            List<Subscription> subscriptions = userAccountAPI.findAllSubscriptionOnUserAccountById(new UserAccount(userAccountId));
+
+            for (Subscription subscription : subscriptions) {
+                System.out.println(subscription.toString());
+
+            }
+        }
+
+    }
+
+    private class OrderPrinter {
+
+        private OrderPrinter(long userAccountId) {
+            printOrderById(userAccountId);
+        }
+
+        private void printAllOrdersPrinter() {
+            List<Subscription> subscriptions = userAccountAPI.findAllSubscription();
+            for (Subscription subscription : subscriptions) {
+                System.out.println(subscription.toString());
+            }
+        }
+
+        private void printOrderById(Long userAccountId) {
+            List<Order> orders = userAccountAPI.findAllOrderOnUserAccountById(new UserAccount(userAccountId));
+            for (Order order : orders) {
+                System.out.println(order.toString());
+
+            }
+        }
+    }
+
+    private class UserAccountCreator {
+
+
+        private UserAccountCreator(UserAccount userAccount) {
+            createUserAccount(userAccount);
+        }
+
+        public UserAccountCreator(UserAccount newUserAccount, long id) {
+            updateUserAccount(newUserAccount, id);
+        }
+
+        private void createUserAccount(UserAccount userAccount) {
+            userAccountAPI.createUserAccount(userAccount);
+        }
+
+        private void updateUserAccount(UserAccount userAccount, long id) {
+            userAccountAPI.updateUserAccount(userAccount, id);
+        }
+    }
 }

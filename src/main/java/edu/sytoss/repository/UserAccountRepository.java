@@ -28,4 +28,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount,Long> {
 
     @Query("select u from UserAccount u where upper(u.role) like upper(concat(?1, '%'))")
     List<UserAccount> findByRoleStartingWithIgnoreCase(String role);
+
+    /*@Query("select l from Lesson l left  join  fetch  l.comments where l.id = ?1")
+    Lesson findById(Long id);*/
 }

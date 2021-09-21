@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "order")
+@Table(name = "`order`")
 @Entity
 public class Order {
     @Id
@@ -25,8 +25,9 @@ public class Order {
     @JoinColumn(name = "customer", nullable = false)
     private UserAccount customer;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "seller", nullable = false)
+   /* @ManyToOne(optional = false)
+    @JoinColumn(name = "seller", nullable = false)*/
+    @Transient
     private Shop seller;
 
     @Column(name = "last_change_date", nullable = false)
@@ -35,5 +36,12 @@ public class Order {
     @Column(name = "state", nullable = false, length = 50)
     private String state;
 
-
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", lastChangeDate=" + lastChangeDate +
+                ", state='" + state + '\'' +
+                '}';
+    }
 }
