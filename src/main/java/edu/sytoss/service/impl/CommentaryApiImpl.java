@@ -27,10 +27,6 @@ public class CommentaryApiImpl {
     @Autowired
     CommentaryRepository<Commentary> commentaryRepository;
 
-    public List<Answer> findAnswersForProductCard(ProductCard productCard) {
-        return answerRepository.findAllByProductCard(productCard);
-    }
-
     public List<Review> findReviewsForProductCard(ProductCard productCard){
         return reviewRepository.findAllByProductCard(productCard);
     }
@@ -39,19 +35,8 @@ public class CommentaryApiImpl {
         return questionRepository.findAllByProductCard(productCard);
     }
 
-
     public long countCommentariesForProductCard(ProductCard productCard){
         return commentaryRepository.countAllByProductCard(productCard);
-    }
-
-
-    public long countReviewsForProductCard(ProductCard productCard){
-        return reviewRepository.countAllByProductCard(productCard);
-    }
-
-
-    public long countQuestionsForProductCard(ProductCard productCard){
-        return questionRepository.countAllByProductCard(productCard);
     }
 
     public List<Answer> findAnswersByRootCommentary(Long commentaryId){
