@@ -13,6 +13,12 @@ public class MenuUtils {
         return scanner.nextInt();
     }
 
+    public static int scanInt(){
+        System.out.println(colors.ANSI_PURPLE + "----- INPUT INT -----");
+        lastScanInteger = true;
+        return scanner.nextInt();
+    }
+
     public static String scanLine(String text) {
         System.out.println(colors.ANSI_PURPLE + "----- INPUT LINE -----");
         System.out.print(text + colors.ANSI_RESET);
@@ -31,11 +37,11 @@ public class MenuUtils {
     }
 
     public static void printClassName(String className) {
-        System.out.println(colors.ANSI_RED + "----- " + className + "-----");
+        System.out.println(colors.ANSI_RED + "----- " + className + " -----" + colors.ANSI_RESET);
     }
 
     public static void printField(String field, String value) {
-        System.out.print(colors.ANSI_GREEN + field + colors.ANSI_CYAN + value + colors.ANSI_RESET);
+        System.out.println(colors.ANSI_GREEN + field + " : "+colors.ANSI_CYAN + value + colors.ANSI_RESET);
     }
 
     public static class colors {

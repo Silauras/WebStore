@@ -4,7 +4,6 @@ import edu.sytoss.model.product.*;
 import edu.sytoss.repository.*;
 import edu.sytoss.service.ProductApi;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +31,13 @@ public class ProductApiImpl implements ProductApi {
 
     /* --------- IMPLEMENTED METHODS --------- */
 
+    @Transactional
     @Override
     public ProductCard findProductById(Long id) {
+        ProductCard productCard = productCardRepository.findById(id);
+        productCard.getPrices().size();
+        productCard.getCharacteristics().size();
+        productCard.getProductTemplate().getId();
         return productCardRepository.findById(id);
     }
 

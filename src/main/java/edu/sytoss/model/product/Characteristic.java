@@ -24,6 +24,9 @@ public class Characteristic {
     @Column(name = "value", nullable = false, length = 50)
     private String value;
 
+    @Column(name = "amount")
+    private Integer amount;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "product", nullable = false)
     private ProductCard productCard;
