@@ -2,6 +2,7 @@ package edu.sytoss.model.shop;
 
 import javax.persistence.*;
 
+import edu.sytoss.model.product.Product;
 import edu.sytoss.model.product.ProductCard;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,12 +35,7 @@ public class Warehouse {
     @JoinColumn(name = "owner", nullable = false)
     private Shop owner;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "warehouse_product",
-            joinColumns =
-            @JoinColumn(name = "warehouse_id", referencedColumnName = "warehouse_id"),
-            inverseJoinColumns =
-            @JoinColumn(name = "product_id", referencedColumnName = "product_id")
-    )
-    Set<ProductCard> productCards;
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    Product product;
 }

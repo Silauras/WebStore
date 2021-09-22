@@ -21,43 +21,18 @@ public class Product implements Subsciptable {
     @Column(name = "product_id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
+    @Column(name = "serial_number", nullable = false, length = 50)
+    private long serialNumber;
 
-    @Lob
-    @Column(name = "shortDescription")
-    private String shortDescription;
-
-    @Lob
-    @Column(name = "fullDescription")
-    private String fullDescription;
-
-    @Column(name = "status", nullable = false, length = 50)
-    private String status;
-
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_template", nullable = false)
-    private ProductTemplate productTemplate;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "warehouse_product",
-            joinColumns =
-            @JoinColumn(name = "product_id", referencedColumnName = "product_id"),
-            inverseJoinColumns =
-            @JoinColumn(name = "warehouse_id", referencedColumnName = "warehouse_id")
-    )
-    private Set<Warehouse> warehouseSet;
+    @Column(name = "price")
+    private Price price;
 
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", shortDescription='" + shortDescription + '\'' +
-                ", fullDescription='" + fullDescription + '\'' +
-                ", status='" + status + '\'' +
-                ", productTemplate=" + productTemplate +
-                ", warehouseSet=" + warehouseSet +
+                ", serialNumber=" + serialNumber +
+                ", price=" + price +
                 '}';
     }
 }

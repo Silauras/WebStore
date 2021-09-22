@@ -36,13 +36,16 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" object-ref="schemas/webstore/tables/warehouse" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.claim" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.warehouse" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.communication" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.reaction" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.subscription" active-filter-id="EMPTY_FILTER" />
