@@ -36,11 +36,7 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" object-ref="schemas/webstore/tables/user_account" />
-      <object connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" object-ref="schemas/webstore/tables/subscription_subscribers" />
-      <object connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" object-ref="schemas/webstore/tables/subscription" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" />
@@ -48,6 +44,7 @@
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.claim" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.communication" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.reaction" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.subscription" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.order" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.user_account" active-filter-id="EMPTY_FILTER" />

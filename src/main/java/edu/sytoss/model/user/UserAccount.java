@@ -52,11 +52,12 @@ public class UserAccount {
     @Column(name = "`role`", nullable = false, length = 50)
     private String role;
 
-
     @OneToMany(/*mappedBy = "userAccount"*/)
     @JoinColumn(name = "user_account")
     private List<Communication> communication;
-
+    @OneToMany()
+    @JoinColumn(name = "customer")
+    private List<Order> orders;
     /* @ManyToOne
      @JoinTable(name = "seller_shop")*/
     @Transient
@@ -66,13 +67,9 @@ public class UserAccount {
     @JoinColumn(name = "author")
     private Set<Message> messages;
 
-    @OneToMany
-    @JoinColumn(name = "customer")
-    private List<Order> orders;
-
-    @OneToMany
-    @JoinColumn(name = "author")
-    private Set<Reaction> reactions;
+    @OneToMany(mappedBy = "author")
+    //@JoinColumn(name = "author")
+    private List<Reaction> reactions;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "subscription_subscribers",

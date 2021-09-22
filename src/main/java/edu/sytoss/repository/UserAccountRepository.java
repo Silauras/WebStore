@@ -30,8 +30,15 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
     @Query("select u from UserAccount u where upper(u.role) like upper(concat(?1, '%'))")
     List<UserAccount> findByRoleStartingWithIgnoreCase(String role);
 
-    @Query("select u from UserAccount u left  join  fetch  u.communication where u.id = ?1")
+    @Query("select u from UserAccount u left join fetch u.communication where u.id = ?1")
     UserAccount findUserAccountWithCommunicationById(Long id);
+
+    @Query("select u from UserAccount u left join fetch    u.reactions   where u.id = ?1")
+    UserAccount findUserAccountWithReactionById(Long id);
+
+    @Query("select u from UserAccount u left join fetch    u.orders   where u.id = ?1")
+    UserAccount findUserAccountWithOrderById(Long id);
+
 
    /* @Query("select u\n" +
             "from UserAccount u\n" +
@@ -39,4 +46,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
             "left join fetch Subscription s on s.id =ss.subscription_id\n" +
             "where u.id =?1\n")
     UserAccount findUserAccountWithSubscriptionById(Long id);*/
+
+    @Query("select u from UserAccount u left join fetch    u.subscriptions   where u.id = ?1")
+    UserAccount findUserAccountWithSubscriptionsById(Long id);
 }

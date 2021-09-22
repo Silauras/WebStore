@@ -1,5 +1,6 @@
 package edu.sytoss.service.impl;
 
+import edu.sytoss.model.communication.Reaction;
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.Subscription;
@@ -37,7 +38,32 @@ public class UserAccountAPIImpl implements UserAccountAPI {
 
     @Override
     public List<Subscription> findAllSubscription() {
+        return subscriptionRepository.findAll();
+    }
+
+    /*-----------------------------Order--------------------------------------*/
+
+    @Override
+    public List<Order> findAllOrder() {
         return null;
+    }
+
+    @Override
+    public List<Order> findAllOrderInUserAccountById(UserAccount userAccount) {
+        UserAccount u = userAccountRepository.findUserAccountWithOrderById(userAccount.getId());
+        return u.getOrders();
+    }
+    /*-----------------------------Reaction--------------------------------------*/
+
+    @Override
+    public List<Reaction> findAllReaction() {
+        return null;
+    }
+
+    @Override
+    public List<Reaction> findAllReactionInUserAccountById(UserAccount userAccount) {
+        UserAccount u = userAccountRepository.findUserAccountWithReactionById(userAccount.getId());
+        return u.getReactions();
     }
 
     /*-------------------------------Communication------------------------------------*/
@@ -112,23 +138,6 @@ public class UserAccountAPIImpl implements UserAccountAPI {
         } catch (NullPointerException e) {
             return false;
         }
-    }
-
-    /*-----------------------------Order--------------------------------------*/
-
-    @Override
-    public List<Order> findAllOrder() {
-        return null;
-    }
-
-    @Override
-    public List<Order> findAllOrderOnUserAccountById(UserAccount userAccount) {
-        System.out.println(" dfdsf df sdf ds fdsf ");
-        UserAccount ua = userAccountRepository.findById(8l);
-        System.out.println(ua.getOrders().toString());
-        List<Order> orders = new ArrayList<>();
-        Hibernate.initialize(orders);
-        return orders;
     }
 
 
