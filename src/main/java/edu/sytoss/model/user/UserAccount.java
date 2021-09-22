@@ -52,12 +52,14 @@ public class UserAccount {
     @Column(name = "`role`", nullable = false, length = 50)
     private String role;
 
-    @OneToMany(/*mappedBy = "userAccount"*/)
+    @OneToMany()
     @JoinColumn(name = "user_account")
     private List<Communication> communication;
+
     @OneToMany()
     @JoinColumn(name = "customer")
     private List<Order> orders;
+
     /* @ManyToOne
      @JoinTable(name = "seller_shop")*/
     @Transient

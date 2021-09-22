@@ -2,6 +2,7 @@ package edu.sytoss.model.product;
 
 import edu.sytoss.model.shop.Warehouse;
 import edu.sytoss.model.user.Subsciptable;
+import edu.sytoss.model.user.UserAccount;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,6 +27,14 @@ public class Product implements Subsciptable {
 
     @Column(name = "price")
     private Price price;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    Warehouse warehouse;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "product_card", nullable = false)
+    private ProductCard productCard;
 
     @Override
     public String toString() {

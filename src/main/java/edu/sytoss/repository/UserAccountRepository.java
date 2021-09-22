@@ -44,7 +44,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
             "from UserAccount u\n" +
             "left join fetch subscription_subscribers ss on u.id = ss.subscriber_id\n" +
             "left join fetch Subscription s on s.id =ss.subscription_id\n" +
-            "where u.id =?1\n")
+            "where u.id =?1\n"? )
     UserAccount findUserAccountWithSubscriptionById(Long id);*/
 
     @Query("select u from UserAccount u left join fetch    u.subscriptions   where u.id = ?1")

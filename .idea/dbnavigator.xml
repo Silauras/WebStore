@@ -25,36 +25,27 @@
     <autoscroll-from-editor value="true" />
     <show-object-properties value="false" />
     <loaded-nodes>
-      <connection connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f">
-        <schema name="webstore" object-types="table, function, constraint, index, column, dataset trigger" />
+      <connection connection-id="fc9361a0-44a6-40ca-9aab-50acf836c193">
+        <schema name="webstore" object-types="table, view, procedure, function, constraint, index, column, dataset trigger" />
+        <schema name="world" object-types="table, view, procedure, function" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="c24d023d-0301-4cdb-a4d5-9d6ad640641f">
-      <console name="WebStoreConnection" type="STANDARD" schema="webstore" session="Main"><![CDATA[select * from user_account  where user_account_id > 0]]></console>
+    <connection id="fc9361a0-44a6-40ca-9aab-50acf836c193">
+      <console name="Connection" type="STANDARD" schema="mysql" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" object-ref="schemas/webstore/tables/warehouse" />
+      <object connection-id="fc9361a0-44a6-40ca-9aab-50acf836c193" object-ref="schemas/webstore/tables/product" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" />
+    <connection id="fc9361a0-44a6-40ca-9aab-50acf836c193" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.claim" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.warehouse" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.communication" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.reaction" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.subscription" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.order" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.user_account" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.product_template" active-filter-id="" />
-    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.product_template_characteristic_template" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.subscription_subscribers" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" dataset="webstore.dialog" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="fc9361a0-44a6-40ca-9aab-50acf836c193" dataset="webstore.product" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -82,9 +73,9 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="c24d023d-0301-4cdb-a4d5-9d6ad640641f" active="true">
+      <connection id="fc9361a0-44a6-40ca-9aab-50acf836c193" active="true">
         <database>
-          <name value="WebStoreConnection" />
+          <name value="Connection" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
@@ -95,7 +86,7 @@
           <url-type value="DATABASE" />
           <host value="192.168.20.161" />
           <port value="3306" />
-          <database value="webstore" />
+          <database value="mysql" />
           <type value="USER_PASSWORD" />
           <user value="root" />
           <deprecated-pwd value="cm9vdA==" />
