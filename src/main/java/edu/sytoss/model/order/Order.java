@@ -23,7 +23,7 @@ public class Order {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "customer", nullable = false)
-    private UserAccount customer;
+    private UserAccount userAccount;
 
    /* @ManyToOne(optional = false)
     @JoinColumn(name = "seller", nullable = false)*/

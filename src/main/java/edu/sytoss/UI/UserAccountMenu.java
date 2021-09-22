@@ -1,5 +1,6 @@
 package edu.sytoss.UI;
 
+import edu.sytoss.model.communication.Reaction;
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.Subscription;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 @NoArgsConstructor
 @Service
@@ -76,7 +76,9 @@ public class UserAccountMenu {
                 "1. Show UserAccount with main info",
                 "2. Show UserAccount with Communication",
                 "3. Show UserAccount with Subscription",
-                "4. Show UserAccount with Orders"
+                "4. Show UserAccount with Orders",
+                "5. Show UserAccount with Reaction",
+                "6. Show UserAccount with Subscription"
         );
         long userAccountId;
         switch (MenuUtils.scanInt("")) {
@@ -92,9 +94,10 @@ public class UserAccountMenu {
             case 2:
                 userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
                 if (userAccountId == 0) {
-                    for (long id = 1; id <= countUser; id++) {
-                        new UserAccountPrinter(id);
-                        new CommunicationPrinter(id);
+                    List<UserAccount> userAccounts = userAccountAPI.findAllUserAccount();
+                    for (UserAccount userAccount : userAccounts) {
+                        new UserAccountPrinter(userAccount.getId());
+                        new CommunicationPrinter(userAccount.getId());
                     }
                 } else {
                     new UserAccountPrinter(userAccountId);
@@ -104,9 +107,10 @@ public class UserAccountMenu {
             case 3:
                 userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
                 if (userAccountId == 0) {
-                    for (long id = 1; id <= countUser; id++) {
-                        new UserAccountPrinter(id);
-                        new SubscriptionPrinter(id);
+                    List<UserAccount> userAccounts = userAccountAPI.findAllUserAccount();
+                    for (UserAccount userAccount : userAccounts) {
+                        new UserAccountPrinter(userAccount.getId());
+                        new SubscriptionPrinter(userAccount.getId());
                     }
                 } else {
                     new UserAccountPrinter(userAccountId);
@@ -123,6 +127,30 @@ public class UserAccountMenu {
                 } else {
                     new UserAccountPrinter(userAccountId);
                     new OrderPrinter(userAccountId);
+                    break;
+                }
+            case 5:
+                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
+                if (userAccountId == 0) {
+                    for (long id = 1; id <= countUser; id++) {
+                        new UserAccountPrinter(id);
+                        new ReactionPrinter(id);
+                    }
+                } else {
+                    new UserAccountPrinter(userAccountId);
+                    new ReactionPrinter(userAccountId);
+                    break;
+                }
+            case 6:
+                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
+                if (userAccountId == 0) {
+                    for (long id = 1; id <= countUser; id++) {
+                        new UserAccountPrinter(id);
+                        new SubscriptionPrinter(id);
+                    }
+                } else {
+                    new UserAccountPrinter(userAccountId);
+                    new SubscriptionPrinter(userAccountId);
                     break;
                 }
         }
@@ -192,40 +220,9 @@ public class UserAccountMenu {
             printCommunicationById(userAccountId);
         }
 
-        private void printAllCommunication() {
-            List<Communication> communications = userAccountAPI.findAllCommunication();
-            for (Communication communication : communications) {
-                System.out.println(communication.toString());
-            }
-        }
-
         private void printCommunicationById(Long userAccountId) {
-            Communication communications = userAccountAPI.findCommunicationById(new UserAccount(userAccountId));
+            List<Communication> communications = userAccountAPI.findCommunicationInUserAccountById(new UserAccount(userAccountId));
             System.out.println(communications.toString());
-        }
-
-    }
-
-    private class SubscriptionPrinter {
-
-        private SubscriptionPrinter(long userAccountId) {
-            printSubscriptionsById(userAccountId);
-        }
-
-        private void printAllSubscriptions() {
-            List<Subscription> subscriptions = userAccountAPI.findAllSubscription();
-            for (Subscription subscription : subscriptions) {
-                System.out.println(subscription.toString());
-            }
-        }
-
-        private void printSubscriptionsById(Long userAccountId) {
-            List<Subscription> subscriptions = userAccountAPI.findAllSubscriptionOnUserAccountById(new UserAccount(userAccountId));
-
-            for (Subscription subscription : subscriptions) {
-                System.out.println(subscription.toString());
-
-            }
         }
 
     }
@@ -236,19 +233,9 @@ public class UserAccountMenu {
             printOrderById(userAccountId);
         }
 
-        private void printAllOrdersPrinter() {
-            List<Subscription> subscriptions = userAccountAPI.findAllSubscription();
-            for (Subscription subscription : subscriptions) {
-                System.out.println(subscription.toString());
-            }
-        }
-
         private void printOrderById(Long userAccountId) {
-            List<Order> orders = userAccountAPI.findAllOrderOnUserAccountById(new UserAccount(userAccountId));
-            for (Order order : orders) {
-                System.out.println(order.toString());
-
-            }
+            List<Order> orders = userAccountAPI.findAllOrderInUserAccountById(new UserAccount(userAccountId));
+            System.out.println(orders.toString());
         }
     }
 
@@ -270,5 +257,28 @@ public class UserAccountMenu {
         private void updateUserAccount(UserAccount userAccount, long id) {
             userAccountAPI.updateUserAccount(userAccount, id);
         }
+    }
+
+    private class ReactionPrinter {
+        private ReactionPrinter(long userAccountId) {
+            printReactionById(userAccountId);
+        }
+
+        private void printReactionById(Long userAccountId) {
+            List<Reaction> reactions = userAccountAPI.findAllReactionInUserAccountById(new UserAccount(userAccountId));
+            System.out.println(reactions.toString());
+        }
+
+    }
+
+    private class SubscriptionPrinter {
+        private SubscriptionPrinter(long userAccountId) {
+            printSubscriptionById(userAccountId);
+        }
+        private void printSubscriptionById(Long userAccountId) {
+            List<Subscription> subscriptions = userAccountAPI.findAllSubscriptionOnUserAccountById(new UserAccount(userAccountId));
+            System.out.println(subscriptions.toString());
+        }
+
     }
 }

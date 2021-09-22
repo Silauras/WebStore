@@ -1,6 +1,8 @@
 package edu.sytoss.model.product;
 
+import edu.sytoss.model.order.Order;
 import edu.sytoss.model.shop.Warehouse;
+import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.Subsciptable;
 import lombok.*;
 
@@ -56,6 +58,10 @@ public class ProductCard implements Subsciptable {
     @OneToMany
     @JoinColumn(name = "product")
     List<Characteristic> characteristics;
+
+    @OneToMany()
+    @JoinColumn(name = "product_card")
+    private List<Product> product;
 
     @Override
     public String toString() {

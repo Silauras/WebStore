@@ -52,10 +52,13 @@ public class UserAccount {
     @Column(name = "`role`", nullable = false, length = 50)
     private String role;
 
-
-    @OneToMany
+    @OneToMany()
     @JoinColumn(name = "user_account")
-    private Set<Communication> communication;
+    private List<Communication> communication;
+
+    @OneToMany()
+    @JoinColumn(name = "customer")
+    private List<Order> orders;
 
     /* @ManyToOne
      @JoinTable(name = "seller_shop")*/
@@ -66,13 +69,9 @@ public class UserAccount {
     @JoinColumn(name = "author")
     private Set<Message> messages;
 
-    @OneToMany
-    @JoinColumn(name = "customer")
-    private List<Order> orders;
-
-    @OneToMany
-    @JoinColumn(name = "author")
-    private Set<Reaction> reactions;
+    @OneToMany(mappedBy = "author")
+    //@JoinColumn(name = "author")
+    private List<Reaction> reactions;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "subscription_subscribers",
@@ -94,7 +93,7 @@ public class UserAccount {
             this.surname = surnameName[0];
             this.name = surnameName[1];
         } else if (surnameNameLogin.startsWith("$")) {
-            this.role=surnameNameLogin.substring(1);
+            this.role = surnameNameLogin.substring(1);
         } else if (surnameNameLogin.startsWith("@")) {
             this.login = surnameNameLogin.substring(1);
         } else {
@@ -102,6 +101,7 @@ public class UserAccount {
             this.name = surnameNameLogin;
         }
     }
+
     public UserAccount(String surname, String name, String login, String password,
                        Date registrationDate, Date lastActivityDate, String role) {
         this.surname = surname;
@@ -112,6 +112,7 @@ public class UserAccount {
         this.lastActivityDate = lastActivityDate;
         this.role = role;
     }
+
     @Override
     public String toString() {
         return "UserAccount{" +
@@ -126,4 +127,5 @@ public class UserAccount {
                 ", role='" + role + '\'' +
                 '}';
     }
+
 }

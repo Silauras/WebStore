@@ -1,6 +1,6 @@
 package edu.sytoss.service.impl;
 
-import edu.sytoss.model.communication.Dialog;
+import edu.sytoss.model.communication.Reaction;
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.Subscription;
@@ -12,12 +12,10 @@ import edu.sytoss.service.UserAccountAPI;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -30,6 +28,7 @@ public class UserAccountAPIImpl implements UserAccountAPI {
     @Autowired
     SubscriptionRepository subscriptionRepository;
 
+    /*-------------------------------Subscription------------------------------------*/
     @Override
     public List<Subscription> findAllSubscriptionOnUserAccountById(UserAccount userAccount) {
         List<Subscription> subscriptions = userAccountRepository.findById(userAccount.getId()).getSubscriptions();
@@ -38,24 +37,40 @@ public class UserAccountAPIImpl implements UserAccountAPI {
     }
 
     @Override
-    public List<Order> findAllOrderOnUserAccountById(UserAccount userAccount) {
-        System.out.println(" dfdsf df sdf ds fdsf ");
-        UserAccount ua = userAccountRepository.findById(8l);
-        System.out.println(ua.getOrders().toString());
-        List<Order> orders = new ArrayList<>();
-        Hibernate.initialize(orders);
-        return orders;
+    public List<Subscription> findAllSubscription() {
+        return subscriptionRepository.findAll();
     }
 
+    /*-----------------------------Order--------------------------------------*/
+
     @Override
-    public List<Subscription> findAllSubscription() {
+    public List<Order> findAllOrder() {
         return null;
     }
 
-    /*-------------------------------------------------------------------*/
     @Override
-    public Communication findCommunicationById(UserAccount userAccount) {
-        return communicationRepository.findById(userAccount.getId());
+    public List<Order> findAllOrderInUserAccountById(UserAccount userAccount) {
+        UserAccount u = userAccountRepository.findUserAccountWithOrderById(userAccount.getId());
+        return u.getOrders();
+    }
+    /*-----------------------------Reaction--------------------------------------*/
+
+    @Override
+    public List<Reaction> findAllReaction() {
+        return null;
+    }
+
+    @Override
+    public List<Reaction> findAllReactionInUserAccountById(UserAccount userAccount) {
+        UserAccount u = userAccountRepository.findUserAccountWithReactionById(userAccount.getId());
+        return u.getReactions();
+    }
+
+    /*-------------------------------Communication------------------------------------*/
+    @Override
+    public List<Communication> findCommunicationInUserAccountById(UserAccount userAccount) {
+        UserAccount u = userAccountRepository.findUserAccountWithCommunicationById(userAccount.getId());
+        return u.getCommunication();
     }
 
     @Override
@@ -63,7 +78,7 @@ public class UserAccountAPIImpl implements UserAccountAPI {
         return communicationRepository.findAll();
     }
 
-    /*-------------------------------------------------------------------*/
+    /*----------------------------UserAccount---------------------------------------*/
     @Override
     public List<UserAccount> findUserAccount(UserAccount userAccount) {
         List<UserAccount> userAccounts = new ArrayList<>();
@@ -90,19 +105,10 @@ public class UserAccountAPIImpl implements UserAccountAPI {
         return userAccounts;
     }
 
-
     @Override
     public List<UserAccount> findAllUserAccount() {
         return userAccountRepository.findAll();
     }
-
-
-    @Override
-    public List<Order> findAllOrder() {
-        return null;
-    }
-
-
 
     @Override
     public long countAllUserAccount() {
@@ -133,8 +139,6 @@ public class UserAccountAPIImpl implements UserAccountAPI {
             return false;
         }
     }
-
-
 
 
 }
