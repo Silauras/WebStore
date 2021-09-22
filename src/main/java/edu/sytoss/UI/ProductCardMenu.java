@@ -92,7 +92,7 @@ public class ProductCardMenu {
     }
 
     private void printProduct(Long productId) {
-        ProductCard productCard = productApi.findProductById(productId);
+        ProductCard productCard = productApi.findProductCardByIdWithCharacteristicsAndCategory(productId);
         printClassName("Product");
         printField("id", productCard.getId().toString());
         printField("status", productCard.getStatus());
@@ -130,7 +130,7 @@ public class ProductCardMenu {
     }
 
     private void printCommentariesPerProduct(Long productId) {
-        ProductCard productCard = productApi.findProductById(productId);
+        ProductCard productCard = productApi.findProductCardById(productId);
         List<Review> reviews = new ArrayList<>(commentaryApi.findReviewsForProductCard(productCard));
         List<Question> questions = new ArrayList<>(commentaryApi.findQuestionsForProductCard(productCard));
 

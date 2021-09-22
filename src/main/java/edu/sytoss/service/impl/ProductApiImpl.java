@@ -33,12 +33,14 @@ public class ProductApiImpl implements ProductApi {
 
     @Transactional
     @Override
-    public ProductCard findProductById(Long id) {
-        ProductCard productCard = productCardRepository.findById(id);
-        productCard.getPrices().size();
-        productCard.getCharacteristics().size();
-        productCard.getProductTemplate().getId();
+    public ProductCard findProductCardById(Long id) {
         return productCardRepository.findById(id);
+    }
+
+    @Transactional
+    @Override
+    public ProductCard findProductCardByIdWithCharacteristicsAndCategory(Long id) {
+        return productCardRepository.findByIdWithCharacteristicsAndCategory(id);
     }
 
     @Override

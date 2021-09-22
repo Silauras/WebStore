@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 
-@Table(name = "product")
+@Table(name = "product_card")
 @Entity
 @Embeddable// Определяет класс, экземпляры которого хранятся как неотъемлемая часть исходного объекта
 public class ProductCard implements Subsciptable {
