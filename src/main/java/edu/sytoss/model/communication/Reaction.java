@@ -33,4 +33,13 @@ public class Reaction {
 
     @Column(name = "type", nullable = false, length = 50)
     private String type;
+
+    @Override
+    public String toString() {
+        return "Reaction{" +
+                "id=" + id +
+                ", creationDate=" + creationDate +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

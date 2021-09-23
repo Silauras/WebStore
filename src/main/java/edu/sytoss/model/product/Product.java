@@ -26,10 +26,10 @@ public class Product implements Subsciptable {
     private long serialNumber;
 
     @Column(name = "price")
-    private Price price;
+    private Long price;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "warehouse", nullable = false)
     Warehouse warehouse;
 
     @ManyToOne(optional = false)

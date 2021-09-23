@@ -31,9 +31,8 @@ public class UserAccountAPIImpl implements UserAccountAPI {
     /*-------------------------------Subscription------------------------------------*/
     @Override
     public List<Subscription> findAllSubscriptionOnUserAccountById(UserAccount userAccount) {
-        List<Subscription> subscriptions = userAccountRepository.findById(userAccount.getId()).getSubscriptions();
-        Hibernate.initialize(subscriptions);
-        return subscriptions;
+        UserAccount u = userAccountRepository.findUserAccountWithSubscriptionsById(userAccount.getId());
+        return u.getSubscriptions();
     }
 
     @Override
