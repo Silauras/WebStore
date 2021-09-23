@@ -1,5 +1,6 @@
 package edu.sytoss.model.product;
 
+import edu.sytoss.model.order.Order;
 import edu.sytoss.model.shop.Warehouse;
 import edu.sytoss.model.user.Subsciptable;
 import edu.sytoss.model.user.UserAccount;
@@ -13,10 +14,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 
-@Table(name = "product_card")
+@Table(name = "product")
 @Entity
 @Embeddable// Определяет класс, экземпляры которого хранятся как неотъемлемая часть исходного объекта
-public class Product implements Subsciptable {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id", nullable = false)
@@ -36,12 +37,20 @@ public class Product implements Subsciptable {
     @JoinColumn(name = "product_card", nullable = false)
     private ProductCard productCard;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "order", nullable = false)
+    private Order order;
+
+    @Column(name = "status")
+    private String status;
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
                 ", serialNumber=" + serialNumber +
                 ", price=" + price +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

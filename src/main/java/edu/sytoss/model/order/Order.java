@@ -1,7 +1,10 @@
 
 package edu.sytoss.model.order;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
+import edu.sytoss.model.product.Product;
 import edu.sytoss.model.shop.Shop;
+import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.UserAccount;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +12,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,6 +38,10 @@ public class Order {
 
     @Column(name = "state", nullable = false, length = 50)
     private String state;
+
+    @OneToMany()
+    @JoinColumn(name = "order")
+    private List<Product> products;
 
     @Override
     public String toString() {

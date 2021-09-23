@@ -13,6 +13,8 @@ public class Menu {
     UserAccountMenu userAccountMenu;
     @Autowired
     ProductCardMenu productCardMenu;
+    @Autowired
+    OrderMenu orderMenu;
 
 
     public void start() {
@@ -31,6 +33,9 @@ public class Menu {
                     break;
                 case 2:
                     productCardMenu.start();
+                    break;
+                case 3:
+                    orderMenu.start();
                     break;
             }
         }
