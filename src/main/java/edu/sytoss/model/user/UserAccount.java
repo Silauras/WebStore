@@ -69,8 +69,8 @@ public class UserAccount {
     @JoinColumn(name = "author")
     private Set<Message> messages;
 
-    @OneToMany(mappedBy = "author")
-    //@JoinColumn(name = "author")
+    @OneToMany()
+    @JoinColumn(name = "author")
     private List<Reaction> reactions;
 
     @ManyToMany(fetch = FetchType.LAZY)

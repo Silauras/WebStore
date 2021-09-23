@@ -70,15 +70,13 @@ public class UserAccountMenu {
     }
 
     private void findUserById() {
-        long countUser = userAccountAPI.countAllUserAccount();
         MenuUtils.printMenu(
                 "What you want to see?",
                 "1. Show UserAccount with main info",
                 "2. Show UserAccount with Communication",
                 "3. Show UserAccount with Subscription",
                 "4. Show UserAccount with Orders",
-                "5. Show UserAccount with Reaction",
-                "6. Show UserAccount with Subscription"
+                "5. Show UserAccount with Reaction"
         );
         long userAccountId;
         switch (MenuUtils.scanInt("")) {
@@ -104,6 +102,7 @@ public class UserAccountMenu {
                     new CommunicationPrinter(userAccountId);
                     break;
                 }
+                break;
             case 3:
                 userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
                 if (userAccountId == 0) {
@@ -117,40 +116,32 @@ public class UserAccountMenu {
                     new SubscriptionPrinter(userAccountId);
                     break;
                 }
+                break;
             case 4:
                 userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
                 if (userAccountId == 0) {
-                    for (long id = 1; id <= countUser; id++) {
-                        new UserAccountPrinter(id);
-                        new OrderPrinter(id);
+                    List<UserAccount> userAccounts = userAccountAPI.findAllUserAccount();
+                    for (UserAccount userAccount : userAccounts) {
+                        new UserAccountPrinter(userAccount.getId());
+                        new OrderPrinter(userAccount.getId());
                     }
                 } else {
                     new UserAccountPrinter(userAccountId);
                     new OrderPrinter(userAccountId);
                     break;
                 }
+                break;
             case 5:
                 userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
                 if (userAccountId == 0) {
-                    for (long id = 1; id <= countUser; id++) {
-                        new UserAccountPrinter(id);
-                        new ReactionPrinter(id);
+                    List<UserAccount> userAccounts = userAccountAPI.findAllUserAccount();
+                    for (UserAccount userAccount : userAccounts) {
+                        new UserAccountPrinter(userAccount.getId());
+                        new ReactionPrinter(userAccount.getId());
                     }
                 } else {
                     new UserAccountPrinter(userAccountId);
                     new ReactionPrinter(userAccountId);
-                    break;
-                }
-            case 6:
-                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
-                if (userAccountId == 0) {
-                    for (long id = 1; id <= countUser; id++) {
-                        new UserAccountPrinter(id);
-                        new SubscriptionPrinter(id);
-                    }
-                } else {
-                    new UserAccountPrinter(userAccountId);
-                    new SubscriptionPrinter(userAccountId);
                     break;
                 }
         }
@@ -268,13 +259,13 @@ public class UserAccountMenu {
             List<Reaction> reactions = userAccountAPI.findAllReactionInUserAccountById(new UserAccount(userAccountId));
             System.out.println(reactions.toString());
         }
-
     }
 
     private class SubscriptionPrinter {
         private SubscriptionPrinter(long userAccountId) {
             printSubscriptionById(userAccountId);
         }
+
         private void printSubscriptionById(Long userAccountId) {
             List<Subscription> subscriptions = userAccountAPI.findAllSubscriptionOnUserAccountById(new UserAccount(userAccountId));
             System.out.println(subscriptions.toString());

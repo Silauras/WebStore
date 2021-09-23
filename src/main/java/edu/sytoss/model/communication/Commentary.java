@@ -38,11 +38,13 @@ public class Commentary {
     @Column(name = "creation_date", nullable = false)
     private Date creationDate;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "product", nullable = false)
     private ProductCard productCard;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "root_commentary")
     List<Answer> answers;
+
+
 }

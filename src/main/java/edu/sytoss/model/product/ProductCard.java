@@ -42,15 +42,6 @@ public class ProductCard implements Subsciptable {
     @JoinColumn(name = "product_template", nullable = false)
     private ProductTemplate productTemplate;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "warehouse_product",
-            joinColumns =
-            @JoinColumn(name = "product_id", referencedColumnName = "product_id"),
-            inverseJoinColumns =
-            @JoinColumn(name = "warehouse_id", referencedColumnName = "warehouse_id")
-    )
-    private Set<Warehouse> warehouseSet;
-
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "product")
     private List<Price> prices;
@@ -72,7 +63,6 @@ public class ProductCard implements Subsciptable {
                 ", fullDescription='" + fullDescription + '\'' +
                 ", status='" + status + '\'' +
                 ", productTemplate=" + productTemplate +
-                ", warehouseSet=" + warehouseSet +
                 '}';
     }
 }

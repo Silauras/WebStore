@@ -25,9 +25,8 @@ public class Order {
     @JoinColumn(name = "customer", nullable = false)
     private UserAccount userAccount;
 
-   /* @ManyToOne(optional = false)
-    @JoinColumn(name = "seller", nullable = false)*/
-    @Transient
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "seller", nullable = false)
     private Shop seller;
 
     @Column(name = "last_change_date", nullable = false)

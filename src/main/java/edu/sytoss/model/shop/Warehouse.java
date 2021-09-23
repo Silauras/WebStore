@@ -35,7 +35,7 @@ public class Warehouse {
     @JoinColumn(name = "owner", nullable = false)
     private Shop owner;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "product_card", nullable = false)
     Product product;
 }

@@ -33,20 +33,12 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
     @Query("select u from UserAccount u left join fetch u.communication where u.id = ?1")
     UserAccount findUserAccountWithCommunicationById(Long id);
 
-    @Query("select u from UserAccount u left join fetch    u.reactions   where u.id = ?1")
+    @Query("select u from UserAccount u left join fetch u.reactions     where u.id = ?1")
     UserAccount findUserAccountWithReactionById(Long id);
 
-    @Query("select u from UserAccount u left join fetch    u.orders   where u.id = ?1")
+    @Query("select u from UserAccount u left join fetch u.orders        where u.id = ?1")
     UserAccount findUserAccountWithOrderById(Long id);
 
-
-   /* @Query("select u\n" +
-            "from UserAccount u\n" +
-            "left join fetch subscription_subscribers ss on u.id = ss.subscriber_id\n" +
-            "left join fetch Subscription s on s.id =ss.subscription_id\n" +
-            "where u.id =?1\n"? )
-    UserAccount findUserAccountWithSubscriptionById(Long id);*/
-
-    @Query("select u from UserAccount u left join fetch    u.subscriptions   where u.id = ?1")
+    @Query("select u from UserAccount u left join fetch u.subscriptions where u.id = ?1")
     UserAccount findUserAccountWithSubscriptionsById(Long id);
 }
