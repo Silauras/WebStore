@@ -1,10 +1,8 @@
 
 package edu.sytoss.model.order;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import edu.sytoss.model.product.Product;
 import edu.sytoss.model.shop.Shop;
-import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.UserAccount;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

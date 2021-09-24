@@ -23,7 +23,8 @@ public class Menu {
                     "What you want to see?",
                     "-1. Quit",
                     "1. Go to User Account Menu",
-                    "2. Go to Product Menu"
+                    "2. Go to Product Menu",
+                    "3. Go to Order Menu"
             );
             switch (scanInt()) {
                 case -1:
