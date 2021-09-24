@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -35,7 +36,6 @@ public class Warehouse {
     @JoinColumn(name = "owner", nullable = false)
     private Shop owner;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "product_card", nullable = false)
-    Product product;
+    @OneToMany
+    private List<Product> product;
 }

@@ -7,6 +7,7 @@ import edu.sytoss.model.user.Subsciptable;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +18,6 @@ import java.util.Set;
 
 @Table(name = "product_card")
 @Entity
-@Embeddable// Определяет класс, экземпляры которого хранятся как неотъемлемая часть исходного объекта
 public class ProductCard implements Subsciptable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +27,12 @@ public class ProductCard implements Subsciptable {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Lob
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
+
     @Column(name = "shortDescription")
     private String shortDescription;
 
-    @Lob
     @Column(name = "fullDescription")
     private String fullDescription;
 

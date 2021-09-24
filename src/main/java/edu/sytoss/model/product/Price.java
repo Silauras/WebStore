@@ -16,14 +16,11 @@ import java.util.Date;
 
 
 @Entity
-public class Price{
+public class Price {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "price_id", nullable = false)
     private Long id;
-
-    @Column(name = "price_type", nullable = false)
-    private String priceType;
 
     @Column(name = "unit", nullable = false, length = 20)
     private String unit;
@@ -41,7 +38,7 @@ public class Price{
     @JoinColumn(name = "product", nullable = false)
     private ProductCard productCard;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "promotion")
     private Promotion promotion;
 }

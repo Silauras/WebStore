@@ -16,7 +16,6 @@ import java.util.Set;
 
 @Table(name = "product")
 @Entity
-@Embeddable// Определяет класс, экземпляры которого хранятся как неотъемлемая часть исходного объекта
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +28,7 @@ public class Product {
     @Column(name = "price")
     private Long price;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouse", nullable = false)
     Warehouse warehouse;
 
@@ -43,6 +42,10 @@ public class Product {
 
     @Column(name = "status")
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "kit")
+    private Kit kit;
 
     @Override
     public String toString() {

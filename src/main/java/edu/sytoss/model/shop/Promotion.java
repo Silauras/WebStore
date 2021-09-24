@@ -1,5 +1,6 @@
 package edu.sytoss.model.shop;
 
+import edu.sytoss.model.product.Price;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -39,6 +41,7 @@ public class Promotion {
     @JoinColumn(name = "shop", nullable = false)
     private Shop shop;
 
-    @Column(name = "promotion_type", nullable = false, length = 50)
-    private String promotionType;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "promotion")
+    Set<Price> prices;
 }

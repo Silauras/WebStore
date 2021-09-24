@@ -16,7 +16,6 @@ import javax.persistence.*;
 
 @Table(name = "shop")
 @Entity
-@Embeddable// Определяет класс, экземпляры которого хранятся как неотъемлемая часть исходного объекта
 public class Shop implements Subsciptable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
