@@ -1,6 +1,8 @@
 package edu.sytoss.service;
 
 import edu.sytoss.model.order.Order;
+import edu.sytoss.model.product.Product;
+import edu.sytoss.model.product.ProductCard;
 import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.UserAccount;
 import edu.sytoss.repository.OrderRepository;
@@ -11,4 +13,12 @@ import java.util.List;
 public interface OrderAPI {
 
      Order findOrderById(Long id);
+
+     List<Order> findAllOrder();
+
+     List<Product> findAllProductInOrderById(Long id);
+
+     List<ProductCard> findAllProductCartsInOrderById(Long id);
+
+     ProductCard findProductCardById(Long id);
 }

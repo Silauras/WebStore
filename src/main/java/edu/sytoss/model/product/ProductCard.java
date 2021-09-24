@@ -57,13 +57,12 @@ public class ProductCard implements Subsciptable {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "ProductCards{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", shortDescription='" + shortDescription + '\'' +
                 ", fullDescription='" + fullDescription + '\'' +
                 ", status='" + status + '\'' +
-                ", productTemplate=" + productTemplate +
                 '}';
     }
 }

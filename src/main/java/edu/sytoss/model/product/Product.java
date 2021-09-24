@@ -7,6 +7,7 @@ import edu.sytoss.model.user.UserAccount;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Getter
@@ -26,7 +27,7 @@ public class Product {
     private long serialNumber;
 
     @Column(name = "price")
-    private Long price;
+    private BigDecimal price;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouse", nullable = false)

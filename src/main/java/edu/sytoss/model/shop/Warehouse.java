@@ -37,5 +37,6 @@ public class Warehouse {
     private Shop owner;
 
     @OneToMany
-    private List<Product> product;
+    @JoinColumn(name = "warehouse")
+    List<Product> products;
 }
