@@ -3,7 +3,7 @@ package edu.sytoss.UI;
 import java.util.Scanner;
 
 public class MenuUtils {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     private static boolean lastScanInteger = false;
 
     public static int scanInt(String text) {

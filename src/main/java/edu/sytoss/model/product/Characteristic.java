@@ -35,45 +35,4 @@ public class Characteristic {
     @JoinColumn(name = "template", nullable = false)
     private CharacteristicTemplate template;
 
-    public CharacteristicTemplate getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(CharacteristicTemplate template) {
-        this.template = template;
-    }
-
-    public ProductCard getProductCard() {
-        return productCard;
-    }
-
-    public void setProductCard(ProductCard productCard) {
-        this.productCard = productCard;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
 }

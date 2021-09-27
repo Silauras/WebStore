@@ -7,15 +7,16 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
+/**
+ * Composition of product cards that has cost less than all product cards prices separately.
+ */
+
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-
-@Table(name = "Kit")
-
 
 @Entity
+@Table(name = "Kit")
 public class Kit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,11 +35,26 @@ public class Kit {
 
     @ManyToMany
     @JoinTable(name = "kit_product_card",
-            joinColumns =
-            @JoinColumn(name = "kit", referencedColumnName = "kit_id"),
-            inverseJoinColumns =
-            @JoinColumn(name = "product_card", referencedColumnName = "product_id")
-    )
-    private Set<ProductCard> productCard;
+            joinColumns = @JoinColumn(name = "kit", referencedColumnName = "kit_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_card", referencedColumnName = "product_id"))
+    private Set<ProductCard> productCards;
 
+
+    /**
+     * Returns product card with maximum price (without any sale) in kit
+     *
+     * @return most expensive product card in kit
+     * @author Oleg Pensov
+     */
+    public ProductCard getMostExpensiveProduct() {
+        BigDecimal maxPrice = BigDecimal.ZERO;
+        ProductCard mostExpensive = new ProductCard();
+        for (ProductCard productCard : this.productCards) {
+            if (maxPrice.compareTo(productCard.getPrice()) < 0) {
+                maxPrice = productCard.getPrice();
+                mostExpensive = productCard;
+            }
+        }
+        return mostExpensive;
+    }
 }
