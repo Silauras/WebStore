@@ -1,9 +1,13 @@
 package edu.sytoss.repository;
 
+import edu.sytoss.model.product.Product;
 import edu.sytoss.model.product.ProductCard;
+import edu.sytoss.model.user.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface ProductCardRepository extends JpaRepository<ProductCard, Long> {
@@ -15,4 +19,10 @@ public interface ProductCardRepository extends JpaRepository<ProductCard, Long> 
             "left join fetch pt.category " +
             "where p.id = ?1")
     ProductCard findByIdWithCharacteristicsAndCategory(Long id);
+
+    @Query("select pc from ProductCard pc left join fetch pc.products p where pc.id = ?1")
+    ProductCard findProductCardWithProductsById(Long id);
+    @Query("select pc from ProductCard pc left join fetch pc.products p where pc.id = ?1 and p.status = ?2 ")
+    ProductCard findProductCardWithProductsByIdWhereStatus(Long id, String status);
+
 }

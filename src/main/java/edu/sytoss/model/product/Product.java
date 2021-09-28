@@ -23,10 +23,10 @@ public class Product {
     @Column(name = "product_id", nullable = false)
     private Long id;
 
-    @Column(name = "serial_number", nullable = false, length = 50)
-    private long serialNumber;
+    @Column(name = "serial_number", nullable = false)
+    private Long serialNumber;
 
-    @Column(name = "price")
+    @Column(name = "price", precision = 10)
     private BigDecimal price;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -37,11 +37,11 @@ public class Product {
     @JoinColumn(name = "product_card", nullable = false)
     private ProductCard productCard;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "order", nullable = false)
+    @ManyToOne()
+    @JoinColumn(name = "`order`")
     private Order order;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false, length = 50)
     private String status;
 
     @ManyToOne

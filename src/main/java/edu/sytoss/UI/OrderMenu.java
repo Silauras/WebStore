@@ -55,7 +55,6 @@ public class OrderMenu {
                 "-1.Quit",
                 "1. Find Order by id"
         );
-
         switch (scanInt()) {
             case -1:
                 return;
@@ -66,63 +65,93 @@ public class OrderMenu {
     }
 
     private void updateOrder() {
-        long oderId = MenuUtils.scanInt("Write id Order");
-        new OrderPrinter(oderId);
-        new CartsPrinter(oderId);
+        long orderId = MenuUtils.scanInt("Write id Order");
+        new OrderPrinter(orderId);
+        new CartsPrinter(orderId);
+        new PricePrinter(orderId);
+        printMenu(
+                "-1.Quit",
+                "1. Add product",
+                "2. Delete product",
+                "3. Pay"
+        );
+        switch (scanInt()) {
+            case -1:
+                return;
+            case 1:
+                addProduct(orderId, "add");
+                break;
+            case 2:
+                addProduct(orderId, "delete");
+                break;
+            case 3:
+                payOrder(orderId);
+                break;
+        }
+        System.out.println("Ордер после обновления");
+        new OrderPrinter(orderId);
+        new CartsPrinter(orderId);
+    }
+
+    private void payOrder(long orderId) {
+        orderAPI.updateOrder(orderId);
+    }
+
+    private void addProduct(Long orderId, String actionType) {
         long productCardId = MenuUtils.scanInt("Write id ProductCard");
-        ProductCard productCard = orderAPI.findProductCardById(productCardId);
+        int quantity = MenuUtils.scanInt("Write Quantity");
+        orderAPI.updateOrder(orderId, productCardId, quantity, actionType);
     }
 
     private void findOrderById() {
+        long orderId = scanInt("Write Order id(0 for all): ");
         printMenu(
                 "What you want to see?",
                 "1. Show Oder with main info",
                 "2. Show Oder with Products",
                 "3. Show Oder with ProductCarts"
         );
-        long oderId;
+
         switch (scanInt("")) {
             case 1:
-                oderId = scanInt("Write Order id(0 for all): ");
-                if (oderId == 0) {
+                if (orderId == 0) {
                     List<Order> orders = orderAPI.findAllOrder();
                     for (Order order : orders) {
                         new OrderPrinter(order.getId());
                     }
                 } else {
-                    new OrderPrinter(oderId);
+                    new OrderPrinter(orderId);
                     break;
                 }
                 break;
             case 2:
-                oderId = MenuUtils.scanInt("Write Order id(0 for all): ");
-                if (oderId == 0) {
+                if (orderId == 0) {
                     List<Order> orders = orderAPI.findAllOrder();
                     for (Order order : orders) {
                         new OrderPrinter(order.getId());
                         new ProductPrinter(order.getId());
                     }
                 } else {
-                    new OrderPrinter(oderId);
-                    new ProductPrinter(oderId);
+                    new OrderPrinter(orderId);
+                    new ProductPrinter(orderId);
                     break;
                 }
                 break;
-            case 3:
-                oderId = MenuUtils.scanInt("Write Order id(0 for all): ");
-                if (oderId == 0) {
+            case 3: ;
+                if (orderId == 0) {
                     List<Order> orders = orderAPI.findAllOrder();
                     for (Order order : orders) {
                         new OrderPrinter(order.getId());
                         new CartsPrinter(order.getId());
                     }
                 } else {
-                    new OrderPrinter(oderId);
-                    new CartsPrinter(oderId);
+                    new OrderPrinter(orderId);
+                    new CartsPrinter(orderId);
                     break;
                 }
                 break;
         }
+        new PricePrinter(orderId);
     }
 
     private class OrderPrinter {
@@ -155,20 +184,28 @@ public class OrderMenu {
         private void printProductById(Long orderId) {
             List<ProductCard> productCards = orderAPI.findAllProductCartsInOrderById(orderId);
             Map<String, Integer> cardsMap = new HashMap<>();
-            int count =1;
+            int count = 1;
             for (ProductCard productCard : productCards) {
                 cardsMap.put(productCard.getName(), count);
             }
             for (String nameProduct : cardsMap.keySet()) {
                 for (ProductCard productCard : productCards) {
-                    if (nameProduct.equals(productCard.getName()))
-                    {
-                        cardsMap.put(nameProduct,count++);
+                    if (nameProduct.equals(productCard.getName())) {
+                        cardsMap.put(nameProduct, count++);
                     }
                 }
-                count=1;
+                count = 1;
             }
             System.out.println(cardsMap);
+        }
+    }
+
+    private class PricePrinter {
+        public PricePrinter(long orderId) {
+            printOrderPriceById(orderId);
+        }
+        private void printOrderPriceById(Long orderId) {
+            priceCalculator.calculatePriceForOrder(orderId);
         }
     }
 }

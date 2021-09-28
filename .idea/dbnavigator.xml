@@ -25,26 +25,25 @@
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
     <loaded-nodes>
-      <connection connection-id="071db53a-c843-4ef6-9f61-f92742897c04">
+      <connection connection-id="782f9931-a768-4bae-b78f-c6383def1e2f">
         <schema name="webstore" object-types="table, view, procedure, function, constraint, index, column, dataset trigger" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="071db53a-c843-4ef6-9f61-f92742897c04">
-      <console name="Connection" type="STANDARD" schema="webstore" session="Main" />
+    <connection id="782f9931-a768-4bae-b78f-c6383def1e2f">
+      <console name="WebStore" type="STANDARD" schema="webstore" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="071db53a-c843-4ef6-9f61-f92742897c04" object-ref="schemas/webstore/tables/product" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="071db53a-c843-4ef6-9f61-f92742897c04" />
+    <connection id="782f9931-a768-4bae-b78f-c6383def1e2f" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="071db53a-c843-4ef6-9f61-f92742897c04" dataset="webstore.product" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="782f9931-a768-4bae-b78f-c6383def1e2f" dataset="webstore.order" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="782f9931-a768-4bae-b78f-c6383def1e2f" dataset="webstore.product" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -72,9 +71,9 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="071db53a-c843-4ef6-9f61-f92742897c04" active="true">
+      <connection id="782f9931-a768-4bae-b78f-c6383def1e2f" active="true">
         <database>
-          <name value="Connection" />
+          <name value="WebStore" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />

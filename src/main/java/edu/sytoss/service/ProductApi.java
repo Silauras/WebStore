@@ -9,11 +9,15 @@ import java.util.List;
 public interface ProductApi {
 
     /* --------- PRODUCTS --------- */
+    Product findById(Long id);
+
     ProductCard findProductCardById(Long id);
 
     List<ProductCard> findAllProductCards();
 
     ProductCard findProductCardByIdWithCharacteristicsAndCategory(Long id);
+
+    boolean updateProductStatus(Product product, Long orderId, String status);
 
     /**
      * * @param filter

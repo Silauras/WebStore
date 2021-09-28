@@ -54,7 +54,7 @@ public class ProductCard implements Subsciptable {
 
     @OneToMany()
     @JoinColumn(name = "product_card")
-    private List<Product> product;
+    private List<Product> products;
 
     @Override
     public String toString() {
