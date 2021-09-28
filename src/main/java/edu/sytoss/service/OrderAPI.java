@@ -21,4 +21,8 @@ public interface OrderAPI {
      List<ProductCard> findAllProductCartsInOrderById(Long id);
 
      ProductCard findProductCardById(Long id);
+
+     void updateOrder(Long orderId, Long productCardId, int quantity, String actionType);
+
+     void updateOrder(Long orderId);
 }

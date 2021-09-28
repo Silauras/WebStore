@@ -1,6 +1,8 @@
 package edu.sytoss.service.impl;
 
+import edu.sytoss.model.order.Order;
 import edu.sytoss.model.product.*;
+import edu.sytoss.model.user.UserAccount;
 import edu.sytoss.repository.*;
 import edu.sytoss.service.ProductApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,17 @@ public class ProductApiImpl implements ProductApi {
 
     @Autowired
     CharacteristicRepository characteristicRepository;
+    @Autowired
+    ProductRepository productRepository;
+    @Autowired
+    OrderRepository orderRepository;
 
     /* --------- IMPLEMENTED METHODS --------- */
+
+    @Override
+    public Product findById(Long id) {
+        return productRepository.findById(id);
+    }
 
     @Transactional
     @Override
@@ -41,6 +52,26 @@ public class ProductApiImpl implements ProductApi {
     @Override
     public ProductCard findProductCardByIdWithCharacteristicsAndCategory(Long id) {
         return productCardRepository.findByIdWithCharacteristicsAndCategory(id);
+    }
+
+    /**
+     * @param
+     * @param
+     * @return
+     * @author Andrey Kolesnyk
+     */
+    @Transactional
+    @Override
+    public boolean updateProductStatus(Product product, Long orderId, String status) {
+        try {
+            Order order = orderRepository.findById(orderId);
+            product.setStatus(status);
+            product.setOrder(order);
+            productRepository.save(product);
+            return true;
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
     @Override
