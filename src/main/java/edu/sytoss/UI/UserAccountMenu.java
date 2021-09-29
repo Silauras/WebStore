@@ -36,7 +36,7 @@ public class UserAccountMenu {
                 createUserAccount(0);
                 break;
             case 3:
-                int id = MenuUtils.scanInt("Write id UserAccount: ");
+                int id = MenuUtils.scanInt("Write id UserAccount");
                 createUserAccount(id);
                 break;
         }
@@ -51,7 +51,7 @@ public class UserAccountMenu {
                 "3. Find User by Role"
         );
 
-        switch (MenuUtils.scanInt("")) {
+        switch (MenuUtils.scanInt()) {
             case -1:
                 return;
             case 1:
@@ -59,7 +59,7 @@ public class UserAccountMenu {
                 break;
             case 2:
                 String surnameNameLogin = MenuUtils.scanLine("Write Name and/or Surname or Login\n" +
-                        "(if Login start with'@'): ");
+                        "(if Login start with'@')");
                 new UserAccountPrinter(surnameNameLogin);
                 break;
             case 3:
@@ -79,9 +79,9 @@ public class UserAccountMenu {
                 "5. Show UserAccount with Reaction"
         );
         long userAccountId;
-        switch (MenuUtils.scanInt("")) {
+        switch (MenuUtils.scanInt()) {
             case 1:
-                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
+                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all)");
                 if (userAccountId == 0) {
                     new UserAccountPrinter();
                 } else {
@@ -90,7 +90,7 @@ public class UserAccountMenu {
                 }
                 break;
             case 2:
-                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
+                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all)");
                 if (userAccountId == 0) {
                     List<UserAccount> userAccounts = userAccountAPI.findAllUserAccount();
                     for (UserAccount userAccount : userAccounts) {
@@ -104,7 +104,7 @@ public class UserAccountMenu {
                 }
                 break;
             case 3:
-                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
+                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all)");
                 if (userAccountId == 0) {
                     List<UserAccount> userAccounts = userAccountAPI.findAllUserAccount();
                     for (UserAccount userAccount : userAccounts) {
@@ -118,7 +118,7 @@ public class UserAccountMenu {
                 }
                 break;
             case 4:
-                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
+                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all)");
                 if (userAccountId == 0) {
                     List<UserAccount> userAccounts = userAccountAPI.findAllUserAccount();
                     for (UserAccount userAccount : userAccounts) {
@@ -132,7 +132,7 @@ public class UserAccountMenu {
                 }
                 break;
             case 5:
-                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all): ");
+                userAccountId = MenuUtils.scanInt("Write UserAccount id(0 for all)");
                 if (userAccountId == 0) {
                     List<UserAccount> userAccounts = userAccountAPI.findAllUserAccount();
                     for (UserAccount userAccount : userAccounts) {
@@ -154,13 +154,14 @@ public class UserAccountMenu {
 
     private void createUserAccount(int id) {
         String[] surnameAndName = MenuUtils
-                .scanLine("Write your Surname and Name:").split(" ");
+                .scanLine("Write your Surname and Name").split(" ");
         String surname = surnameAndName[0];
         String name = surnameAndName[1];
-        String login = MenuUtils.scanLine("Write your Login: ");
-        String password = MenuUtils.scanLine("Write your Password:");
+        String login = MenuUtils.scanLine("Write your Login");
+        String password = MenuUtils.scanLine("Write your Password");
         Date registrationDate = new Date();
         System.out.println("Wait 2 second");
+        // O_o UserAccountMenu is not thread
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

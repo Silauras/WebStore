@@ -8,12 +8,12 @@ public class MenuUtils {
 
     public static int scanInt(String text) {
         System.out.println(colors.ANSI_PURPLE + "----- INPUT INT -----");
-        System.out.print(text + colors.ANSI_RESET);
+        System.out.print(text + ": " + colors.ANSI_RESET);
         lastScanInteger = true;
         return scanner.nextInt();
     }
 
-    public static int scanInt(){
+    public static int scanInt() {
         System.out.println(colors.ANSI_PURPLE + "----- INPUT INT -----");
         lastScanInteger = true;
         return scanner.nextInt();
@@ -41,7 +41,7 @@ public class MenuUtils {
     }
 
     public static void printField(String field, String value) {
-        System.out.println(colors.ANSI_GREEN + field + " : "+colors.ANSI_CYAN + value + colors.ANSI_RESET);
+        System.out.println(colors.ANSI_GREEN + field + " : " + colors.ANSI_CYAN + value + colors.ANSI_RESET);
     }
 
     public static class colors {

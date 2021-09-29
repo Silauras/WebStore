@@ -14,10 +14,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import static edu.sytoss.UI.MenuUtils.printMenu;
-import static edu.sytoss.UI.MenuUtils.scanInt;
-
 import java.util.Map;
+
+import static edu.sytoss.UI.MenuUtils.*;
 
 
 @Service
@@ -44,8 +43,11 @@ public class OrderMenu {
                 updateOrder();
                 break;
             case 3:
-                MenuUtils.printField("price",
-                        priceCalculator.calculatePriceForOrder((long) scanInt("Write order id")).toString());
+                long orderId = scanInt("Write order id");
+                printField("price without sale", String.valueOf(
+                        priceCalculator.calculatePriceForOrderWithoutSale(orderId)));
+                printField("price", String.valueOf(
+                        priceCalculator.calculatePriceForOrderWithSale(orderId)));
                 break;
         }
     }
@@ -137,7 +139,7 @@ public class OrderMenu {
                     break;
                 }
                 break;
-            case 3: ;
+            case 3:
                 if (orderId == 0) {
                     List<Order> orders = orderAPI.findAllOrder();
                     for (Order order : orders) {
@@ -204,8 +206,9 @@ public class OrderMenu {
         public PricePrinter(long orderId) {
             printOrderPriceById(orderId);
         }
+
         private void printOrderPriceById(Long orderId) {
-            priceCalculator.calculatePriceForOrder(orderId);
+            priceCalculator.calculatePriceForOrderWithSale(orderId);
         }
     }
 }

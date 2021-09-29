@@ -51,10 +51,10 @@ public class ProductCardMenu {
     }
 
     private void printAllPossibleCharacteristics() {
-        long categoryId = scanInt("Write category id or 0 to show all catalogs: ");
+        long categoryId = scanInt("Write category id or 0 to show all catalogs");
         if (categoryId == 0) {
             printAllCategoriesWithCharacteristics();
-            categoryId = scanInt("Write catalog id: ");
+            categoryId = scanInt("Write catalog id");
         }
         printPerCategory(categoryId);
     }
@@ -87,7 +87,7 @@ public class ProductCardMenu {
     }
 
     private void printProducts() {
-        long productId = scanInt("Write product id: ");
+        long productId = scanInt("Write product id");
         printProduct(productId);
     }
 
@@ -109,10 +109,10 @@ public class ProductCardMenu {
 
     private void printCommentaries() {
         // I don't think that in test you will use BIG number;
-        long productId = scanInt("Write product id or 0 to show all products: ");
+        long productId = scanInt("Write product id or 0 to show all products");
         if (productId == 0) {
             printAllProductsWithCountOfCommentaries();
-            productId = scanInt("Write product id: ");
+            productId = scanInt("Write product id");
         }
         printCommentariesPerProduct(productId);
     }

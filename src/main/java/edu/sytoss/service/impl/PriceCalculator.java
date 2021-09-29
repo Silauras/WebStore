@@ -7,6 +7,7 @@ import edu.sytoss.model.product.Product;
 import edu.sytoss.model.product.ProductCard;
 import edu.sytoss.model.shop.Promotion;
 import edu.sytoss.repository.OrderRepository;
+import edu.sytoss.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ import java.math.BigDecimal;
 @Service
 public class PriceCalculator {
     @Autowired
-    OrderRepository orderRepository;
+    ProductRepository productRepository;
 
     /**
      * Calculate summary price for {@link Order order} without any sales like
@@ -45,11 +46,11 @@ public class PriceCalculator {
      * @author Oleg Pentsov
      */
     public BigDecimal calculatePriceForOrderWithoutSale(Long orderId) {
-        Order order = orderRepository.findOrderWithProductCartsById(orderId);
         BigDecimal result = BigDecimal.ZERO;
-        for (Product product : order.getProducts())
+        for (Product product : productRepository.findByOrderId(orderId)) {
             //like result += price of product
             result = result.add(product.getProductCard().getPrice());
+        }
         return result;
     }
 
@@ -69,13 +70,12 @@ public class PriceCalculator {
      * @author Oleg Pentsov
      */
     public BigDecimal calculatePriceForOrderWithSale(Long orderId) {
-        Order order = orderRepository.findOrderWithProductCartsById(orderId);
         BigDecimal result = BigDecimal.ZERO;
-        for (Product product : order.getProducts()) {
+        for (Product product : productRepository.findByOrderIdWithAllPriceFetches(orderId)) {
+            System.out.println(product.getId() + ". " + calculateProductPrice(product));
             result = result.add(calculateProductPrice(product));
-
         }
-        return null;
+        return result;
     }
 
     /**
@@ -104,10 +104,11 @@ public class PriceCalculator {
      */
     public BigDecimal calculateProductPriceInKit(Product product) {
         ProductCard productCard = product.getProductCard();
-        if (productCard.equals(product.getKit().getMostExpensiveProduct()))
+        if (productCard.getId().equals(product.getKit().getMostExpensiveProduct().getId())) {
             return productCard.getPrice().subtract(calculateDifferenceInKit(product.getKit()));
-        else
+        } else {
             return productCard.getPrice();
+        }
 
     }
 
@@ -125,24 +126,26 @@ public class PriceCalculator {
             BigDecimal minPrice = productCard.getPrice();
             for (Price price : productCard.getPrices()) {
                 if (price.getUnit().equals("%")) {
-                    //minPrice < minPrice - (minPrice * sale / 100)
+                    //minPrice > minPrice - (minPrice * sale / 100)
                     if (minPrice.compareTo(minPrice.subtract(minPrice
                             .multiply(price.getValue())
-                            .multiply(new BigDecimal("0.01")))) < 0) {
+                            .multiply(new BigDecimal("0.01")))) > 0) {
                         //minPrice = minPrice - (minPrice * sale / 100)
                         minPrice = minPrice.subtract(minPrice
                                 .multiply(price.getValue())
                                 .multiply(new BigDecimal("0.01")));
                     }
                 } else {
-                    // minPrice < minPrice - sale
-                    if (minPrice.compareTo(minPrice.subtract(price.getValue())) < 0) {
+                    // minPrice > minPrice - sale
+                    if (minPrice.compareTo(minPrice.subtract(price.getValue())) > 0) {
                         minPrice = minPrice.subtract(price.getValue());
                     }
                 }
             }
             return minPrice;
-        } else return productCard.getPrice();
+        } else {
+            return productCard.getPrice();
+        }
     }
 
     /**
@@ -153,7 +156,7 @@ public class PriceCalculator {
      * @author Oleg Pentsov
      */
     public BigDecimal calculateDifferenceInKit(Kit kit) {
-        return kit.getPrice().subtract(calculateSummaryKitPrice(kit));
+        return calculateSummaryKitPrice(kit).subtract(kit.getPrice());
     }
 
     /**

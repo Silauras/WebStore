@@ -52,7 +52,7 @@ public class ProductCard implements Subsciptable {
     @JoinColumn(name = "product")
     List<Characteristic> characteristics;
 
-    @OneToMany()
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_card")
     private List<Product> products;
 
@@ -82,7 +82,7 @@ public class ProductCard implements Subsciptable {
         if (!productTemplate.equals(that.productTemplate)) return false;
         if (!Objects.equals(prices, that.prices)) return false;
         if (!characteristics.equals(that.characteristics)) return false;
-        return Objects.equals(product, that.product);
+        return Objects.equals(products, that.products);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class ProductCard implements Subsciptable {
         result = 31 * result + productTemplate.hashCode();
         result = 31 * result + (prices != null ? prices.hashCode() : 0);
         result = 31 * result + characteristics.hashCode();
-        result = 31 * result + (product != null ? product.hashCode() : 0);
+        result = 31 * result + (products != null ? products.hashCode() : 0);
         return result;
     }
 }

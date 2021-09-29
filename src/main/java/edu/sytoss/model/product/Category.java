@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,11 +22,14 @@ public class Category {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_category")
     private Category parentCategory;
 
+    @OneToMany(fetch =  FetchType.LAZY)
+    private Set<Category> subCategory;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "category")
-    List<ProductTemplate> productTemplates;
+    Set<ProductTemplate> productTemplates;
 }

@@ -8,7 +8,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -33,7 +32,7 @@ public class Product {
     @JoinColumn(name = "warehouse", nullable = false)
     Warehouse warehouse;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_card", nullable = false)
     private ProductCard productCard;
 
