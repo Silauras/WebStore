@@ -2,11 +2,10 @@ package edu.sytoss.service.impl;
 
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.product.Kit;
-import edu.sytoss.model.product.Price;
+import edu.sytoss.model.product.Sale;
 import edu.sytoss.model.product.Product;
 import edu.sytoss.model.product.ProductCard;
 import edu.sytoss.model.shop.Promotion;
-import edu.sytoss.repository.OrderRepository;
 import edu.sytoss.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,8 +47,10 @@ public class PriceCalculator {
     public BigDecimal calculatePriceForOrderWithoutSale(Long orderId) {
         BigDecimal result = BigDecimal.ZERO;
         for (Product product : productRepository.findByOrderId(orderId)) {
+            System.out.println(product.getId() + ". " + product.getProductCard().getPrice());
             //like result += price of product
             result = result.add(product.getProductCard().getPrice());
+            System.out.println("result now: " + result);
         }
         return result;
     }
@@ -74,6 +75,7 @@ public class PriceCalculator {
         for (Product product : productRepository.findByOrderIdWithAllPriceFetches(orderId)) {
             System.out.println(product.getId() + ". " + calculateProductPrice(product));
             result = result.add(calculateProductPrice(product));
+            System.out.println("result now: " + result);
         }
         return result;
     }
@@ -113,7 +115,7 @@ public class PriceCalculator {
     }
 
     /**
-     * Calculate price of product card with sale from {@link Promotion promotions} with {@link Price prices}
+     * Calculate price of product card with sale from {@link Promotion promotions} with {@link Sale prices}
      * <p>
      * Product card must have only current prices, their period of work won't check there
      *
@@ -122,9 +124,9 @@ public class PriceCalculator {
      * @author Oleg Pentsov
      */
     public BigDecimal calculateProductCardPriceWithSale(ProductCard productCard) {
-        if (productCard.getPrices() != null && productCard.getPrices().size() > 0) {
+        if (productCard.getSales() != null && productCard.getSales().size() > 0) {
             BigDecimal minPrice = productCard.getPrice();
-            for (Price price : productCard.getPrices()) {
+            for (Sale price : productCard.getSales()) {
                 if (price.getUnit().equals("%")) {
                     //minPrice > minPrice - (minPrice * sale / 100)
                     if (minPrice.compareTo(minPrice.subtract(minPrice

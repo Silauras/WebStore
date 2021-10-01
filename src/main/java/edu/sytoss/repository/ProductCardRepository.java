@@ -25,4 +25,7 @@ public interface ProductCardRepository extends JpaRepository<ProductCard, Long> 
     @Query("select pc from ProductCard pc left join fetch pc.products p where pc.id = ?1 and p.status = ?2 ")
     ProductCard findProductCardWithProductsByIdWhereStatus(Long id, String status);
 
+    @Query("select p from ProductCard p where p.productTemplate.category.id = ?1")
+    List<ProductCard> findProductCardsByProductTemplateCategoryId(Long categoryId);
+
 }

@@ -1,6 +1,6 @@
 package edu.sytoss.model.shop;
 
-import edu.sytoss.model.product.Price;
+import edu.sytoss.model.product.Sale;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,5 +43,5 @@ public class Promotion {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "promotion")
-    Set<Price> prices;
+    Set<Sale> prices;
 }

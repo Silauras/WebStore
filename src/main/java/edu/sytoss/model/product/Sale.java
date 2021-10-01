@@ -16,7 +16,7 @@ import java.util.Date;
 
 
 @Entity
-public class Price {
+public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "price_id", nullable = false)

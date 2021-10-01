@@ -6,6 +6,8 @@ import edu.sytoss.model.communication.Review;
 import edu.sytoss.model.product.Category;
 import edu.sytoss.model.product.Characteristic;
 import edu.sytoss.model.product.ProductCard;
+import edu.sytoss.repository.ProductCardFilterRepository;
+import edu.sytoss.repository.ProductCardRepository;
 import edu.sytoss.service.ProductApi;
 import edu.sytoss.service.impl.CommentaryApiImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +28,18 @@ public class ProductCardMenu {
     ProductApi productApi;
     @Autowired
     CommentaryApiImpl commentaryApi;
+    @Autowired
+    ProductCardFilterRepository productCardFilterRepository;
+    @Autowired
+    ProductCardRepository productCardRepository;
 
     public void start() {
         printMenu(
                 "-1. Quit",
                 "1. Print commentaries for product",
                 "2. Print Product with full description",
-                "3. Print all possible characteristics for category"
+                "3. Print all possible characteristics for category",
+                "4. Product Card filter"
         );
         switch (scanInt()) {
             case -1:
@@ -45,7 +52,14 @@ public class ProductCardMenu {
                 break;
             case 3:
                 printAllPossibleCharacteristics();
-
+                break;
+            case 4:
+                long orderId = scanInt("write category id");
+                for (Object o : productCardFilterRepository
+                        .findProductCardsByFilter(orderId, new HashMap<String, List<String>>())) {
+                    System.out.println(o.toString());
+                    System.out.println(o.getClass());
+                }
 
         }
     }

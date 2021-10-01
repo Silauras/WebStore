@@ -1,8 +1,5 @@
 package edu.sytoss.model.product;
 
-import edu.sytoss.model.order.Order;
-import edu.sytoss.model.shop.Warehouse;
-import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.Subsciptable;
 import lombok.*;
 
@@ -46,9 +43,9 @@ public class ProductCard implements Subsciptable {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "product")
-    private Set<Price> prices;
+    private Set<Sale> sales;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "product")
     List<Characteristic> characteristics;
 
@@ -80,7 +77,7 @@ public class ProductCard implements Subsciptable {
         if (!Objects.equals(fullDescription, that.fullDescription)) return false;
         if (!status.equals(that.status)) return false;
         if (!productTemplate.equals(that.productTemplate)) return false;
-        if (!Objects.equals(prices, that.prices)) return false;
+        if (!Objects.equals(sales, that.sales)) return false;
         if (!characteristics.equals(that.characteristics)) return false;
         return Objects.equals(products, that.products);
     }
@@ -93,7 +90,7 @@ public class ProductCard implements Subsciptable {
         result = 31 * result + (fullDescription != null ? fullDescription.hashCode() : 0);
         result = 31 * result + status.hashCode();
         result = 31 * result + productTemplate.hashCode();
-        result = 31 * result + (prices != null ? prices.hashCode() : 0);
+        result = 31 * result + (sales != null ? sales.hashCode() : 0);
         result = 31 * result + characteristics.hashCode();
         result = 31 * result + (products != null ? products.hashCode() : 0);
         return result;
