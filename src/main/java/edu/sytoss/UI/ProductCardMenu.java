@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static edu.sytoss.UI.MenuUtils.*;
 
@@ -54,13 +51,56 @@ public class ProductCardMenu {
                 printAllPossibleCharacteristics();
                 break;
             case 4:
-                long orderId = scanInt("write category id");
-                for (Object o : productCardFilterRepository
-                        .findProductCardsByFilter(orderId, new HashMap<String, List<String>>())) {
-                    System.out.println(o.toString());
-                    System.out.println(o.getClass());
-                }
+                printProductCardsByFilter();
+                break;
+        }
+    }
 
+    private void printProductCardsByFilter() {
+        Map<String, List<String>> params = new HashMap<>();
+
+        long orderId = scanInt("write category id");
+
+        String startPrice = scanLine("write start price or -1 to don't add");
+        if (!startPrice.equals("-1")) {
+            params.put("startPrice", new ArrayList<>(Collections.singletonList(startPrice)));
+        }
+        String endPrice = scanLine("write end price or -1 to don't add");
+        if (!endPrice.equals("-1")) {
+            params.put("endPrice", new ArrayList<>(Collections.singletonList(endPrice)));
+        }
+        String statusString = scanLine("write statuses using , or -1 to don't add");
+        List<String> statues = statusString.equals("-1") ?
+                null : new ArrayList<>(Arrays.asList(statusString.split(",")));
+        if (statues != null) {
+            params.put("productStatus", statues);
+        }
+        printMenu("Select sort type",
+                "1. mostExpensive",
+                "2. mostCheap",
+                "3. mostCommented",
+                "4. bestRated");
+        switch (scanInt()) {
+            case 1:
+                params.put("sortType", new ArrayList<>(Collections.singletonList("mostExpensive")));
+                break;
+            case 2:
+                params.put("sortType", new ArrayList<>(Collections.singletonList("mostCheap")));
+                break;
+            case 3:
+                params.put("sortType", new ArrayList<>(Collections.singletonList("mostCommented")));
+                break;
+            case 4:
+                params.put("sortType", new ArrayList<>(Collections.singletonList("bestRated")));
+                break;
+        }
+
+        params.put("sortType", new ArrayList<String>());
+        params.get("sortType").add("mostCommented");
+        for (Object o : productCardFilterRepository
+                .findProductCardsByFilter(orderId, params)) {
+            System.out.println(o.toString());
+            System.out.println(o.getClass());
         }
     }
 

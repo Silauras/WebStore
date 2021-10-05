@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,11 +39,8 @@ public class ProductCardFilterRepository {
      *        <ul>
      *            <li><i>mostExpensive</i> - from most expensive to cheap</li>
      *            <li><i>mostCheap</i> - from most cheap to expensive</li>
-     *            <li><i>mostCommented</i> - from productCard with biggest count of commentaries</li>
-     *            <li><i>leastCommented</i> - count of comments will grow</li>
-     *            <li><i>bestRated</i> - firstly check average rating then count of ratings</li>
-     *            <li><i>bestSales</i> - from biggest sales to small</li>
-     *            <li><i>popular</i> - firstly sort by purchases for last month then rating</li>
+     *            <li><i>mostCommented</i> - from productCard with biggest amount of commentary authors then count of commentaries</li>
+     *            <li><i>bestRated</i> - firstly check average rating</li>
      *            check value on index 0
      *        </ul>
      *        </li>
@@ -56,7 +54,6 @@ public class ProductCardFilterRepository {
      */
     @Transactional
     public List<ProductCard> findProductCardsByFilter(Long categoryId, Map<String, List<String>> params) {
-
         String baseSQL = "select " +
                 "distinct " +
                 "pc.product_id, " +
@@ -68,13 +65,20 @@ public class ProductCardFilterRepository {
                 "pc.status " +
                 "from product_card pc ";
 
+        // product template joins for category filtering
         String joinBuilder = "inner join product_template pt on pc.product_template = pt.product_template_id " +
                 "inner join category c on pt.category = c.category_id " +
-                "inner join characteristic c2 on pc.product_id = c2.product " +
-                "left join price p on pc.product_id = p.product ";
+                "inner join characteristic c2 on pc.product_id = c2.product ";
 
         StringBuilder whereBuilder = new StringBuilder("where c.category_id = :categoryId ");
 
+        //price join
+        if (params.containsKey("startPrice") ||
+                params.containsKey("endPrice") ||
+                params.get("sortType").contains("mostCheap") ||
+                params.get("sortType").contains("mosExpensive")) {
+            joinBuilder += " left join price p on pc.product_id = p.product ";
+        }
         //price filtering
         BigDecimal startPrice = null;
         BigDecimal endPrice = null;
@@ -82,17 +86,17 @@ public class ProductCardFilterRepository {
             startPrice = new BigDecimal(params.get("startPrice").get(0));
         }
         if (startPrice != null) {
-            whereBuilder.append(" and if(p.unit = '%'," +
-                    " pc.price * (100 - p.value) / 100," +
-                    " pc.price - p.value) > :startPrice ");
+            whereBuilder.append(" and if(p.price_id is not null," +
+                    " if(p.unit = '%', pc.price * (100 - p.value) / 100, pc.price - p.value)" +
+                    ", pc.price) > :startPrice ");
         }
         if (params.containsKey("endPrice")) {
             endPrice = new BigDecimal(params.get("endPrice").get(0));
         }
         if (endPrice != null) {
-            whereBuilder.append(" and if(p.unit = '%'," +
-                    " pc.price * (100 - p.value) / 100," +
-                    " pc.price - p.value) > :endPrice ");
+            whereBuilder.append(" and if(p.price_id is not null," +
+                    " if(p.unit = '%', pc.price * (100 - p.value) / 100, pc.price - p.value)," +
+                    " pc.price) > :endPrice ");
         }
 
         //status filtering
@@ -100,29 +104,90 @@ public class ProductCardFilterRepository {
             whereBuilder.append(" and ( ");
             int countOfStatuses = params.get("productStatus").size() - 1;
             for (int i = 0; i <= countOfStatuses; i++) {
-                if (i != 0 || i != countOfStatuses) {
+                if (i != 0) {
                     whereBuilder.append(" or ");
                 }
-                whereBuilder.append("pc.status = :productStatus").append(i);
+                whereBuilder.append("pc.status = ':productStatus'").append(i);
             }
             whereBuilder.append(") ");
         }
 
         //sorting
-        if (params.containsKey("sortType")){
-            whereBuilder.append(" order by ");
-            switch (params.get("sortType").get(0)){
+        if (params.containsKey("sortType")) {
+            whereBuilder.append(" group by product_id order by ");
+            switch (params.get("sortType").get(0)) {
                 case "mostExpensive":
-                    whereBuilder.append(" if(p.unit = '%', pc.price * (100 - p.value) / 100, pc.price - p.value) desc ");
+                    whereBuilder.append(" if(p.price_id is not null, if(p.unit = '%', pc.price * (100 - p.value) / 100, pc.price - p.value), pc.price) desc ");
                     break;
                 case "mostCheap":
-                    whereBuilder.append(" if(p.unit = '%', pc.price * (100 - p.value) / 100, pc.price - p.value) ");
+                    whereBuilder.append(" if(p.price_id is not null, if(p.unit = '%', pc.price * (100 - p.value) / 100, pc.price - p.value), pc.price) ");
                     break;
                 case "mostCommented":
+                    joinBuilder += " left join commentary com on pc.product_id = com.product ";
+                    whereBuilder.append(" count(distinct com.author) + count(distinct com.commentary_id) / 100 desc");
+                    break;
+                case "bestRated":
+                    joinBuilder += "left join commentary com on pc.product_id = com.product and commentary_type= 'review' ";
+                    whereBuilder.append(// (R *v + m
+                            " (avg(distinct com.rating) * count(distinct com.commentary_id) + 1 * " +
+                                        //* C ) /
+                            "avg(count(distinct commentary_id)) over () )/" +
+                                        // (v + m)
+                            "(count(distinct com.commentary_id) + avg(count(distinct commentary_id)) over ()) desc ");
+
+                    // weighted rating (WR) = (v ÷ (v+m)) × R + (m ÷ (v+m)) × C
+                    // where:
+                    // R = average product value
+                    // v = number of reviews for the product
+                    // m = the minimum number of reviews required to be included in the list
+                    // (does not prevent you from sorting those products with fewer reviews)
+                    // C = average number of reviews per product across the entire list
+                    // and mathematically simplified to
+                    // rating = (R * v + C * m) / (v + m)
+
                     break;
                 default:
                     throw new IllegalArgumentException("Sorting Type is illegal");
             }
+        }
+
+        for (String characteristicName : params.keySet()) {
+            if (characteristicName.equals("startPrice") ||
+                    characteristicName.equals("endPrice") ||
+                    characteristicName.equals("productStatus") ||
+                    characteristicName.equals("sortType")) {
+                continue;
+            }
+
+
+            whereBuilder.append(" and c2.name = '").append(characteristicName).append("' and (");
+            List<String> characteristicValues = params.get(characteristicName);
+            for (int i = 0; i < characteristicValues.size(); i++) {
+                if (i != 0) {
+                    whereBuilder.append(" or ");
+                }
+                whereBuilder.append("c2.value = '").append(characteristicValues.get(i)).append("' ");
+            }
+
+        }
+
+        // makes something like (characteristics)
+        // name = 'name_1' and (value = 'value_01' or value = 'value_02' or ... value = 'value_0n') and ...
+        // name = 'name_m' (value = 'value_m0' or ... value = 'value_mn')
+        List<String> characteristicNames = new ArrayList<>(params.keySet());
+        for (String characteristicName : characteristicNames) {
+            if (checkIfParameterNameIsReserved(characteristicName)) {
+                continue;
+            }
+            whereBuilder.append(" and c2.name = '").append(characteristicName).append("' and (");
+            List<String> characteristicValues = params.get(characteristicName);
+            for (int j = 0; j < characteristicValues.size(); j++) {
+                if (j == 0) {
+                    whereBuilder.append(" or ");
+                }
+                whereBuilder.append("c2.value = '").append(characteristicValues.get(j)).append("' ");
+            }
+            whereBuilder.append(" ) ");
         }
 
 
@@ -150,6 +215,13 @@ public class ProductCardFilterRepository {
         }
 
         return query.getResultList();
+    }
+
+    private boolean checkIfParameterNameIsReserved(String parameterName) {
+        return parameterName.equals("startPrice") ||
+                parameterName.equals("endPrice") ||
+                parameterName.equals("productStatus") ||
+                parameterName.equals("sortType");
     }
 
 }

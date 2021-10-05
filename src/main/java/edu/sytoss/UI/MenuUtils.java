@@ -14,16 +14,25 @@ public class MenuUtils {
     }
 
     public static int scanInt() {
-        System.out.println(colors.ANSI_PURPLE + "----- INPUT INT -----");
+        System.out.println(colors.ANSI_PURPLE + "----- INPUT INT -----" + colors.ANSI_RESET);
         lastScanInteger = true;
         return scanner.nextInt();
     }
 
     public static String scanLine(String text) {
         System.out.println(colors.ANSI_PURPLE + "----- INPUT LINE -----");
-        System.out.print(text + colors.ANSI_RESET);
+        System.out.print(text + ": " + colors.ANSI_RESET);
         if (lastScanInteger)
             scanner.nextLine();// java just ignore first Scanner.nextLine() after Scanner.nextInt();
+        lastScanInteger = false;
+        return scanner.nextLine();
+    }
+
+    public static String scanLine() {
+        System.out.println(colors.ANSI_PURPLE + "----- INPUT LINE -----" + colors.ANSI_RESET);
+        if (lastScanInteger) {
+            scanner.nextLine();// java just ignore first Scanner.nextLine() after Scanner.nextInt();
+        }
         lastScanInteger = false;
         return scanner.nextLine();
     }
