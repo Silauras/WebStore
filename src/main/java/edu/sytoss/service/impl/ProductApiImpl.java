@@ -2,7 +2,7 @@ package edu.sytoss.service.impl;
 
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.product.*;
-import edu.sytoss.model.user.UserAccount;
+import edu.sytoss.model.shop.Shop;
 import edu.sytoss.repository.*;
 import edu.sytoss.service.ProductApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +48,7 @@ public class ProductApiImpl implements ProductApi {
         return productCardRepository.findById(id);
     }
 
+
     @Transactional
     @Override
     public ProductCard findProductCardByIdWithCharacteristicsAndCategory(Long id) {
@@ -73,6 +74,7 @@ public class ProductApiImpl implements ProductApi {
             return false;
         }
     }
+
 
     @Override
     public List<ProductCard> findAllProductCards() {
@@ -138,5 +140,40 @@ public class ProductApiImpl implements ProductApi {
             }
         }
         return characteristics;
+    }
+
+    @Override
+    public List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard) {
+        return productCardRepository.findProductCardByIdAndProductStatusWithShopAndProducts(productCard.getId(), "AVAILABLE").getProducts();
+    }
+    @Override
+    public Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCart) {
+        List<Product> products = new ArrayList<>();
+        for (ProductCard productCard:shoppingCart.keySet()) {
+            for (int i = 0; i < shoppingCart.get(productCard) ; i++) {
+               // try {
+                    Product product= findAvailableProductsByProductCardWithShop(productCard).get(i);
+                    products.add(product);
+              //  }
+               // catch (Siz)
+
+
+            }
+        }
+        Map<Shop, List<Product>> productByShop = new HashMap<>();
+        for (Product product:products) {
+            productByShop.put(product.getWarehouse().getOwner(), new ArrayList<Product>());
+        }
+        for (Product product:products){
+            for (Shop shop:productByShop.keySet()) {
+                if (product.getWarehouse().getOwner().equals(shop))
+                {
+                    List<Product> productsInOrder = productByShop.get(shop);
+                    productsInOrder.add(product);
+                    productByShop.put(shop, productsInOrder);
+                }
+            }
+        }
+        return productByShop;
     }
 }

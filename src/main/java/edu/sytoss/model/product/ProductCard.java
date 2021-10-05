@@ -58,8 +58,6 @@ public class ProductCard implements Subsciptable {
         return "ProductCards{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", shortDescription='" + shortDescription + '\'' +
-                ", fullDescription='" + fullDescription + '\'' +
                 ", status='" + status + '\'' +
                 '}';
     }
@@ -67,32 +65,13 @@ public class ProductCard implements Subsciptable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ProductCard)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         ProductCard that = (ProductCard) o;
-
-        if (!name.equals(that.name)) return false;
-        if (!price.equals(that.price)) return false;
-        if (!Objects.equals(shortDescription, that.shortDescription)) return false;
-        if (!Objects.equals(fullDescription, that.fullDescription)) return false;
-        if (!status.equals(that.status)) return false;
-        if (!productTemplate.equals(that.productTemplate)) return false;
-        if (!Objects.equals(sales, that.sales)) return false;
-        if (!characteristics.equals(that.characteristics)) return false;
-        return Objects.equals(products, that.products);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + price.hashCode();
-        result = 31 * result + (shortDescription != null ? shortDescription.hashCode() : 0);
-        result = 31 * result + (fullDescription != null ? fullDescription.hashCode() : 0);
-        result = 31 * result + status.hashCode();
-        result = 31 * result + productTemplate.hashCode();
-        result = 31 * result + (sales != null ? sales.hashCode() : 0);
-        result = 31 * result + characteristics.hashCode();
-        result = 31 * result + (products != null ? products.hashCode() : 0);
-        return result;
+        return Objects.hash(id);
     }
 }

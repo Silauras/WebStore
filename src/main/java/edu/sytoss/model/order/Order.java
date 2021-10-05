@@ -11,6 +11,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,6 +19,12 @@ import java.util.List;
 @Table(name = "`order`")
 @Entity
 public class Order {
+
+    public Order(UserAccount customer, Shop seller) {
+        this.userAccount = customer;
+        this.seller = seller;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id", nullable = false)
