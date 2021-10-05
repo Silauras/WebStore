@@ -12,7 +12,6 @@ import edu.sytoss.service.impl.PriceCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,10 +109,10 @@ public class OrderMenu {
      */
     private class ShoppingCartPrinter {
         public ShoppingCartPrinter(Map<ProductCard, Integer> shoppingCart) {
-            printProductByUserAccountId(shoppingCart);
+            printProductByShoppingCart(shoppingCart);
         }
 
-        private void printProductByUserAccountId(Map<ProductCard, Integer> shoppingCart) {
+        private void printProductByShoppingCart(Map<ProductCard, Integer> shoppingCart) {
             System.out.println("В вашей корзине:");
             for (ProductCard productCard : shoppingCart.keySet()) {
                 if (shoppingCart.get(productCard) == 0) {
@@ -125,28 +124,34 @@ public class OrderMenu {
         }
     }
 
+    private class OrderPrinter {
+        public OrderPrinter( Map<Shop, List<Product>> productByShop) {
+            printOrderPrinterByUserAccountId(productByShop);
+        }
+        private void printOrderPrinterByUserAccountId(Map<Shop, List<Product>> productByShop) {
+            System.out.println("---Ваши заказы---");
+            int count = 1;
+            for (Shop shop : productByShop.keySet()) {
+                Map<ProductCard, Integer> productCardIntegerMap = new HashMap<>();
+                for (Product product : productByShop.get(shop)) {
+                    if (!productCardIntegerMap.containsKey(product.getProductCard())) {
+                        productCardIntegerMap.put(product.getProductCard(), count);
+                    } else {
+                        productCardIntegerMap.put(product.getProductCard(), ++count);
+                    }
+                }
+                System.out.println(shop.getName());
+                System.out.println(productCardIntegerMap);
+                count = 1;
+            }
+        }
+    }
+
+
+
     private void payShoppingCart(UserAccount userAccount, Map<ProductCard, Integer> shoppingCart) {
         Map<Shop, List<Product>> productByShop = productApi.dividingProductsIntoOrders(shoppingCart);
-        System.out.println("---Магазины в которых вы сделалил покупку---");
-        for (Shop shop : productByShop.keySet()) {
-            System.out.println(shop.getName());
-        }
-        System.out.println("---Ваши заказы---");
-        int count = 1;
-        for (Shop shop : productByShop.keySet()) {
-            Map<ProductCard, Integer> productCardIntegerMap = new HashMap<>();
-            for (Product product : productByShop.get(shop)) {
-                if (!productCardIntegerMap.containsKey(product.getProductCard())) {
-                    productCardIntegerMap.put(product.getProductCard(), count);
-                } else {
-                    productCardIntegerMap.put(product.getProductCard(), ++count);
-                }
-            }
-            System.out.println(shop.getName());
-            System.out.println(productCardIntegerMap);
-            count = 1;
-        }
-
+        new OrderPrinter( productByShop);
         for (Shop shop : productByShop.keySet()) {
             Order order = new Order(userAccount, shop);
             orderAPI.createOrder(order, productByShop.get(shop));
