@@ -35,9 +35,13 @@ public interface UserAccountAPI {
 
     List<Order> findAllOrder();
 
+     List<Order> findUserAccountWithStateOrder(UserAccount userAccount, String state);
+
+
     /*--------------------------Reaction--------------------*/
     List<Reaction> findAllReaction();
 
     List<Reaction> findAllReactionInUserAccountById(UserAccount userAccount);
+
 
 }

@@ -9,7 +9,6 @@ import edu.sytoss.repository.CommunicationRepository;
 import edu.sytoss.repository.SubscriptionRepository;
 import edu.sytoss.repository.UserAccountRepository;
 import edu.sytoss.service.UserAccountAPI;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +44,16 @@ public class UserAccountAPIImpl implements UserAccountAPI {
     @Override
     public List<Order> findAllOrder() {
         return null;
+    }
+
+    @Override
+    public List<Order> findUserAccountWithStateOrder(UserAccount userAccount, String state) {
+        UserAccount u = userAccountRepository.findUserAccountWithOrderWhereState(userAccount.getId(), state);
+        List<Order> orders = new ArrayList<>();
+        if (u != null) {
+            orders = u.getOrders();
+        }
+        return orders;
     }
 
     @Override
@@ -138,6 +147,4 @@ public class UserAccountAPIImpl implements UserAccountAPI {
             return false;
         }
     }
-
-
 }

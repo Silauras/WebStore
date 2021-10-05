@@ -1,10 +1,12 @@
 package edu.sytoss.service;
 
 import edu.sytoss.model.product.*;
+import edu.sytoss.model.shop.Shop;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface ProductApi {
 
@@ -37,5 +39,9 @@ public interface ProductApi {
     /* --------- CHARACTERISTIC --------- */
 
     List<Characteristic> findCharacteristicsPerCategory(Long categoryId);
+    /*-------------------Product---------------------*/
+    List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard);
+
+    Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCart);
 
 }

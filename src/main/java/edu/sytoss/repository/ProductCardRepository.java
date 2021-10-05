@@ -20,9 +20,13 @@ public interface ProductCardRepository extends JpaRepository<ProductCard, Long> 
             "where p.id = ?1")
     ProductCard findByIdWithCharacteristicsAndCategory(Long id);
 
-    @Query("select pc from ProductCard pc left join fetch pc.products p where pc.id = ?1")
-    ProductCard findProductCardWithProductsById(Long id);
+    @Query("select pc from ProductCard pc " +
+            "left join fetch pc.products p " +
+            "left join fetch p.warehouse w " +
+            "left join fetch w.owner " +
+            "where pc.id = ?1 and p.status = ?2")
+    ProductCard findProductCardByIdAndProductStatusWithShopAndProducts(Long id, String productStatus);
     @Query("select pc from ProductCard pc left join fetch pc.products p where pc.id = ?1 and p.status = ?2 ")
-    ProductCard findProductCardWithProductsByIdWhereStatus(Long id, String status);
+    ProductCard findProductCarByIdAndProductStatusWithProducts(Long id, String productStatus);
 
 }

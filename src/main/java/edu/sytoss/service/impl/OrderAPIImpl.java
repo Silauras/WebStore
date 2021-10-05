@@ -3,17 +3,18 @@ package edu.sytoss.service.impl;
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.product.Product;
 import edu.sytoss.model.product.ProductCard;
+import edu.sytoss.model.user.UserAccount;
 import edu.sytoss.repository.OrderRepository;
 import edu.sytoss.repository.ProductCardRepository;
 import edu.sytoss.repository.ProductRepository;
 import edu.sytoss.service.OrderAPI;
 import edu.sytoss.service.ProductApi;
+import edu.sytoss.service.UserAccountAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -24,10 +25,12 @@ public class OrderAPIImpl implements OrderAPI {
     ProductCardRepository productCardRepository;
     @Autowired
     ProductRepository productRepository;
-
     @Autowired
     ProductApi productApi;
+    @Autowired
+    UserAccountAPI userAccountAPI;
 
+    /*---------------------------------Order-------------------------------*/
     @Override
     public Order findOrderById(Long id) {
         return orderRepository.findById(id);
@@ -61,21 +64,6 @@ public class OrderAPIImpl implements OrderAPI {
 
     @Override
     public void updateOrder(Long orderId, Long productCardId, int quantity, String actionType) {
-        if (actionType.equals("add")) {
-            ProductCard productCard = productCardRepository.findProductCardWithProductsByIdWhereStatus(productCardId, "AVAILABLE");
-            List<Product> products = productCard.getProducts();
-            for (int i = 0; i < quantity; i++) {
-                Product product = products.get(i);
-                productApi.updateProductStatus(product, orderId, "BLOCKED");
-            }
-        } else if (actionType.equals("delete")) {
-            Order order = orderRepository.findById(orderId);
-            List<Product> products = productRepository.findProductByOrder(order);
-            for (int i = 0; i < quantity; i++) {
-                Product product = products.get(i);
-                productApi.updateProductStatus(product, null, "AVAILABLE");
-            }
-        }
     }
 
     @Override
@@ -83,10 +71,92 @@ public class OrderAPIImpl implements OrderAPI {
         Order order = orderRepository.findById(orderId);
         order.setState("finished_accepted");
         List<Product> products = productRepository.findProductByOrder(order);
-        for (Product product: products) {
+        for (Product product : products) {
             productApi.updateProductStatus(product, orderId, "SOLD");
         }
         orderRepository.save(order);
+    }
+
+    @Override
+    public boolean createOrder(Order order, List<Product> products) {
+        try {
+            for (Product product : products) {
+                if (!product.getStatus().equals("AVAILABLE")) {
+                    System.out.println("Для офрмления заказа недостаточно продуктов");
+                    return false;
+                }
+            }
+            order.setState("NEW");
+            order.setLastChangeDate(new Date());
+            orderRepository.saveAndFlush(order);
+            for (Product product : products) {
+                productApi.updateProductStatus(product, order.getId(), "BLOCKED");
+            }
+            return true;
+        } catch (NullPointerException e) {
+            return false;
+        }
+
+    }
+
+    /*--------------------------ShoppingCart-----------------------------*/
+    @Override
+    public Map<ProductCard, Integer> createShoppingCart(UserAccount userAccount) {
+        List<Order> shoppingCart = new ArrayList<>();
+        List<ProductCard> productCards = new ArrayList<>();
+        for (Order order : shoppingCart) {
+            productCards.addAll(findAllProductCartsInOrderById(order.getId()));
+        }
+        /*Create Template for  Shopping Cart*/
+        Map<ProductCard, Integer> cardsMap = new HashMap<>();
+        int count = 1;
+        for (ProductCard productCard : productCards) {
+            cardsMap.put(productCard, count);
+        }
+        /*Count items in Shopping Cart*/
+        for (ProductCard productCard : cardsMap.keySet()) {
+            for (ProductCard productCardOrder : productCards) {
+                if (productCard.equals(productCardOrder)) {
+                    cardsMap.put(productCard, count++);
+                }
+            }
+            count = 1;
+        }
+        return cardsMap;
+    }
+
+    @Override
+    public Map<ProductCard, Integer> updateShoppingCart(Map<ProductCard, Integer> shoppingCart, long productCardId, int quantity, String actionType) {
+        ProductCard productCard = productCardRepository.findProductCarByIdAndProductStatusWithProducts(productCardId, "AVAILABLE");
+        switch (actionType) {
+            case "add":
+                if (productCard == null) {
+                    System.out.println("Невожно добавить продукт в корзину. Он отсутствует.");
+                    return shoppingCart;
+                }
+                if (productCard.getProducts().size() < quantity) {
+                    System.out.println("Невожно добавить такое количесво продуктов в корзину");
+                    System.out.println("Доступно для заказа: " + productCard.getProducts().size());
+                    return shoppingCart;
+                }
+                if (shoppingCart.containsKey(productCard)) {
+                    shoppingCart.put(productCard, shoppingCart.get(productCard) + quantity);
+                    if (shoppingCart.get(productCard) >= productCard.getProducts().size()){
+                        shoppingCart.put(productCard, productCard.getProducts().size());
+                    }
+                } else {
+                    shoppingCart.put(productCard, quantity);
+                }
+                break;
+            case "delete":
+                if (shoppingCart.containsKey(productCard)) {
+                    shoppingCart.put(productCard, shoppingCart.get(productCard) - quantity);
+                } else {
+                    System.out.println("Вы пытаетесь удалить обьект которого нету в заказе");
+                }
+                break;
+        }
+        return shoppingCart;
     }
 }
 
