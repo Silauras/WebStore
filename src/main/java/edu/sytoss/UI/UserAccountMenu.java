@@ -177,6 +177,7 @@ public class UserAccountMenu {
         }
     }
 
+    /*-----------------------------for print information----------------*/
     private class UserAccountPrinter {
         private UserAccountPrinter() {
             printAllUserAccount();

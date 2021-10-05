@@ -79,9 +79,6 @@ public class OrderMenu {
             case 3:
                 payShoppingCart(userAccount, shoppingCart);
                 break;
-            case 4:
-
-                break;
         }
     }
 
@@ -98,6 +95,15 @@ public class OrderMenu {
         int quantity = MenuUtils.scanInt("Write Quantity");
         Map<ProductCard, Integer> newShoppingCart = orderAPI.updateShoppingCart(shoppingCart, productCardId, quantity, actionType);
         new ShoppingCartPrinter(newShoppingCart);
+    }
+
+    private void payShoppingCart(UserAccount userAccount, Map<ProductCard, Integer> shoppingCart) {
+        Map<Shop, List<Product>> productByShop = productApi.dividingProductsIntoOrders(shoppingCart);
+        new OrderPrinter( productByShop);
+        for (Shop shop : productByShop.keySet()) {
+            Order order = new Order(userAccount, shop);
+            orderAPI.createOrder(order, productByShop.get(shop));
+        }
     }
 
     /**
@@ -123,7 +129,13 @@ public class OrderMenu {
             }
         }
     }
-
+    /**
+     * <p>
+     * Class that Print Shopping Order
+     * </p>
+     *
+     * @author Andrey Kolesnyk
+     */
     private class OrderPrinter {
         public OrderPrinter( Map<Shop, List<Product>> productByShop) {
             printOrderPrinterByUserAccountId(productByShop);
@@ -146,17 +158,5 @@ public class OrderMenu {
             }
         }
     }
-
-
-
-    private void payShoppingCart(UserAccount userAccount, Map<ProductCard, Integer> shoppingCart) {
-        Map<Shop, List<Product>> productByShop = productApi.dividingProductsIntoOrders(shoppingCart);
-        new OrderPrinter( productByShop);
-        for (Shop shop : productByShop.keySet()) {
-            Order order = new Order(userAccount, shop);
-            orderAPI.createOrder(order, productByShop.get(shop));
-        }
-    }
-
 }
 

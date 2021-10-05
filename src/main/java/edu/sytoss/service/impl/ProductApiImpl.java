@@ -146,28 +146,24 @@ public class ProductApiImpl implements ProductApi {
     public List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard) {
         return productCardRepository.findProductCardByIdAndProductStatusWithShopAndProducts(productCard.getId(), "AVAILABLE").getProducts();
     }
+
+    /*Dividing Products into orders for create different orders*/
     @Override
     public Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCart) {
         List<Product> products = new ArrayList<>();
-        for (ProductCard productCard:shoppingCart.keySet()) {
-            for (int i = 0; i < shoppingCart.get(productCard) ; i++) {
-               // try {
-                    Product product= findAvailableProductsByProductCardWithShop(productCard).get(i);
-                    products.add(product);
-              //  }
-               // catch (Siz)
-
-
+        for (ProductCard productCard : shoppingCart.keySet()) {
+            for (int i = 0; i < shoppingCart.get(productCard); i++) {
+                              Product product = findAvailableProductsByProductCardWithShop(productCard).get(i);
+                products.add(product);
             }
         }
         Map<Shop, List<Product>> productByShop = new HashMap<>();
-        for (Product product:products) {
+        for (Product product : products) {
             productByShop.put(product.getWarehouse().getOwner(), new ArrayList<Product>());
         }
-        for (Product product:products){
-            for (Shop shop:productByShop.keySet()) {
-                if (product.getWarehouse().getOwner().equals(shop))
-                {
+        for (Product product : products) {
+            for (Shop shop : productByShop.keySet()) {
+                if (product.getWarehouse().getOwner().equals(shop)) {
                     List<Product> productsInOrder = productByShop.get(shop);
                     productsInOrder.add(product);
                     productByShop.put(shop, productsInOrder);
