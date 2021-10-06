@@ -100,7 +100,6 @@ public class ProductCardMenu {
         for (Object o : productCardFilterRepository
                 .findProductCardsByFilter(orderId, params)) {
             System.out.println(o.toString());
-            System.out.println(o.getClass());
         }
     }
 

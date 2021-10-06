@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface ProductCardRepository extends JpaRepository<ProductCard, Long> {
+    @Query("select p from ProductCard p where p.id = ?1")
     ProductCard findById(Long id);
 
     @Query("select p from ProductCard p " +
@@ -32,4 +33,6 @@ public interface ProductCardRepository extends JpaRepository<ProductCard, Long> 
     @Query("select p from ProductCard p where p.productTemplate.category.id = ?1")
     List<ProductCard> findProductCardsByProductTemplateCategoryId(Long categoryId);
 
+    @Query("select pc from ProductCard pc left join fetch pc.kits k where pc.id = ?1")
+    ProductCard findByIdWithKits(Long id);
 }

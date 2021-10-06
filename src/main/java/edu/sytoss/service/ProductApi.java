@@ -15,6 +15,8 @@ public interface ProductApi {
 
     ProductCard findProductCardById(Long id);
 
+    ProductCard findProductCardByIdWhitKits(Long id);
+
     List<ProductCard> findAllProductCards();
 
     ProductCard findProductCardByIdWithCharacteristicsAndCategory(Long id);
@@ -44,4 +46,5 @@ public interface ProductApi {
 
     Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCart);
 
+    List<Kit> findKitByProductCard(long productCardId);
 }

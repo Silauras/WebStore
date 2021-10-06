@@ -78,8 +78,7 @@ public class UserAccount {
             joinColumns =
             @JoinColumn(name = "subscriber_id", referencedColumnName = "user_account_id"),
             inverseJoinColumns =
-            @JoinColumn(name = "subscription_id", referencedColumnName = "subscription_id")
-    )
+            @JoinColumn(name = "subscription_id", referencedColumnName = "subscription_id"))
     private List<Subscription> subscriptions;
 
     public UserAccount(Long userAccountId) {

@@ -1,9 +1,11 @@
 package edu.sytoss.service.impl;
 
 import edu.sytoss.model.order.Order;
+import edu.sytoss.model.product.Kit;
 import edu.sytoss.model.product.Product;
 import edu.sytoss.model.product.ProductCard;
 import edu.sytoss.model.user.UserAccount;
+import edu.sytoss.repository.KitRepository;
 import edu.sytoss.repository.OrderRepository;
 import edu.sytoss.repository.ProductCardRepository;
 import edu.sytoss.repository.ProductRepository;
@@ -24,11 +26,14 @@ public class OrderAPIImpl implements OrderAPI {
     @Autowired
     ProductCardRepository productCardRepository;
     @Autowired
+    KitRepository kitRepository;
+    @Autowired
     ProductRepository productRepository;
     @Autowired
     ProductApi productApi;
     @Autowired
     UserAccountAPI userAccountAPI;
+
 
     /*---------------------------------Order-------------------------------*/
     @Override
@@ -101,10 +106,10 @@ public class OrderAPIImpl implements OrderAPI {
 
     /*--------------------------ShoppingCart-----------------------------*/
     @Override
-    public Map<ProductCard, Integer> createShoppingCart(UserAccount userAccount) {
-        List<Order> shoppingCart = new ArrayList<>();
+    public Map<ProductCard, Integer> createShoppingCartWithCard(UserAccount userAccount) {
+        List<Order> shoppingCartWithCard = new ArrayList<>();
         List<ProductCard> productCards = new ArrayList<>();
-        for (Order order : shoppingCart) {
+        for (Order order : shoppingCartWithCard) {
             productCards.addAll(findAllProductCartsInOrderById(order.getId()));
         }
         /*Create Template for  Shopping Cart*/
@@ -126,37 +131,82 @@ public class OrderAPIImpl implements OrderAPI {
     }
 
     @Override
-    public Map<ProductCard, Integer> updateShoppingCart(Map<ProductCard, Integer> shoppingCart, long productCardId, int quantity, String actionType) {
+    public Map<Kit, Integer> createShoppingCartWithKit(UserAccount userAccount) {
+        Map<Kit, Integer> cardsMap = new HashMap<>();
+        return cardsMap;
+    }
+
+    @Override
+    public Map<ProductCard, Integer> updateShoppingCart(Map<ProductCard, Integer> shoppingCartWithCard, long productCardId, int quantity, String actionType) {
         ProductCard productCard = productCardRepository.findProductCarByIdAndProductStatusWithProducts(productCardId, "AVAILABLE");
         switch (actionType) {
             case "add":
                 if (productCard == null) {
                     System.out.println("Невожно добавить продукт в корзину. Он отсутствует.");
-                    return shoppingCart;
+                    return shoppingCartWithCard;
                 }
                 if (productCard.getProducts().size() < quantity) {
                     System.out.println("Невожно добавить такое количесво продуктов в корзину");
                     System.out.println("Доступно для заказа: " + productCard.getProducts().size());
-                    return shoppingCart;
+                    return shoppingCartWithCard;
                 }
-                if (shoppingCart.containsKey(productCard)) {
-                    shoppingCart.put(productCard, shoppingCart.get(productCard) + quantity);
-                    if (shoppingCart.get(productCard) >= productCard.getProducts().size()){
-                        shoppingCart.put(productCard, productCard.getProducts().size());
+                if (shoppingCartWithCard.containsKey(productCard)) {
+                    shoppingCartWithCard.put(productCard, shoppingCartWithCard.get(productCard) + quantity);
+                    if (shoppingCartWithCard.get(productCard) >= productCard.getProducts().size()) {
+                        shoppingCartWithCard.put(productCard, productCard.getProducts().size());
                     }
                 } else {
-                    shoppingCart.put(productCard, quantity);
+                    shoppingCartWithCard.put(productCard, quantity);
                 }
                 break;
             case "delete":
-                if (shoppingCart.containsKey(productCard)) {
-                    shoppingCart.put(productCard, shoppingCart.get(productCard) - quantity);
+                if (shoppingCartWithCard.containsKey(productCard)) {
+                    shoppingCartWithCard.put(productCard, shoppingCartWithCard.get(productCard) - quantity);
                 } else {
                     System.out.println("Вы пытаетесь удалить обьект которого нету в заказе");
                 }
                 break;
         }
-        return shoppingCart;
+        return shoppingCartWithCard;
+    }
+
+    @Override
+    public Map<Kit, Integer> updateShoppingCartKit(Map<Kit, Integer> shoppingCartWithKit, long kitId, int quantity, String actionType) {
+        Kit kit = kitRepository.findKitByIdAndProductStatusWithProducts(kitId, "AVAILABLE");
+        Set<ProductCard> productCards = kit.getProductCards();
+        int maxCountKit = 0;
+        switch (actionType) {
+            case "add":
+                for (ProductCard productCard : productCards) {
+                    if (productCard == null) {
+                        System.out.println("Невожно добавить продукт в корзину. Он отсутствует.");
+                        return shoppingCartWithKit;
+                    }
+                    if (productCard.getProducts().size() < quantity) {
+                        System.out.println("Невожно добавить такое количесво продуктов в корзину");
+                        System.out.println("Доступно для заказа: " + productCard.getProducts().size());
+                        return shoppingCartWithKit;
+                    }
+                    maxCountKit = productCard.getProducts().size();
+                }
+                if (shoppingCartWithKit.containsKey(kit)) {
+                    shoppingCartWithKit.put(kit, shoppingCartWithKit.get(kit) + quantity);
+                    if (shoppingCartWithKit.get(kit) >= maxCountKit) {
+                        shoppingCartWithKit.put(kit, maxCountKit);
+                    }
+                } else {
+                    shoppingCartWithKit.put(kit, quantity);
+                }
+                break;
+            case "delete":
+                if (shoppingCartWithKit.containsKey(kit)) {
+                    shoppingCartWithKit.put(kit, shoppingCartWithKit.get(kit) - quantity);
+                } else {
+                    System.out.println("Вы пытаетесь удалить обьект которого нету в заказе");
+                }
+                break;
+        }
+        return shoppingCartWithKit;
     }
 }
 

@@ -53,6 +53,11 @@ public class ProductCard implements Subsciptable {
     @JoinColumn(name = "product_card")
     private List<Product> products;
 
+    @ManyToMany
+    @JoinTable(name = "kit_product_card",
+            joinColumns = @JoinColumn(name = "product_card", referencedColumnName = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "kit", referencedColumnName = "kit_id"))
+    private Set<Kit> kits;
     @Override
     public String toString() {
         return "ProductCards{" +

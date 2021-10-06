@@ -18,6 +18,8 @@ public class ProductApiImpl implements ProductApi {
     /* --------- REPOSITORIES --------- */
     @Autowired
     ProductCardRepository productCardRepository;
+    @Autowired
+    KitRepository kitRepository;
 
     @Autowired
     CategoryRepository categoryRepository;
@@ -30,8 +32,10 @@ public class ProductApiImpl implements ProductApi {
 
     @Autowired
     CharacteristicRepository characteristicRepository;
+
     @Autowired
     ProductRepository productRepository;
+
     @Autowired
     OrderRepository orderRepository;
 
@@ -46,6 +50,11 @@ public class ProductApiImpl implements ProductApi {
     @Override
     public ProductCard findProductCardById(Long id) {
         return productCardRepository.findById(id);
+    }
+
+    @Override
+    public ProductCard findProductCardByIdWhitKits(Long id) {
+        return productCardRepository.findByIdWithKits(id);
     }
 
 
@@ -153,7 +162,7 @@ public class ProductApiImpl implements ProductApi {
         List<Product> products = new ArrayList<>();
         for (ProductCard productCard : shoppingCart.keySet()) {
             for (int i = 0; i < shoppingCart.get(productCard); i++) {
-                              Product product = findAvailableProductsByProductCardWithShop(productCard).get(i);
+                Product product = findAvailableProductsByProductCardWithShop(productCard).get(i);
                 products.add(product);
             }
         }
@@ -171,5 +180,11 @@ public class ProductApiImpl implements ProductApi {
             }
         }
         return productByShop;
+    }
+
+    @Override
+    public List<Kit> findKitByProductCard(long productCardId) {
+        List<Kit> kits = kitRepository.findKitByProductCard(productCardId);
+        return kits;
     }
 }

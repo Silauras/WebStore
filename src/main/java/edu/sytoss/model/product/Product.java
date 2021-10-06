@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 
 @Table(name = "product")
 @Entity
-public class Product {
+public class Product implements Purchase{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id", nullable = false)
