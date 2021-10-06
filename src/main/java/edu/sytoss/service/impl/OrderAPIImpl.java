@@ -202,7 +202,7 @@ public class OrderAPIImpl implements OrderAPI {
                 if (shoppingCartWithKit.containsKey(kit)) {
                     shoppingCartWithKit.put(kit, shoppingCartWithKit.get(kit) - quantity);
                 } else {
-                    System.out.println("Вы пытаетесь удалить обьект которого нету в заказе");
+                    System.out.println("Вы пытаетесь удалить комлпект которого нету в заказе");
                 }
                 break;
         }

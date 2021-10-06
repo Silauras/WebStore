@@ -124,7 +124,7 @@ public class OrderMenu {
     }
 
     private void payShoppingCart(UserAccount userAccount, Map<ProductCard, Integer> shoppingCartWithCard, Map<Kit, Integer> shoppingCartWithKit) {
-        Map<Shop, List<Product>> productByShop = productApi.dividingProductsIntoOrders(shoppingCartWithCard);
+        Map<Shop, List<Product>> productByShop = productApi.dividingProductsIntoOrders(shoppingCartWithCard,shoppingCartWithKit);
         new OrderPrinter(productByShop);
         for (Shop shop : productByShop.keySet()) {
             Order order = new Order(userAccount, shop);

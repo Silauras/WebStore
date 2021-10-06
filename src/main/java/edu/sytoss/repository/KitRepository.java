@@ -22,6 +22,13 @@ public interface KitRepository extends JpaRepository<Kit, Long> {
             "left join fetch k.productCards pc " +
             "where pc.id = ?1")
     List<Kit> findKitByProductCard(long productCardId);
+    @Query("select k from Kit k " +
+            "left join fetch k.productCards pc "+
+            "left join fetch pc.products p " +
+            "left join fetch p.warehouse w " +
+            "left join fetch w.owner " +
+            "where pc.id = ?1 and p.status = ?2")
+    Kit findKitByIdAndProductStatusWithShopAndProducts(Long id, String productStatus);
 }
 
 

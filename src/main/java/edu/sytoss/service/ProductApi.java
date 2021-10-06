@@ -44,7 +44,8 @@ public interface ProductApi {
     /*-------------------Product---------------------*/
     List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard);
 
-    Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCart);
+    Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCartWithCard,
+                                                        Map<Kit, Integer> shoppingCartWithKit);
 
     List<Kit> findKitByProductCard(long productCardId);
 }

@@ -153,19 +153,36 @@ public class ProductApiImpl implements ProductApi {
 
     @Override
     public List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard) {
-        return productCardRepository.findProductCardByIdAndProductStatusWithShopAndProducts(productCard.getId(), "AVAILABLE").getProducts();
+        List<Product> products = productCardRepository.findProductCardByIdAndProductStatusWithShopAndProducts(productCard.getId(), "AVAILABLE").getProducts();
+        return products;
+    }
+
+    public List<Product> findAvailableProductsByKitWithShop(Kit kit) {
+        Set<ProductCard> productCards = kitRepository
+                .findKitByIdAndProductStatusWithShopAndProducts(kit.getId(), "AVAILABLE").getProductCards();
+        for (ProductCard productCard : productCards) {
+            productCard.getProducts();
+        }
+        return null;
     }
 
     /*Dividing Products into orders for create different orders*/
     @Override
-    public Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCart) {
+    public Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCartWithCard,
+                                                               Map<Kit, Integer> shoppingCartWithKit) {
         List<Product> products = new ArrayList<>();
-        for (ProductCard productCard : shoppingCart.keySet()) {
-            for (int i = 0; i < shoppingCart.get(productCard); i++) {
+        for (ProductCard productCard : shoppingCartWithCard.keySet()) {
+            for (int i = 0; i < shoppingCartWithCard.get(productCard); i++) {
                 Product product = findAvailableProductsByProductCardWithShop(productCard).get(i);
                 products.add(product);
             }
         }
+        /*for (Kit kit : shoppingCartWithKit.keySet()) {
+            for (int i = 0; i < shoppingCartWithCard.get(kit); i++) {
+                Product product = findAvailableProductsByProductCardWithShop(productCard).get(i);
+                products.add(product);
+            }
+        }*/
         Map<Shop, List<Product>> productByShop = new HashMap<>();
         for (Product product : products) {
             productByShop.put(product.getWarehouse().getOwner(), new ArrayList<Product>());
