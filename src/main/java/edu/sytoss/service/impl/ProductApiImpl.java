@@ -152,18 +152,25 @@ public class ProductApiImpl implements ProductApi {
     }
 
     @Override
-    public List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard) {
-        List<Product> products = productCardRepository.findProductCardByIdAndProductStatusWithShopAndProducts(productCard.getId(), "AVAILABLE").getProducts();
+    public List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard, Integer quantity) {
+        ProductCard pC = productCardRepository.findProductCardByIdAndProductStatusWithShopAndProducts(productCard.getId(), "AVAILABLE");
+        List<Product> allProduct = pC.getProducts();
+        List<Product> products = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            products.add(allProduct.get(i));
+            updateProductStatus(allProduct.get(i), null, "BLOCKED");
+        }
         return products;
     }
 
     public List<Product> findAvailableProductsByKitWithShop(Kit kit) {
-        Set<ProductCard> productCards = kitRepository
-                .findKitByIdAndProductStatusWithShopAndProducts(kit.getId(), "AVAILABLE").getProductCards();
+        List<Product> products = new ArrayList<>();
+        Set<ProductCard> productCards = kitRepository.findKitByIdAndProductStatusWithShopAndProducts(kit.getId(), "AVAILABLE").getProductCards();
         for (ProductCard productCard : productCards) {
-            productCard.getProducts();
+            products.addAll(productCard.getProducts());
         }
-        return null;
+        System.out.println(products);
+        return products;
     }
 
     /*Dividing Products into orders for create different orders*/
@@ -173,16 +180,21 @@ public class ProductApiImpl implements ProductApi {
         List<Product> products = new ArrayList<>();
         for (ProductCard productCard : shoppingCartWithCard.keySet()) {
             for (int i = 0; i < shoppingCartWithCard.get(productCard); i++) {
-                Product product = findAvailableProductsByProductCardWithShop(productCard).get(i);
+                Product product = findAvailableProductsByProductCardWithShop(productCard, shoppingCartWithCard.get(productCard)).get(i);
                 products.add(product);
+                System.out.println("productId: " + product.getId() + " " + product.getProductCard().getName() + " " + product.getStatus());
             }
         }
-        /*for (Kit kit : shoppingCartWithKit.keySet()) {
-            for (int i = 0; i < shoppingCartWithCard.get(kit); i++) {
-                Product product = findAvailableProductsByProductCardWithShop(productCard).get(i);
-                products.add(product);
+        for (Kit kit : shoppingCartWithKit.keySet()) {
+            Set<ProductCard> productCards = kit.getProductCards();
+            for (int i = 0; i < shoppingCartWithKit.get(kit); i++) {
+                for (ProductCard productCard : productCards) {
+                    Product product = findAvailableProductsByProductCardWithShop(productCard, shoppingCartWithKit.get(kit)).get(i);
+                    products.add(product);
+                    System.out.println("productId: " + product.getId() + " " + product.getProductCard().getName() + " " + product.getStatus());
+                }
             }
-        }*/
+        }
         Map<Shop, List<Product>> productByShop = new HashMap<>();
         for (Product product : products) {
             productByShop.put(product.getWarehouse().getOwner(), new ArrayList<Product>());

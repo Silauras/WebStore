@@ -85,12 +85,12 @@ public class OrderAPIImpl implements OrderAPI {
     @Override
     public boolean createOrder(Order order, List<Product> products) {
         try {
-            for (Product product : products) {
-                if (!product.getStatus().equals("AVAILABLE")) {
-                    System.out.println("Для офрмления заказа недостаточно продуктов");
-                    return false;
-                }
-            }
+//            for (Product product : products) {
+//                if (!product.getStatus().equals("AVAILABLE")) {
+//                    System.out.println("Для офрмления заказа недостаточно продуктов");
+//                    return false;
+//                }
+//            }
             order.setState("NEW");
             order.setLastChangeDate(new Date());
             orderRepository.saveAndFlush(order);

@@ -42,7 +42,7 @@ public interface ProductApi {
 
     List<Characteristic> findCharacteristicsPerCategory(Long categoryId);
     /*-------------------Product---------------------*/
-    List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard);
+    List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard, Integer quantity);
 
     Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCartWithCard,
                                                         Map<Kit, Integer> shoppingCartWithKit);

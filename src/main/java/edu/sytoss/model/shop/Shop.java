@@ -34,7 +34,6 @@ public class Shop implements Subsciptable {
         return "Shop{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", owner=" + owner +
                 '}';
     }
 }

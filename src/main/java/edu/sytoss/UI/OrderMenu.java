@@ -101,7 +101,7 @@ public class OrderMenu {
         Map<ProductCard, Integer> newShoppingCartWithCard = new HashMap<>();
         long productCardId = MenuUtils.scanInt("Write id ProductCard");
         if (productApi.findProductCardByIdWhitKits(productCardId).getKits().size() != 0) {
-            String answer = scanLine("Do you want buy kit? 1 = Yes, 11 = No");
+            String answer = scanLine("Do you want buy kit? 1 = Yes, 0 = No");
             if (answer.equals("1")) {
                 int count = 1;
                 List<Kit> kits = productApi.findKitByProductCard(productCardId);
@@ -126,10 +126,10 @@ public class OrderMenu {
     private void payShoppingCart(UserAccount userAccount, Map<ProductCard, Integer> shoppingCartWithCard, Map<Kit, Integer> shoppingCartWithKit) {
         Map<Shop, List<Product>> productByShop = productApi.dividingProductsIntoOrders(shoppingCartWithCard,shoppingCartWithKit);
         new OrderPrinter(productByShop);
-        for (Shop shop : productByShop.keySet()) {
+       /*for (Shop shop : productByShop.keySet()) {
             Order order = new Order(userAccount, shop);
             orderAPI.createOrder(order, productByShop.get(shop));
-        }
+        }*/
     }
 
     /**
