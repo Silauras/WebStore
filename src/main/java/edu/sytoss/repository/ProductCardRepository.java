@@ -25,10 +25,10 @@ public interface ProductCardRepository extends JpaRepository<ProductCard, Long> 
             "left join fetch pc.products p " +
             "left join fetch p.warehouse w " +
             "left join fetch w.owner " +
-            "where pc.id = ?1 and p.status = ?2")
+            "where pc.id = ?1 and p.status = ?2 and p.status <> 'BLOCKED'" )
     ProductCard findProductCardByIdAndProductStatusWithShopAndProducts(Long id, String productStatus);
 
-    @Query("select pc from ProductCard pc left join fetch pc.products p where pc.id = ?1 and p.status = ?2 ")
+    @Query("select pc from ProductCard pc left join fetch pc.products p where pc.id = ?1 and p.status = ?2")
     ProductCard findProductCarByIdAndProductStatusWithProducts(Long id, String productStatus);
 
     @Query("select p from ProductCard p where p.productTemplate.category.id = ?1")

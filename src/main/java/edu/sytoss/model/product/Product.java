@@ -51,9 +51,7 @@ public class Product implements Purchase{
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", serialNumber=" + serialNumber +
-                ", price=" + price +
-                ", status='" + status + '\'' +
+                ", status='" + status +
                 '}';
     }
 }

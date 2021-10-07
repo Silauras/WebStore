@@ -70,7 +70,6 @@ public class ProductApiImpl implements ProductApi {
      * @return
      * @author Andrey Kolesnyk
      */
-    @Transactional
     @Override
     public boolean updateProductStatus(Product product, Long orderId, String status) {
         try {
@@ -78,6 +77,7 @@ public class ProductApiImpl implements ProductApi {
             product.setStatus(status);
             product.setOrder(order);
             productRepository.save(product);
+            productRepository.flush();
             return true;
         } catch (NullPointerException e) {
             return false;
@@ -155,11 +155,16 @@ public class ProductApiImpl implements ProductApi {
     public List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard, Integer quantity) {
         ProductCard pC = productCardRepository.findProductCardByIdAndProductStatusWithShopAndProducts(productCard.getId(), "AVAILABLE");
         List<Product> allProduct = pC.getProducts();
+        System.out.println(allProduct);
         List<Product> products = new ArrayList<>();
         for (int i = 0; i < quantity; i++) {
             products.add(allProduct.get(i));
             updateProductStatus(allProduct.get(i), null, "BLOCKED");
         }
+        for (Product product : products) {
+            System.out.println("productId: " + product.getId() + " " + product.getProductCard().getName() + " " + product.getStatus());
+        }
+
         return products;
     }
 
@@ -178,23 +183,17 @@ public class ProductApiImpl implements ProductApi {
     public Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCartWithCard,
                                                                Map<Kit, Integer> shoppingCartWithKit) {
         List<Product> products = new ArrayList<>();
+
         for (ProductCard productCard : shoppingCartWithCard.keySet()) {
-            for (int i = 0; i < shoppingCartWithCard.get(productCard); i++) {
-                Product product = findAvailableProductsByProductCardWithShop(productCard, shoppingCartWithCard.get(productCard)).get(i);
-                products.add(product);
-                System.out.println("productId: " + product.getId() + " " + product.getProductCard().getName() + " " + product.getStatus());
-            }
+            products.addAll(findAvailableProductsByProductCardWithShop(productCard, shoppingCartWithCard.get(productCard)));
         }
         for (Kit kit : shoppingCartWithKit.keySet()) {
             Set<ProductCard> productCards = kit.getProductCards();
-            for (int i = 0; i < shoppingCartWithKit.get(kit); i++) {
-                for (ProductCard productCard : productCards) {
-                    Product product = findAvailableProductsByProductCardWithShop(productCard, shoppingCartWithKit.get(kit)).get(i);
-                    products.add(product);
-                    System.out.println("productId: " + product.getId() + " " + product.getProductCard().getName() + " " + product.getStatus());
-                }
+            for (ProductCard productCard : productCards) {
+                products.addAll(findAvailableProductsByProductCardWithShop(productCard, shoppingCartWithKit.get(kit)));
             }
         }
+
         Map<Shop, List<Product>> productByShop = new HashMap<>();
         for (Product product : products) {
             productByShop.put(product.getWarehouse().getOwner(), new ArrayList<Product>());

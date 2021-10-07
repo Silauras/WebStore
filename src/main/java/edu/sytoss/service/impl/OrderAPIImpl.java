@@ -12,6 +12,9 @@ import edu.sytoss.repository.ProductRepository;
 import edu.sytoss.service.OrderAPI;
 import edu.sytoss.service.ProductApi;
 import edu.sytoss.service.UserAccountAPI;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,6 +83,7 @@ public class OrderAPIImpl implements OrderAPI {
             productApi.updateProductStatus(product, orderId, "SOLD");
         }
         orderRepository.save(order);
+
     }
 
     @Override
