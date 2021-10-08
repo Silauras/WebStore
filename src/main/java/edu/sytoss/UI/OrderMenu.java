@@ -106,7 +106,7 @@ public class OrderMenu {
                 int count = 1;
                 List<Kit> kits = productApi.findKitByProductCard(productCardId);
                 for (Kit kit : kits) {
-                    System.out.println("№" + count++ + " " + kit);
+                    System.out.println("№" + count++ + " " + kit.getName());
                 }
                 int numberKit = MenuUtils.scanInt("Write Number Kit");
                 Kit kit = kits.get(numberKit - 1);
@@ -195,19 +195,18 @@ public class OrderMenu {
 
         private void printOrderPrinterByUserAccountId(Map<Shop, List<Product>> productByShop) {
             System.out.println("---Ваши заказы---");
-            int count = 1;
             for (Shop shop : productByShop.keySet()) {
                 Map<ProductCard, Integer> productCardIntegerMap = new HashMap<>();
                 for (Product product : productByShop.get(shop)) {
                     if (!productCardIntegerMap.containsKey(product.getProductCard())) {
-                        productCardIntegerMap.put(product.getProductCard(), count);
+                        productCardIntegerMap.put(product.getProductCard(), 1);
                     } else {
-                        productCardIntegerMap.put(product.getProductCard(), ++count);
+                        int count = productCardIntegerMap.get(product.getProductCard());
+                        productCardIntegerMap.put(product.getProductCard(),++count);
                     }
                 }
                 System.out.println(shop.getName());
                 System.out.println(productCardIntegerMap);
-                count = 1;
             }
         }
     }

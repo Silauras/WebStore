@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-@Transactional
 public class OrderAPIImpl implements OrderAPI {
     @Autowired
     OrderRepository orderRepository;
@@ -37,24 +36,27 @@ public class OrderAPIImpl implements OrderAPI {
     @Autowired
     UserAccountAPI userAccountAPI;
 
-
     /*---------------------------------Order-------------------------------*/
+    @Transactional
     @Override
     public Order findOrderById(Long id) {
         return orderRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public List<Order> findAllOrder() {
         return orderRepository.findAll();
     }
 
+    @Transactional
     @Override
     public List<Product> findAllProductInOrderById(Long id) {
         Order order = orderRepository.findOrderWithProductsById(id);
         return order.getProducts();
     }
 
+    @Transactional
     @Override
     public List<ProductCard> findAllProductCartsInOrderById(Long id) {
         List<Product> products = orderRepository.findOrderWithProductCartsById(id).getProducts();
@@ -65,15 +67,18 @@ public class OrderAPIImpl implements OrderAPI {
         return productCards;
     }
 
+    @Transactional
     @Override
     public ProductCard findProductCardById(Long id) {
         return productCardRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public void updateOrder(Long orderId, Long productCardId, int quantity, String actionType) {
     }
 
+    @Transactional
     @Override
     public void updateOrder(Long orderId) {
         Order order = orderRepository.findById(orderId);
@@ -86,6 +91,7 @@ public class OrderAPIImpl implements OrderAPI {
 
     }
 
+    @Transactional
     @Override
     public boolean createOrder(Order order, List<Product> products) {
         try {
@@ -109,6 +115,7 @@ public class OrderAPIImpl implements OrderAPI {
     }
 
     /*--------------------------ShoppingCart-----------------------------*/
+    @Transactional
     @Override
     public Map<ProductCard, Integer> createShoppingCartWithCard(UserAccount userAccount) {
         List<Order> shoppingCartWithCard = new ArrayList<>();
@@ -134,12 +141,14 @@ public class OrderAPIImpl implements OrderAPI {
         return cardsMap;
     }
 
+    @Transactional
     @Override
     public Map<Kit, Integer> createShoppingCartWithKit(UserAccount userAccount) {
         Map<Kit, Integer> cardsMap = new HashMap<>();
         return cardsMap;
     }
 
+    @Transactional
     @Override
     public Map<ProductCard, Integer> updateShoppingCart(Map<ProductCard, Integer> shoppingCartWithCard, long productCardId, int quantity, String actionType) {
         ProductCard productCard = productCardRepository.findProductCarByIdAndProductStatusWithProducts(productCardId, "AVAILABLE");
@@ -174,6 +183,7 @@ public class OrderAPIImpl implements OrderAPI {
         return shoppingCartWithCard;
     }
 
+    @Transactional
     @Override
     public Map<Kit, Integer> updateShoppingCartKit(Map<Kit, Integer> shoppingCartWithKit, long kitId, int quantity, String actionType) {
         Kit kit = kitRepository.findKitByIdAndProductStatusWithProducts(kitId, "AVAILABLE");

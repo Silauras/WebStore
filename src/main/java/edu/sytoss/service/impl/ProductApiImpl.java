@@ -13,34 +13,27 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @Service
-@Transactional
 public class ProductApiImpl implements ProductApi {
     /* --------- REPOSITORIES --------- */
     @Autowired
     ProductCardRepository productCardRepository;
     @Autowired
     KitRepository kitRepository;
-
     @Autowired
     CategoryRepository categoryRepository;
-
     @Autowired
     ProductTemplateRepository productTemplateRepository;
-
     @Autowired
     CharacteristicTemplateRepository characteristicTemplateRepository;
-
     @Autowired
     CharacteristicRepository characteristicRepository;
-
     @Autowired
     ProductRepository productRepository;
-
     @Autowired
     OrderRepository orderRepository;
 
     /* --------- IMPLEMENTED METHODS --------- */
-
+    @Transactional
     @Override
     public Product findById(Long id) {
         return productRepository.findById(id);
@@ -52,11 +45,11 @@ public class ProductApiImpl implements ProductApi {
         return productCardRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public ProductCard findProductCardByIdWhitKits(Long id) {
         return productCardRepository.findByIdWithKits(id);
     }
-
 
     @Transactional
     @Override
@@ -64,63 +57,48 @@ public class ProductApiImpl implements ProductApi {
         return productCardRepository.findByIdWithCharacteristicsAndCategory(id);
     }
 
-    /**
-     * @param
-     * @param
-     * @return
-     * @author Andrey Kolesnyk
-     */
-    @Override
-    public boolean updateProductStatus(Product product, Long orderId, String status) {
-        try {
-            Order order = orderRepository.findById(orderId);
-            product.setStatus(status);
-            product.setOrder(order);
-            productRepository.save(product);
-            productRepository.flush();
-            return true;
-        } catch (NullPointerException e) {
-            return false;
-        }
-    }
-
-
+    @Transactional
     @Override
     public List<ProductCard> findAllProductCards() {
         return productCardRepository.findAll();
     }
 
-
+    @Transactional
     @Override
     public List<ProductCard> findAllProductCardsByFilter(Long CategoryId, HashMap<String, List<String>> filter) {
         return null;
     }
 
+    @Transactional
     @Override
     public List<ProductCard> filterProductsByPrice(BigDecimal startPrice, BigDecimal endPrice, List<ProductCard> productCards) {
         return null;
     }
 
+    @Transactional
     @Override
     public Category findCategoryById(Long id) {
         Category category = categoryRepository.findById(id);
         return categoryRepository.findById(id);
     }
 
-
+    @Transactional
     @Override
     public List<Category> findAllCategories() {
         return categoryRepository.findAll();
     }
 
+    @Transactional
     public ProductTemplate findProductCardTemplateById(Long id) {
         return productTemplateRepository.findById(id);
     }
 
+    @Transactional
     public List<ProductTemplate> findProductCardTemplateByCategoryId(long categoryId) {
         return productTemplateRepository.findAllByCategory_Id(categoryId);
     }
 
+    @Transactional
     public int countUniqueCharacteristicsPerCharacteristicTemplate(Long characteristicTemplateId) {
         List<Characteristic> characteristics = characteristicRepository.findAllByTemplate_Id(characteristicTemplateId);
         Set<String> uniqueNames = new HashSet<>();
@@ -130,10 +108,12 @@ public class ProductApiImpl implements ProductApi {
         return uniqueNames.size();
     }
 
+    @Transactional
     public List<CharacteristicTemplate> findCharacteristicTemplateByProductTemplateId(Long productTemplateId) {
         return characteristicTemplateRepository.findAllByProductTemplateId(productTemplateId);
     }
 
+    @Transactional
     public List<Characteristic> findCharacteristicByTemplate(Long characteristicTemplateId) {
         return characteristicRepository.findAllByTemplate_Id(characteristicTemplateId);
     }
@@ -151,30 +131,33 @@ public class ProductApiImpl implements ProductApi {
         return characteristics;
     }
 
+    @Transactional
+    @Override
+    public boolean updateProductStatus(Product product, Long orderId, String status) {
+        try {
+            Order order = orderRepository.findById(orderId);
+            product.setStatus(status);
+            product.setOrder(order);
+            productRepository.saveAndFlush(product);
+            return true;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    @Transactional
     @Override
     public List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard, Integer quantity) {
         ProductCard pC = productCardRepository.findProductCardByIdAndProductStatusWithShopAndProducts(productCard.getId(), "AVAILABLE");
-        List<Product> allProduct = pC.getProducts();
-        System.out.println(allProduct);
+        List<Product> availableProducts = pC.getProducts();
         List<Product> products = new ArrayList<>();
         for (int i = 0; i < quantity; i++) {
-            products.add(allProduct.get(i));
-            updateProductStatus(allProduct.get(i), null, "BLOCKED");
+            products.add(availableProducts.get(i));
+            updateProductStatus(availableProducts.get(i), null, "BLOCKED");
         }
         for (Product product : products) {
-            System.out.println("productId: " + product.getId() + " " + product.getProductCard().getName() + " " + product.getStatus());
+            System.out.println("id:" + product.getId() + " " + product.getProductCard().getName());
         }
-
-        return products;
-    }
-
-    public List<Product> findAvailableProductsByKitWithShop(Kit kit) {
-        List<Product> products = new ArrayList<>();
-        Set<ProductCard> productCards = kitRepository.findKitByIdAndProductStatusWithShopAndProducts(kit.getId(), "AVAILABLE").getProductCards();
-        for (ProductCard productCard : productCards) {
-            products.addAll(productCard.getProducts());
-        }
-        System.out.println(products);
         return products;
     }
 
@@ -210,9 +193,9 @@ public class ProductApiImpl implements ProductApi {
         return productByShop;
     }
 
+    @Transactional
     @Override
     public List<Kit> findKitByProductCard(long productCardId) {
-        List<Kit> kits = kitRepository.findKitByProductCard(productCardId);
-        return kits;
+        return kitRepository.findKitByProductCard(productCardId);
     }
 }
