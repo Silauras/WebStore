@@ -144,12 +144,12 @@ public class ProductApiImpl implements ProductApi {
             return false;
         }
     }
+
     @Transactional
     @Override
     public boolean updateProductSetKit(List<Product> products, Kit kit, String serialNumberKit) {
         try {
-            for (Product product:products)
-            {
+            for (Product product : products) {
                 product.setKit(kit);
                 product.setSerialNumberKit(serialNumberKit);
                 productRepository.save(product);
@@ -186,16 +186,15 @@ public class ProductApiImpl implements ProductApi {
         for (Kit kit : shoppingCartWithKit.keySet()) {
             Set<ProductCard> productCards = kit.getProductCards();
             for (int i = 0; i < shoppingCartWithKit.get(kit); i++) {
-                StringBuilder serialNumberKit= new StringBuilder(String.valueOf(kit.getId()));
+                StringBuilder serialNumberKit = new StringBuilder(String.valueOf(kit.getId()));
                 List<Product> productsInKit = new ArrayList<>();
                 for (ProductCard productCard : productCards) {
-                    productsInKit.add(findAvailableProductsByProductCardWithShop(productCard,1).get(0));
-                }
-                for (Product product:productsInKit)
-                {
+                    Product product = findAvailableProductsByProductCardWithShop(productCard, 1).get(0);
+                    productsInKit.add(product);
                     serialNumberKit.append("-").append(product.getId());
                 }
                 updateProductSetKit(productsInKit, kit, serialNumberKit.toString());
+                products.addAll(productsInKit);
             }
         }
 
@@ -214,8 +213,6 @@ public class ProductApiImpl implements ProductApi {
         }
         return productByShop;
     }
-
-
 
     @Transactional
     @Override

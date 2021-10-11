@@ -126,10 +126,10 @@ public class OrderMenu {
 
         Map<Shop, List<Product>> productByShop = productApi.dividingProductsIntoOrders(shoppingCartWithCard, shoppingCartWithKit);
         new OrderPrinter(productByShop);
-       /*for (Shop shop : productByShop.keySet()) {
+        for (Shop shop : productByShop.keySet()) {
             Order order = new Order(userAccount, shop);
             orderAPI.createOrder(order, productByShop.get(shop));
-        }*/
+        }
     }
 
     /**
