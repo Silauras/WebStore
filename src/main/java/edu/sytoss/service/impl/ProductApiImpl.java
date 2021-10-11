@@ -133,12 +133,27 @@ public class ProductApiImpl implements ProductApi {
 
     @Transactional
     @Override
-    public boolean updateProductStatus(Product product, Long orderId, String status) {
+    public boolean updateProductForOrder(Product product, Long orderId, String status) {
         try {
             Order order = orderRepository.findById(orderId);
             product.setStatus(status);
             product.setOrder(order);
             productRepository.saveAndFlush(product);
+            return true;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+    @Transactional
+    @Override
+    public boolean updateProductSetKit(List<Product> products, Kit kit, String serialNumberKit) {
+        try {
+            for (Product product:products)
+            {
+                product.setKit(kit);
+                product.setSerialNumberKit(serialNumberKit);
+                productRepository.save(product);
+            }
             return true;
         } catch (NullPointerException e) {
             return false;
@@ -153,10 +168,7 @@ public class ProductApiImpl implements ProductApi {
         List<Product> products = new ArrayList<>();
         for (int i = 0; i < quantity; i++) {
             products.add(availableProducts.get(i));
-            updateProductStatus(availableProducts.get(i), null, "BLOCKED");
-        }
-        for (Product product : products) {
-            System.out.println("id:" + product.getId() + " " + product.getProductCard().getName());
+            updateProductForOrder(availableProducts.get(i), null, "BLOCKED");
         }
         return products;
     }
@@ -170,10 +182,20 @@ public class ProductApiImpl implements ProductApi {
         for (ProductCard productCard : shoppingCartWithCard.keySet()) {
             products.addAll(findAvailableProductsByProductCardWithShop(productCard, shoppingCartWithCard.get(productCard)));
         }
+
         for (Kit kit : shoppingCartWithKit.keySet()) {
             Set<ProductCard> productCards = kit.getProductCards();
-            for (ProductCard productCard : productCards) {
-                products.addAll(findAvailableProductsByProductCardWithShop(productCard, shoppingCartWithKit.get(kit)));
+            for (int i = 0; i < shoppingCartWithKit.get(kit); i++) {
+                StringBuilder serialNumberKit= new StringBuilder(String.valueOf(kit.getId()));
+                List<Product> productsInKit = new ArrayList<>();
+                for (ProductCard productCard : productCards) {
+                    productsInKit.add(findAvailableProductsByProductCardWithShop(productCard,1).get(0));
+                }
+                for (Product product:productsInKit)
+                {
+                    serialNumberKit.append("-").append(product.getId());
+                }
+                updateProductSetKit(productsInKit, kit, serialNumberKit.toString());
             }
         }
 
@@ -192,6 +214,8 @@ public class ProductApiImpl implements ProductApi {
         }
         return productByShop;
     }
+
+
 
     @Transactional
     @Override

@@ -21,8 +21,9 @@ public interface ProductApi {
 
     ProductCard findProductCardByIdWithCharacteristicsAndCategory(Long id);
 
-    boolean updateProductStatus(Product product, Long orderId, String status);
+    boolean updateProductForOrder(Product product, Long orderId, String status);
 
+    boolean updateProductSetKit(List<Product> products, Kit kit, String serialNumberKit);
     /**
      * * @param filter
      * @return
@@ -48,4 +49,6 @@ public interface ProductApi {
                                                         Map<Kit, Integer> shoppingCartWithKit);
 
     List<Kit> findKitByProductCard(long productCardId);
+
+
 }

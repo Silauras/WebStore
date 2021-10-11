@@ -48,11 +48,15 @@ public class Product implements Purchase{
     @JoinColumn(name = "kit")
     private Kit kit;
 
+    @Column(name = "serial_number_kit")
+    private String serialNumberKit;
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", status='" + status +
+                ", status=" + status +
+                ", serialNumberKit=" + serialNumberKit +
                 '}';
     }
 

@@ -12,9 +12,6 @@ import edu.sytoss.repository.ProductRepository;
 import edu.sytoss.service.OrderAPI;
 import edu.sytoss.service.ProductApi;
 import edu.sytoss.service.UserAccountAPI;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,7 +82,7 @@ public class OrderAPIImpl implements OrderAPI {
         order.setState("finished_accepted");
         List<Product> products = productRepository.findProductByOrder(order);
         for (Product product : products) {
-            productApi.updateProductStatus(product, orderId, "SOLD");
+            productApi.updateProductForOrder(product, orderId, "SOLD");
         }
         orderRepository.save(order);
 
@@ -105,7 +102,7 @@ public class OrderAPIImpl implements OrderAPI {
             order.setLastChangeDate(new Date());
             orderRepository.saveAndFlush(order);
             for (Product product : products) {
-                productApi.updateProductStatus(product, order.getId(), "BLOCKED");
+                productApi.updateProductForOrder(product, order.getId(), "BLOCKED");
             }
             return true;
         } catch (NullPointerException e) {

@@ -97,8 +97,6 @@ public class OrderMenu {
 
     private void updatedProductInShoppingCart(UserAccount userAccount, Map<ProductCard, Integer> shoppingCartWithCard,
                                               Map<Kit, Integer> shoppingCartWithKit, String actionType) {
-        Map<Kit, Integer> newShoppingCartWithKit = new HashMap<>();
-        Map<ProductCard, Integer> newShoppingCartWithCard = new HashMap<>();
         long productCardId = MenuUtils.scanInt("Write id ProductCard");
         if (productApi.findProductCardByIdWhitKits(productCardId).getKits().size() != 0) {
             String answer = scanLine("Do you want buy kit? 1 = Yes, 0 = No");
@@ -111,20 +109,22 @@ public class OrderMenu {
                 int numberKit = MenuUtils.scanInt("Write Number Kit");
                 Kit kit = kits.get(numberKit - 1);
                 int quantity = MenuUtils.scanInt("Write Quantity");
-                newShoppingCartWithKit = orderAPI.updateShoppingCartKit(shoppingCartWithKit, kit.getId(), quantity, actionType);
+                orderAPI.updateShoppingCartKit(shoppingCartWithKit, kit.getId(), quantity, actionType);
             } else {
                 int quantity = MenuUtils.scanInt("Write Quantity");
-                newShoppingCartWithCard = orderAPI.updateShoppingCart(shoppingCartWithCard, productCardId, quantity, actionType);
+                orderAPI.updateShoppingCart(shoppingCartWithCard, productCardId, quantity, actionType);
             }
         } else {
             int quantity = MenuUtils.scanInt("Write Quantity");
-            newShoppingCartWithCard = orderAPI.updateShoppingCart(shoppingCartWithCard, productCardId, quantity, actionType);
+            orderAPI.updateShoppingCart(shoppingCartWithCard, productCardId, quantity, actionType);
         }
 
     }
 
     private void payShoppingCart(UserAccount userAccount, Map<ProductCard, Integer> shoppingCartWithCard, Map<Kit, Integer> shoppingCartWithKit) {
-        Map<Shop, List<Product>> productByShop = productApi.dividingProductsIntoOrders(shoppingCartWithCard,shoppingCartWithKit);
+        //добавить метод для блокировки продука и если нужно занесение ему  номера кита
+
+        Map<Shop, List<Product>> productByShop = productApi.dividingProductsIntoOrders(shoppingCartWithCard, shoppingCartWithKit);
         new OrderPrinter(productByShop);
        /*for (Shop shop : productByShop.keySet()) {
             Order order = new Order(userAccount, shop);
@@ -202,7 +202,7 @@ public class OrderMenu {
                         productCardIntegerMap.put(product.getProductCard(), 1);
                     } else {
                         int count = productCardIntegerMap.get(product.getProductCard());
-                        productCardIntegerMap.put(product.getProductCard(),++count);
+                        productCardIntegerMap.put(product.getProductCard(), ++count);
                     }
                 }
                 System.out.println(shop.getName());
