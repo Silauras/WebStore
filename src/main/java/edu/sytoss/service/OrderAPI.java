@@ -16,15 +16,9 @@ import java.util.Set;
 public interface OrderAPI {
     /*---------------------------------Order-------------------------------*/
 
-    Order findOrderById(Long id);
-
-    List<Order> findAllOrder();
-
     List<Product> findAllProductInOrderById(Long id);
 
     List<ProductCard> findAllProductCartsInOrderById(Long id);
-
-    ProductCard findProductCardById(Long id);
 
      boolean createOrder(Order order,List<Product> products);
      /*--------------------------ShoppingCart-----------------------------*/

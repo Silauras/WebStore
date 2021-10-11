@@ -13,6 +13,8 @@ import edu.sytoss.service.impl.PriceCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,14 +124,15 @@ public class OrderMenu {
     }
 
     private void payShoppingCart(UserAccount userAccount, Map<ProductCard, Integer> shoppingCartWithCard, Map<Kit, Integer> shoppingCartWithKit) {
-        //добавить метод для блокировки продука и если нужно занесение ему  номера кита
-
         Map<Shop, List<Product>> productByShop = productApi.dividingProductsIntoOrders(shoppingCartWithCard, shoppingCartWithKit);
+        BigDecimal prise = new BigDecimal(BigInteger.ZERO);
         new OrderPrinter(productByShop);
         for (Shop shop : productByShop.keySet()) {
             Order order = new Order(userAccount, shop);
-
             orderAPI.createOrder(order, productByShop.get(shop));
+           /* for (Product product : productByShop.get(shop)) {
+                prise = prise.add(priceCalculator.calculateProductPrice(product));
+            }*/
         }
     }
 

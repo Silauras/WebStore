@@ -8,10 +8,8 @@ import edu.sytoss.model.user.UserAccount;
 import edu.sytoss.repository.KitRepository;
 import edu.sytoss.repository.OrderRepository;
 import edu.sytoss.repository.ProductCardRepository;
-import edu.sytoss.repository.ProductRepository;
 import edu.sytoss.service.OrderAPI;
 import edu.sytoss.service.ProductApi;
-import edu.sytoss.service.UserAccountAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,24 +25,9 @@ public class OrderAPIImpl implements OrderAPI {
     @Autowired
     KitRepository kitRepository;
     @Autowired
-    ProductRepository productRepository;
-    @Autowired
     ProductApi productApi;
-    @Autowired
-    UserAccountAPI userAccountAPI;
 
     /*---------------------------------Order-------------------------------*/
-    @Transactional
-    @Override
-    public Order findOrderById(Long id) {
-        return orderRepository.findById(id);
-    }
-
-    @Transactional
-    @Override
-    public List<Order> findAllOrder() {
-        return orderRepository.findAll();
-    }
 
     @Transactional
     @Override
@@ -66,15 +49,8 @@ public class OrderAPIImpl implements OrderAPI {
 
     @Transactional
     @Override
-    public ProductCard findProductCardById(Long id) {
-        return productCardRepository.findById(id);
-    }
-
-    @Transactional
-    @Override
     public boolean createOrder(Order order, List<Product> products) {
         try {
-
             order.setState("NEW");
             order.setLastChangeDate(new Date());
             orderRepository.saveAndFlush(order);
@@ -99,18 +75,17 @@ public class OrderAPIImpl implements OrderAPI {
         }
         /*Create Template for  Shopping Cart*/
         Map<ProductCard, Integer> cardsMap = new HashMap<>();
-        int count = 1;
         for (ProductCard productCard : productCards) {
-            cardsMap.put(productCard, count);
+            cardsMap.put(productCard, 1);
         }
         /*Count items in Shopping Cart*/
         for (ProductCard productCard : cardsMap.keySet()) {
+            int count = 1;
             for (ProductCard productCardOrder : productCards) {
                 if (productCard.equals(productCardOrder)) {
                     cardsMap.put(productCard, count++);
                 }
             }
-            count = 1;
         }
         return cardsMap;
     }
