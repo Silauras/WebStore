@@ -20,7 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({"edu.sytoss"})
+@ComponentScan({"edu.sytoss.config"})
 @PropertySource(value = {"classpath:application.properties"})
 @EnableJpaRepositories(basePackages = "edu.sytoss.repository")
 public class ApplicationConfiguration {

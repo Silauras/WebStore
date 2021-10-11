@@ -38,6 +38,7 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
 
     @Query("select u from UserAccount u left join fetch u.orders        where u.id = ?1")
     UserAccount findUserAccountWithOrderById(Long id);
+
     @Query("select u from UserAccount u left join fetch u.orders o where u.id = ?1 and o.state = 'NEW'")
     UserAccount findUserAccountWithNewOrderById(Long id);
 
@@ -46,4 +47,6 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Long> 
 
     @Query("select u from UserAccount u left join fetch u.orders o where u.id = ?1 and o.state = ?2")
     UserAccount findUserAccountWithOrderWhereState(Long id, String state);
+
+    UserAccount findByLogin(String login);
 }

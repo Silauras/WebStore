@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,7 +129,7 @@ public class UserAccountAPIImpl implements UserAccountAPI {
         try {
             userAccountRepository.saveAndFlush(userAccount);
             return true;
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             return false;
         }
     }
