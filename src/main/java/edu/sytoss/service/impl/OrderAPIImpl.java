@@ -72,32 +72,9 @@ public class OrderAPIImpl implements OrderAPI {
 
     @Transactional
     @Override
-    public void updateOrder(Long orderId, Long productCardId, int quantity, String actionType) {
-    }
-
-    @Transactional
-    @Override
-    public void updateOrder(Long orderId) {
-        Order order = orderRepository.findById(orderId);
-        order.setState("finished_accepted");
-        List<Product> products = productRepository.findProductByOrder(order);
-        for (Product product : products) {
-            productApi.updateProductForOrder(product, orderId, "SOLD");
-        }
-        orderRepository.save(order);
-
-    }
-
-    @Transactional
-    @Override
     public boolean createOrder(Order order, List<Product> products) {
         try {
-//            for (Product product : products) {
-//                if (!product.getStatus().equals("AVAILABLE")) {
-//                    System.out.println("Для офрмления заказа недостаточно продуктов");
-//                    return false;
-//                }
-//            }
+
             order.setState("NEW");
             order.setLastChangeDate(new Date());
             orderRepository.saveAndFlush(order);

@@ -26,10 +26,6 @@ public interface OrderAPI {
 
     ProductCard findProductCardById(Long id);
 
-    void updateOrder(Long orderId, Long productCardId, int quantity, String actionType);
-
-    void updateOrder(Long orderId);
-
      boolean createOrder(Order order,List<Product> products);
      /*--------------------------ShoppingCart-----------------------------*/
      Map<ProductCard, Integer> createShoppingCartWithCard(UserAccount userAccount);

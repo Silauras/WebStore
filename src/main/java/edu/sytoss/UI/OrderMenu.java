@@ -128,6 +128,7 @@ public class OrderMenu {
         new OrderPrinter(productByShop);
         for (Shop shop : productByShop.keySet()) {
             Order order = new Order(userAccount, shop);
+
             orderAPI.createOrder(order, productByShop.get(shop));
         }
     }
