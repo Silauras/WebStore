@@ -9,6 +9,7 @@ import edu.sytoss.model.user.UserAccount;
 import edu.sytoss.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,7 +21,7 @@ public interface OrderAPI {
 
     List<ProductCard> findAllProductCartsInOrderById(Long id);
 
-     boolean createOrder(Order order,List<Product> products);
+     boolean createOrder(Order order);
      /*--------------------------ShoppingCart-----------------------------*/
      Map<ProductCard, Integer> createShoppingCartWithCard(UserAccount userAccount);
 

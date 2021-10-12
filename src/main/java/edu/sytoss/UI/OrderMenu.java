@@ -125,14 +125,18 @@ public class OrderMenu {
 
     private void payShoppingCart(UserAccount userAccount, Map<ProductCard, Integer> shoppingCartWithCard, Map<Kit, Integer> shoppingCartWithKit) {
         Map<Shop, List<Product>> productByShop = productApi.dividingProductsIntoOrders(shoppingCartWithCard, shoppingCartWithKit);
-        BigDecimal prise = new BigDecimal(BigInteger.ZERO);
+        BigDecimal sumPrise = new BigDecimal(BigInteger.ZERO);
         new OrderPrinter(productByShop);
         for (Shop shop : productByShop.keySet()) {
             Order order = new Order(userAccount, shop);
-            orderAPI.createOrder(order, productByShop.get(shop));
-           /* for (Product product : productByShop.get(shop)) {
-                prise = prise.add(priceCalculator.calculateProductPrice(product));
-            }*/
+            orderAPI.createOrder(order);
+            for (Product product : productByShop.get(shop)) {
+                BigDecimal priseOfProduct = priceCalculator.calculateProductPrice(product).setScale(2);
+                sumPrise = sumPrise.add(priseOfProduct);
+                productApi.updateProductForOrder(product, order, "BLOCKED", priseOfProduct);
+                System.out.println("orderId: " + order.getId() + " " + product.getProductCard().getName() + ": " + product.getPrice() + "грн");
+            }
+            System.out.println("Окончательная сумма: " + sumPrise+ "грн");
         }
     }
 

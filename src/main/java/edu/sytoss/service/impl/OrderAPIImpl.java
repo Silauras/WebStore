@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -49,14 +50,11 @@ public class OrderAPIImpl implements OrderAPI {
 
     @Transactional
     @Override
-    public boolean createOrder(Order order, List<Product> products) {
+    public boolean createOrder(Order order) {
         try {
             order.setState("NEW");
             order.setLastChangeDate(new Date());
             orderRepository.saveAndFlush(order);
-            for (Product product : products) {
-                productApi.updateProductForOrder(product, order.getId(), "BLOCKED");
-            }
             return true;
         } catch (NullPointerException e) {
             return false;

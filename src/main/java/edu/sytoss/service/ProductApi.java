@@ -1,5 +1,6 @@
 package edu.sytoss.service;
 
+import edu.sytoss.model.order.Order;
 import edu.sytoss.model.product.*;
 import edu.sytoss.model.shop.Shop;
 
@@ -21,7 +22,7 @@ public interface ProductApi {
 
     ProductCard findProductCardByIdWithCharacteristicsAndCategory(Long id);
 
-    boolean updateProductForOrder(Product product, Long orderId, String status);
+    boolean updateProductForOrder(Product product, Order order, String status, BigDecimal price);
 
     boolean updateProductSetKit(List<Product> products, Kit kit, String serialNumberKit);
     /**

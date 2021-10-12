@@ -24,6 +24,7 @@ public interface ProductCardRepository extends JpaRepository<ProductCard, Long> 
             "left join fetch pc.products p " +
             "left join fetch p.warehouse w " +
             "left join fetch w.owner " +
+            "left join fetch pc.sales " +
             "where pc.id = ?1 and p.status = ?2 and p.status <> 'BLOCKED'" )
     ProductCard findProductCardByIdAndProductStatusWithShopAndProducts(Long id, String productStatus);
 

@@ -133,11 +133,11 @@ public class ProductApiImpl implements ProductApi {
 
     @Transactional
     @Override
-    public boolean updateProductForOrder(Product product, Long orderId, String status) {
+    public boolean updateProductForOrder(Product product, Order order, String status, BigDecimal prise) {
         try {
-            Order order = orderRepository.findById(orderId);
             product.setStatus(status);
             product.setOrder(order);
+            product.setPrice(prise);
             productRepository.saveAndFlush(product);
             return true;
         } catch (NullPointerException e) {
@@ -168,7 +168,7 @@ public class ProductApiImpl implements ProductApi {
         List<Product> products = new ArrayList<>();
         for (int i = 0; i < quantity; i++) {
             products.add(availableProducts.get(i));
-            updateProductForOrder(availableProducts.get(i), null, "BLOCKED");
+            updateProductForOrder(availableProducts.get(i), null, "BLOCKED",null);
         }
         return products;
     }
