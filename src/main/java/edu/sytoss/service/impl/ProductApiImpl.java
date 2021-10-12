@@ -209,6 +209,7 @@ public class ProductApiImpl implements ProductApi {
                     productsInOrder.add(product);
                     productByShop.put(shop, productsInOrder);
                 }
+
             }
         }
         return productByShop;
