@@ -1,7 +1,9 @@
 package edu.sytoss.model.product;
 
 import edu.sytoss.model.shop.Shop;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

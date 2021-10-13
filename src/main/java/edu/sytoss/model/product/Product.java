@@ -2,9 +2,10 @@ package edu.sytoss.model.product;
 
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.shop.Warehouse;
-import edu.sytoss.model.user.Subsciptable;
-import edu.sytoss.model.user.UserAccount;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

@@ -1,9 +1,6 @@
 package edu.sytoss.dto;
 
 import lombok.*;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor

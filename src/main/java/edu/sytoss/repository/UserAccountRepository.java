@@ -1,8 +1,6 @@
 package edu.sytoss.repository;
 
-import edu.sytoss.model.user.Communication;
 import edu.sytoss.model.user.UserAccount;
-import edu.sytoss.model.user.UserAccountRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

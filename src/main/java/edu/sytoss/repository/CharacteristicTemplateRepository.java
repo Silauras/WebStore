@@ -1,6 +1,5 @@
 package edu.sytoss.repository;
 
-import edu.sytoss.model.product.Characteristic;
 import edu.sytoss.model.product.CharacteristicTemplate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,8 +1,6 @@
 package edu.sytoss.repository;
 
 import edu.sytoss.model.order.Order;
-import edu.sytoss.model.product.ProductCard;
-import edu.sytoss.model.user.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

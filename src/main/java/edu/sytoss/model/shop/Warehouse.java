@@ -1,15 +1,12 @@
 package edu.sytoss.model.shop;
 
-import javax.persistence.*;
-
 import edu.sytoss.model.product.Product;
-import edu.sytoss.model.product.ProductCard;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter

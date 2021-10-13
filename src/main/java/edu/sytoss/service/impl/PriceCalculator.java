@@ -2,9 +2,9 @@ package edu.sytoss.service.impl;
 
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.product.Kit;
-import edu.sytoss.model.product.Sale;
 import edu.sytoss.model.product.Product;
 import edu.sytoss.model.product.ProductCard;
+import edu.sytoss.model.product.Sale;
 import edu.sytoss.model.shop.Promotion;
 import edu.sytoss.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
