@@ -2,7 +2,7 @@ package edu.sytoss;
 
 import edu.sytoss.UI.Menu;
 
-import edu.sytoss.config.WebConfiguration;
+import edu.sytoss.config.WebConfigurer;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.core.StandardContext;
@@ -52,7 +52,7 @@ public class Application {
 
     private static void startConsoleApp() {
         ApplicationContext applicationContext =
-                new AnnotationConfigApplicationContext(WebConfiguration.class);
+                new AnnotationConfigApplicationContext(WebConfigurer.class);
         System.out.println("Application started!");
         Menu menu = applicationContext.getBean(Menu.class);
         menu.start();
