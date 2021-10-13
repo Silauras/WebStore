@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Kit")
-public class Kit {
+public class Kit implements Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "kit_id", nullable = false)
@@ -39,6 +40,26 @@ public class Kit {
             inverseJoinColumns = @JoinColumn(name = "product_card", referencedColumnName = "product_id"))
     private Set<ProductCard> productCards;
 
+    @Override
+    public String toString() {
+        return "Kit{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Kit kit = (Kit) o;
+        return Objects.equals(id, kit.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     /**
      * Returns product card with maximum price (without any sale) in kit

@@ -8,6 +8,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ import java.math.BigDecimal;
 
 @Table(name = "product")
 @Entity
-public class Product {
+public class Product implements Purchase{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id", nullable = false)
@@ -47,13 +48,28 @@ public class Product {
     @JoinColumn(name = "kit")
     private Kit kit;
 
+    @Column(name = "serial_number_kit")
+    private String serialNumberKit;
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", serialNumber=" + serialNumber +
-                ", price=" + price +
-                ", status='" + status + '\'' +
+                ", status=" + status +
+                ", serialNumberKit=" + serialNumberKit +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

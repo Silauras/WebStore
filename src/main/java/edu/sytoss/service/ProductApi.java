@@ -1,5 +1,6 @@
 package edu.sytoss.service;
 
+import edu.sytoss.model.order.Order;
 import edu.sytoss.model.product.*;
 import edu.sytoss.model.shop.Shop;
 
@@ -15,12 +16,15 @@ public interface ProductApi {
 
     ProductCard findProductCardById(Long id);
 
+    ProductCard findProductCardByIdWhitKits(Long id);
+
     List<ProductCard> findAllProductCards();
 
     ProductCard findProductCardByIdWithCharacteristicsAndCategory(Long id);
 
-    boolean updateProductStatus(Product product, Long orderId, String status);
+    boolean updateProductForOrder(Product product, Order order, String status, BigDecimal price);
 
+    boolean updateProductSetKit(List<Product> products, Kit kit, String serialNumberKit);
     /**
      * * @param filter
      * @return
@@ -40,8 +44,12 @@ public interface ProductApi {
 
     List<Characteristic> findCharacteristicsPerCategory(Long categoryId);
     /*-------------------Product---------------------*/
-    List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard);
+    List<Product> findAvailableProductsByProductCardWithShop(ProductCard productCard, Integer quantity);
 
-    Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCart);
+    Map<Shop, List<Product>> dividingProductsIntoOrders(Map<ProductCard, Integer> shoppingCartWithCard,
+                                                        Map<Kit, Integer> shoppingCartWithKit);
+
+    List<Kit> findKitByProductCard(long productCardId);
+
 
 }
