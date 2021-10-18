@@ -1,5 +1,6 @@
 package edu.sytoss.service.impl;
 
+import edu.sytoss.dto.LoginDTO;
 import edu.sytoss.model.communication.Reaction;
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.user.Communication;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
+
 public class UserAccountAPIImpl implements UserAccountAPI {
     /*------------------------------- Repository---------------------------------------*/
     @Autowired
@@ -28,24 +29,25 @@ public class UserAccountAPIImpl implements UserAccountAPI {
     SubscriptionRepository subscriptionRepository;
 
     /*-------------------------------Subscription------------------------------------*/
+    @Transactional
     @Override
     public List<Subscription> findAllSubscriptionOnUserAccountById(UserAccount userAccount) {
         UserAccount u = userAccountRepository.findUserAccountWithSubscriptionsById(userAccount.getId());
         return u.getSubscriptions();
     }
-
+    @Transactional
     @Override
     public List<Subscription> findAllSubscription() {
         return subscriptionRepository.findAll();
     }
 
     /*-----------------------------Order--------------------------------------*/
-
+    @Transactional
     @Override
     public List<Order> findAllOrder() {
         return null;
     }
-
+    @Transactional
     @Override
     public List<Order> findUserAccountWithStateOrder(UserAccount userAccount, String state) {
         UserAccount u = userAccountRepository.findUserAccountWithOrderWhereState(userAccount.getId(), state);
@@ -55,19 +57,19 @@ public class UserAccountAPIImpl implements UserAccountAPI {
         }
         return orders;
     }
-
+    @Transactional
     @Override
     public List<Order> findAllOrderInUserAccountById(UserAccount userAccount) {
         UserAccount u = userAccountRepository.findUserAccountWithOrderById(userAccount.getId());
         return u.getOrders();
     }
     /*-----------------------------Reaction--------------------------------------*/
-
+    @Transactional
     @Override
     public List<Reaction> findAllReaction() {
         return null;
     }
-
+    @Transactional
     @Override
     public List<Reaction> findAllReactionInUserAccountById(UserAccount userAccount) {
         UserAccount u = userAccountRepository.findUserAccountWithReactionById(userAccount.getId());
@@ -75,18 +77,21 @@ public class UserAccountAPIImpl implements UserAccountAPI {
     }
 
     /*-------------------------------Communication------------------------------------*/
+    @Transactional
     @Override
     public List<Communication> findCommunicationInUserAccountById(UserAccount userAccount) {
         UserAccount u = userAccountRepository.findUserAccountWithCommunicationById(userAccount.getId());
         return u.getCommunication();
     }
-
+    @Transactional
     @Override
     public List<Communication> findAllCommunication() {
         return communicationRepository.findAll();
     }
 
+
     /*----------------------------UserAccount---------------------------------------*/
+    @Transactional
     @Override
     public List<UserAccount> findUserAccount(UserAccount userAccount) {
         List<UserAccount> userAccounts = new ArrayList<>();
@@ -112,12 +117,36 @@ public class UserAccountAPIImpl implements UserAccountAPI {
         }
         return userAccounts;
     }
+    @Transactional
+    @Override
+    public boolean find(Object dto) {
+        List<UserAccount> userAccounts = new ArrayList<>();
+        switch (dto.getClass().getName()) {
+            case "LoginCheckDTO": {
+                LoginCheckDTO loginCheckDTO = (LoginCheckDTO) dto;
+                userAccounts.addAll(userAccountRepository.findUserByLoginStartingWithIgnoreCase(loginCheckDTO.getValue()));
+                for (UserAccount userAccount : userAccounts) {
+                    if (loginCheckDTO.getValue().equals(userAccount.getLogin())) {
+                        return true;
+                    }
+                }
+                break;
+            }
+            case "LoginDTO": {
+                LoginDTO loginDTO = (LoginDTO) dto;
 
+                break;
+            }
+        }
+        return false;
+    }
+
+    @Transactional
     @Override
     public List<UserAccount> findAllUserAccount() {
         return userAccountRepository.findAll();
     }
-
+    @Transactional
     @Override
     public long countAllUserAccount() {
         return userAccountRepository.count();
@@ -126,13 +155,22 @@ public class UserAccountAPIImpl implements UserAccountAPI {
     @Override
     public boolean createUserAccount(UserAccount userAccount) {
         try {
+            /*  UserAccount newUserAccount = new UserAccount();
+            UserAccount newUserAccount = UserAccount.builder().name(userAccount.getName()).build();
+           newUserAccount.setName(userAccount.getName());
+            newUserAccount.setSurname(userAccount.getSurname());
+            newUserAccount.setLogin(userAccount.getLogin());
+            newUserAccount.setPassword(userAccount.getPassword());
+            newUserAccount.setRegistrationDate(new Date(System.currentTimeMillis()));
+            newUserAccount.setLastActivityDate(new Date(System.currentTimeMillis()));
+            newUserAccount.setRole(UserAccountRole.CUSTOMER.getUserAccountRole());*/
             userAccountRepository.saveAndFlush(userAccount);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
-
+    @Transactional
     @Override
     public boolean updateUserAccount(UserAccount userAccount, long id) {
         try {

@@ -36,8 +36,8 @@ public class UserAccountMenu {
                 createUserAccount(0);
                 break;
             case 3:
-                int id = MenuUtils.scanInt("Write id UserAccount");
-                createUserAccount(id);
+                int idUserAccount = MenuUtils.scanInt("Write id UserAccount");
+                updateUserAccount(idUserAccount);
                 break;
         }
     }
@@ -147,6 +147,7 @@ public class UserAccountMenu {
         }
     }
 
+
     private void printUserAccountById(Long userAccountId) {
         List<UserAccount> userAccounts = userAccountAPI.findUserAccount(new UserAccount(userAccountId));
         System.out.println(userAccounts.toString());
@@ -177,6 +178,37 @@ public class UserAccountMenu {
         }
     }
 
+    private void updateUserAccount(int idUserAccount) {
+        MenuUtils.printMenu(
+                "-1.Quit",
+                "1. Update full name",
+                "2. Update login",
+                "3. Update password",
+                "4. Update role",
+                "5. Update communication"
+        );
+
+        switch (MenuUtils.scanInt()) {
+            case -1:
+                return;
+            case 1:
+                updateFullName();
+                break;
+            case 2:
+                String surnameNameLogin = MenuUtils.scanLine("Write Name and/or Surname or Login\n" +
+                        "(if Login start with'@')");
+                new UserAccountPrinter(surnameNameLogin);
+                break;
+            case 3:
+                String role = MenuUtils.scanLine("Write Role start with '$'");
+                new UserAccountPrinter(role);
+                break;
+        }
+    }
+
+    private void updateFullName() {
+    }
+
     /*-----------------------------for print information----------------*/
     private class UserAccountPrinter {
         private UserAccountPrinter() {
@@ -197,7 +229,6 @@ public class UserAccountMenu {
                 System.out.println(userAccount.toString());
             }
         }
-
 
         private void printUserAccountBySurnameNameLogin(String surnameNameLogin) {
             List<UserAccount> userAccounts = userAccountAPI.findUserAccount(new UserAccount(surnameNameLogin));
@@ -244,7 +275,7 @@ public class UserAccountMenu {
         }
 
         private void createUserAccount(UserAccount userAccount) {
-            userAccountAPI.createUserAccount(userAccount);
+         //   userAccountAPI.createUserAccount(userAccount);
         }
 
         private void updateUserAccount(UserAccount userAccount, long id) {

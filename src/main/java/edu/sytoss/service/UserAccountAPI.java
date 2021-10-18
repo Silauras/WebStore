@@ -1,5 +1,6 @@
 package edu.sytoss.service;
 
+import edu.sytoss.dto.CustomerSignUpDTO;
 import edu.sytoss.model.communication.Reaction;
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.user.Communication;
@@ -21,6 +22,7 @@ public interface UserAccountAPI {
 
     /*-------------------------UserAccount----------------------------*/
     List<UserAccount> findUserAccount(UserAccount userAccount);
+    public boolean find(Object dto);
 
     List<UserAccount> findAllUserAccount();
 
