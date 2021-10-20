@@ -4,7 +4,6 @@ import edu.sytoss.model.communication.Message;
 import edu.sytoss.model.communication.Reaction;
 import edu.sytoss.model.order.Order;
 import edu.sytoss.model.shop.Shop;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -48,8 +47,12 @@ public class UserAccount {
 
     @Column(name = "last_activity_date", nullable = false)
     private Date lastActivityDate;
+//
+//    @Enumerated(value = EnumType.STRING)
+//    @Column(name = "`role`", nullable = false, length = 1)
+//    private UserAccountRole role;
 
-    @Column(name = "`role`", nullable = false, length = 50)
+    @Column(name = "`role`", nullable = false)
     private String role;
 
     @OneToMany()
@@ -91,8 +94,6 @@ public class UserAccount {
         if (countWolds == 2) {
             this.surname = surnameName[0];
             this.name = surnameName[1];
-        } else if (surnameNameLogin.startsWith("$")) {
-            this.role = surnameNameLogin.substring(1);
         } else if (surnameNameLogin.startsWith("@")) {
             this.login = surnameNameLogin.substring(1);
         } else {
@@ -112,6 +113,8 @@ public class UserAccount {
         this.role = role;
     }
 
+
+
     @Override
     public String toString() {
         return "UserAccount{" +
@@ -123,7 +126,6 @@ public class UserAccount {
                 ", password='" + password + '\'' +
                 ", registrationDate=" + registrationDate +
                 ", lastActivityDate=" + lastActivityDate +
-                ", role='" + role + '\'' +
                 '}';
     }
 

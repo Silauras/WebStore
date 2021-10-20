@@ -1,6 +1,5 @@
 package edu.sytoss.model.product;
 
-import edu.sytoss.model.user.Subsciptable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,7 @@ import java.util.Set;
 
 @Table(name = "product_card")
 @Entity
-public class ProductCard implements Subsciptable {
+public class ProductCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id", nullable = false)

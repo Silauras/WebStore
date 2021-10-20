@@ -25,28 +25,24 @@
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
     <loaded-nodes>
-      <connection connection-id="35567a30-05f0-44be-a354-e9c924fb1ef1">
+      <connection connection-id="1b86bd32-e23b-45c0-82c7-f21fb9a119dc">
         <schema name="webstore" object-types="table, view" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="35567a30-05f0-44be-a354-e9c924fb1ef1">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
+    <connection id="1b86bd32-e23b-45c0-82c7-f21fb9a119dc">
+      <console name="Connection" type="STANDARD" schema="webstore" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="35567a30-05f0-44be-a354-e9c924fb1ef1" />
+    <connection id="1b86bd32-e23b-45c0-82c7-f21fb9a119dc" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="35567a30-05f0-44be-a354-e9c924fb1ef1" dataset="webstore.warehouse_product" active-filter-id="" />
-    <filter-actions connection-id="35567a30-05f0-44be-a354-e9c924fb1ef1" dataset="webstore.reaction" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="35567a30-05f0-44be-a354-e9c924fb1ef1" dataset="webstore.product" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="35567a30-05f0-44be-a354-e9c924fb1ef1" dataset="webstore.product_card" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="35567a30-05f0-44be-a354-e9c924fb1ef1" dataset="webstore.commentary" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="1b86bd32-e23b-45c0-82c7-f21fb9a119dc" dataset="webstore.user_account" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -74,7 +70,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="35567a30-05f0-44be-a354-e9c924fb1ef1" active="true">
+      <connection id="1b86bd32-e23b-45c0-82c7-f21fb9a119dc" active="true">
         <database>
           <name value="Connection" />
           <description value="" />

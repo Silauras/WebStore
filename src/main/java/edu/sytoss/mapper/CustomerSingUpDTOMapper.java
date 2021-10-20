@@ -1,9 +1,8 @@
 package edu.sytoss.mapper;
 
 import edu.sytoss.dto.CustomerSignUpDTO;
-import edu.sytoss.dto.LoginDTO;
 import edu.sytoss.model.user.UserAccount;
-import edu.sytoss.model.user.UserAccountRole;
+import edu.sytoss.model.user.Role;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
@@ -20,7 +19,7 @@ public class CustomerSingUpDTOMapper {
             map(source.getPassword(), destination.getPassword());
             map(new Date(System.currentTimeMillis()), destination.getRegistrationDate());
             map(new Date(System.currentTimeMillis()), destination.getLastActivityDate());
-            map(UserAccountRole.CUSTOMER.getUserAccountRole(), destination.getRole());
+            map(Role.CUSTOMER.name(), destination.getRole());
         }
     };
 

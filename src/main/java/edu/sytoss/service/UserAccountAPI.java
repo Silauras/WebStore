@@ -22,7 +22,6 @@ public interface UserAccountAPI {
 
     /*-------------------------UserAccount----------------------------*/
     List<UserAccount> findUserAccount(UserAccount userAccount);
-    public boolean find(Object dto);
 
     List<UserAccount> findAllUserAccount();
 

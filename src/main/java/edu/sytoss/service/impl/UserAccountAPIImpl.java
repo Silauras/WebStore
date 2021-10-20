@@ -112,34 +112,12 @@ public class UserAccountAPIImpl implements UserAccountAPI {
             userAccounts.addAll(userAccountRepository
                     .findUserBySurnameStartingWithAndNameStartingWithIgnoreCase(userAccount.getSurname(), userAccount.getName()));
         }
-        if (userAccount.getRole() != null) {
+        /*if (userAccount.getRole() != null) {
             userAccounts.addAll(userAccountRepository.findByRoleStartingWithIgnoreCase(userAccount.getRole()));
-        }
+        }*/
         return userAccounts;
     }
-    @Transactional
-    @Override
-    public boolean find(Object dto) {
-        List<UserAccount> userAccounts = new ArrayList<>();
-        switch (dto.getClass().getName()) {
-            case "LoginCheckDTO": {
-                LoginCheckDTO loginCheckDTO = (LoginCheckDTO) dto;
-                userAccounts.addAll(userAccountRepository.findUserByLoginStartingWithIgnoreCase(loginCheckDTO.getValue()));
-                for (UserAccount userAccount : userAccounts) {
-                    if (loginCheckDTO.getValue().equals(userAccount.getLogin())) {
-                        return true;
-                    }
-                }
-                break;
-            }
-            case "LoginDTO": {
-                LoginDTO loginDTO = (LoginDTO) dto;
 
-                break;
-            }
-        }
-        return false;
-    }
 
     @Transactional
     @Override
