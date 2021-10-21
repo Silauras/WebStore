@@ -5,6 +5,7 @@ import edu.sytoss.repository.UserAccountRepository;
 import edu.sytoss.security.JwtTokenProvider;
 import edu.sytoss.service.UserAccountAPI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-public class AuthenticationRestControllerV1 {
+public class AuthenticationRestControllerV1  {
 
     private final AuthenticationManager authenticationManager;
     private final UserAccountRepository userAccountRepository;
@@ -40,21 +41,21 @@ public class AuthenticationRestControllerV1 {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO request) {
-        System.out.println("AuthenticationRestControllerV1.authenticate");
         try {
-            System.out.println(new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
+            System.out.println("AuthenticationRestControllerV1.authenticate() "+request);
+            System.out.println("AuthenticationRestControllerV1.authenticate() " + new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getLogin(), request.getPassword()));
 
             UserAccount user = userAccountRepository.findByLogin(request.getLogin());
-            System.out.println(user);
             String token = jwtTokenProvider.createToken(request.getLogin(), user.getRole());
-            System.out.println(token);
             Map<Object, Object> response = new HashMap<>();
             response.put("login", request.getLogin());
             response.put("token", token);
-            return ResponseEntity.ok(response);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization","Bearer "+token);
+            return new ResponseEntity("",httpHeaders,HttpStatus.OK);
         } catch (AuthenticationException e) {
-            System.out.println("AuthenticationRestControllerV1.authenticate CATCH");
+            System.out.println("AuthenticationRestControllerV1.authenticate() CATCH");
             return new ResponseEntity<>("Invalid login/password combination", HttpStatus.FORBIDDEN);
         }
     }

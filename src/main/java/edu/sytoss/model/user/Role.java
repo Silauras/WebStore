@@ -6,13 +6,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.*;
 
 public enum Role {
-    ADMIN(new HashSet<Permission>(){{add(Permission.USER_ACCOUNT_READ); add(Permission.USER_ACCOUNT_READ);}}),
-    BANNED(new HashSet<Permission>(){{add(Permission.USER_ACCOUNT_READ); }}),
-    CUSTOMER(new HashSet<Permission>(){{add(Permission.USER_ACCOUNT_READ); }}),
+    ADMIN(new HashSet<Permission>(){{add(Permission.USER_ACCOUNT_READ); add(Permission.USER_ACCOUNT_WRITE);}}),
+    CUSTOMER(new HashSet<Permission>(){{add(Permission.USER_ACCOUNT_READ); }});
+    /*BANNED(new HashSet<Permission>(){{add(Permission.USER_ACCOUNT_READ); }}),
     MODERATOR(new HashSet<Permission>(){{add(Permission.USER_ACCOUNT_READ);}}),
     NON_AUTHORIZED(new HashSet<Permission>(){{add(Permission.USER_ACCOUNT_READ);}}),
     SELLER(new HashSet<Permission>(){{add(Permission.USER_ACCOUNT_READ);}}),
-    SHOP_OWNER(new HashSet<Permission>(){{add(Permission.USER_ACCOUNT_READ);}});
+    SHOP_OWNER(new HashSet<Permission>(){{add(Permission.USER_ACCOUNT_READ);}});*/
 
 
     private final Set<Permission> permissions;

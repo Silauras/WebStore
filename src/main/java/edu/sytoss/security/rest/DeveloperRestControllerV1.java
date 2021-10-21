@@ -3,6 +3,7 @@ package edu.sytoss.security.rest;
 import edu.sytoss.model.user.UserAccount;
 import edu.sytoss.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,18 +15,18 @@ public class DeveloperRestControllerV1 {
     UserAccountRepository userAccountRepository;
 
     @GetMapping
-    public List<UserAccount> getAll() {
+    public String getAll() {
+        System.out.println("eeee");
         System.out.println(userAccountRepository.findAll());
-        return userAccountRepository.findAll();
+        return userAccountRepository.findAll().toString();
     }
 
-//    @GetMapping("/{id}")
-//    @PreAuthorize("hasAuthority('developers:read')")
-//    public Developer getById(@PathVariable Long id) {
-//        return DEVELOPERS.stream().filter(developer -> developer.getId().equals(id))
-//                .findFirst()
-//                .orElse(null);
-//    }
+    @GetMapping("/{id}")
+   // @PreAuthorize("hasAuthority('userAccount:read')")
+    public String getById(@PathVariable Long id) {
+        System.out.println("eee");
+        return userAccountRepository.findById(id).toString();
+    }
 //
 //    @PostMapping
 //    @PreAuthorize("hasAuthority('developers:write')")

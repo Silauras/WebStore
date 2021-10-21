@@ -16,13 +16,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     public UserDetailsServiceImpl(UserAccountRepository userAccountRepository) {
+        System.out.println("UserDetailsServiceImpl.UserDetailsServiceImpl()");
         this.userAccountRepository = userAccountRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        System.out.println("UserDetailsServiceImpl.loadUserByUsername");
         UserAccount userAccount = userAccountRepository.findByLogin(login);
-        return SecurityUser.fromUser(userAccount);
+        System.out.println("UserDetailsServiceImpl.loadUserByUsername() " + userAccount);
+        UserDetails securityUser = SecurityUser.fromUser(userAccount);
+        System.out.println("UserDetailsServiceImpl.loadUserByUsername() " +securityUser);
+        return securityUser;
     }
 }

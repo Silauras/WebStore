@@ -16,7 +16,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-
 @Entity
 @Table(name = "user_account")
 public class UserAccount {

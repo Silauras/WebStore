@@ -18,6 +18,7 @@ public class SecurityUser implements UserDetails {
     private final boolean isActive;
 
     public SecurityUser(String username, String password, Collection<? extends GrantedAuthority> authorities, boolean isActive) {
+        System.out.println("SecurityUser.SecurityUser()");
         this.username = username;
         this.password = password;
         this.authorities = authorities;
@@ -62,8 +63,21 @@ public class SecurityUser implements UserDetails {
     public static UserDetails fromUser(UserAccount user) {
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole()));
+        System.out.println("SecurityUser.fromUser(): "+ authorities);
+        System.out.println("SecurityUser.fromUser(): "+ new org.springframework.security.core.userdetails.User(
+                user.getLogin(), user.getPassword(),
+                true,
+                true,
+                true,
+                true,
+                authorities
+        ));
         return new org.springframework.security.core.userdetails.User(
                 user.getLogin(), user.getPassword(),
+                true,
+                true,
+                true,
+                true,
                 authorities
         );
     }
